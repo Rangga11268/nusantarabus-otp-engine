@@ -958,7 +958,6 @@
       tbody.appendChild(tr);
     });
   }
-  }
 
   /**
    * Tab Switching with Chart Reflow
@@ -1055,6 +1054,7 @@
   function init() {
     setupEventListeners();
     renderPassengerRecommender();
+    renderSentimentTable();
     updateKPIs(state.activeCorridor);
     renderLeaderboard(state.activeCorridor);
     renderWaterfall();
