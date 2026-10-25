@@ -1047,6 +1047,68 @@
   }
 
   /**
+   * Render Granular Passenger Reviews Feed (Who Commented & What They Said)
+   */
+  function renderPassengerReviewsFeed(filterPo = "all") {
+    const feed = document.getElementById("reviewsFeedContainer");
+    if (!feed || !DATA.reviews) return;
+
+    feed.innerHTML = "";
+    const list = filterPo === "all" ? DATA.reviews : DATA.reviews.filter((r) => r.operator_name === filterPo);
+
+    list.forEach((r) => {
+      const logoSrc = LOGO_MAP[r.operator_name] || "assets/logos/sinarjaya.png";
+      const card = document.createElement("article");
+      card.className = "review-card";
+
+      const starCount = Math.round(r.rating_stars);
+      const starsStr = "★".repeat(starCount) + "☆".repeat(5 - starCount);
+
+      card.innerHTML = `
+        <div>
+          <div class="review-user-row">
+            <div class="review-user-info">
+              <div class="review-user-avatar">${r.reviewer_name.charAt(0)}</div>
+              <div>
+                <div class="review-user-name">${r.reviewer_name}</div>
+                <span class="review-source-badge font-mono">${r.source_platform}</span>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 4px;">
+              <span style="color: #fbbf24; font-size: 13px;">${starsStr}</span>
+              <strong class="font-mono" style="font-size: 12px; color: #f8fafc;">${r.rating_stars.toFixed(1)}</strong>
+            </div>
+          </div>
+
+          <div class="review-meta-line">
+            <div class="operator-logo-wrap" style="width: 26px; height: 18px; display: inline-flex; vertical-align: middle;">
+              <img src="${logoSrc}" alt="${r.operator_name}" class="operator-logo-img">
+            </div>
+            <strong style="color: var(--text-primary); font-size: 11.5px;">${r.operator_name}</strong>
+            <span>•</span>
+            <span>${r.service_class}</span>
+          </div>
+
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">
+            Rute: <strong>${r.route_traveled}</strong> • Tanggal: ${r.review_date}
+          </div>
+
+          <h4 class="review-title-text">${r.review_title}</h4>
+          <p class="review-body-text">"${r.review_comment}"</p>
+        </div>
+
+        <div class="review-card-footer">
+          <span class="perk-tag" style="background: rgba(34, 197, 94, 0.1); color: #22c55e; border-color: rgba(34, 197, 94, 0.25);">
+            ${r.aspect_highlight}
+          </span>
+          <span class="font-mono text-dim" style="font-size: 10.5px;">${r.review_id}</span>
+        </div>
+      `;
+      feed.appendChild(card);
+    });
+  }
+
+  /**
    * Tab Switching with Chart Reflow
    */
   function switchTab(tabId) {
@@ -1117,6 +1179,14 @@
       });
     });
 
+    // Review PO Filter
+    const reviewPoFilter = document.getElementById("reviewPoFilter");
+    if (reviewPoFilter) {
+      reviewPoFilter.addEventListener("change", (e) => {
+        renderPassengerReviewsFeed(e.target.value);
+      });
+    }
+
     // Simulator sliders
     const speedSlider = document.getElementById("speedSlider");
     const idleSlider = document.getElementById("idleSlider");
@@ -1142,6 +1212,7 @@
     setupEventListeners();
     renderPassengerRecommender();
     renderSentimentTable();
+    renderPassengerReviewsFeed("all");
     updateKPIs(state.activeCorridor);
     renderLeaderboard(state.activeCorridor);
     renderWaterfall();

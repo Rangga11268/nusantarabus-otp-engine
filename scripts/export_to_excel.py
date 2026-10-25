@@ -13,7 +13,28 @@ OUTPUT_EXCEL = os.path.join(BASE_DIR, "data", "nusantarabus_complete_dataset.xls
 
 print(f"Reading data from {DB_PATH}, {SENTIMENT_PATH}, and {RAW_SCRAPED_PATH}...")
 
-# 1. Sheet 1: Sentimen Penumpang (RedBus & Traveloka Audit)
+conn = sqlite3.connect(DB_PATH)
+
+# 1. Sheet 1: Ulasan Riil Granular Per Penumpang (Siapa yang komen & apa komentarnya)
+query_reviews = """
+SELECT 
+    reviewer_name AS "Nama Penumpang (Reviewer)",
+    source_platform AS "Sumber Platform",
+    review_date AS "Tanggal Ulasan",
+    operator_name AS "Operator Bus (PO)",
+    route_traveled AS "Rute Perjalanan",
+    service_class AS "Kelas Layanan",
+    rating_stars AS "Rating (1-5)",
+    sentiment_label AS "Sentimen",
+    aspect_highlight AS "Aspek Utama",
+    review_title AS "Judul Ulasan",
+    review_comment AS "Komentar Lengkap Penumpang"
+FROM fact_passenger_reviews
+ORDER BY operator_name, review_date DESC;
+"""
+df_granular_reviews = pd.read_sql_query(query_reviews, conn)
+
+# 2. Sheet 2: Ringkasan Sentimen 10 PO Bus
 with open(SENTIMENT_PATH, "r", encoding="utf-8") as f:
     sentiment_data = json.load(f)
 
@@ -35,12 +56,11 @@ for po, s in sentiment_data.items():
         "Kualitas Makanan Servis (1-5)": aspects.get("food_service"),
         "Ketepatan Waktu Lapangan (1-5)": aspects.get("punctuality"),
         "Keunggulan Utama": s.get("top_strengths"),
-        "Poin Perhatian Penumpang": s.get("top_considerations"),
-        "Kutipan Ulasan Riil": quotes
+        "Poin Perhatian Penumpang": s.get("top_considerations")
     })
-df_sentiment = pd.DataFrame(sentiment_rows)
+df_sentiment_summary = pd.DataFrame(sentiment_rows)
 
-# 2. Sheet 2: Raw Scraped Schedules from RedBus
+# 3. Sheet 3: Jadwal Scraped RedBus
 with open(RAW_SCRAPED_PATH, "r", encoding="utf-8") as f:
     raw_scraped = json.load(f)
 
@@ -59,8 +79,7 @@ if not df_raw_scraped.empty:
         "rating": "Rating Publik (1-5)"
     }, inplace=True)
 
-# 3. Sheet 3: Profil Operator & Metrik Kinerja (Data Mart SQLite)
-conn = sqlite3.connect(DB_PATH)
+# 4. Sheet 4: Peringkat Kinerja PO
 query_operators = """
 SELECT 
     o.operator_id AS "ID Operator",
@@ -81,7 +100,7 @@ ORDER BY "Rasio Tepat Waktu OTP (%)" DESC;
 """
 df_operators = pd.read_sql_query(query_operators, conn)
 
-# 4. Sheet 4: Sampel Perjalanan & Ketepatan Riil (fact_trips)
+# 5. Sheet 5: Sampel Perjalanan Aktual (500 Trip)
 query_trips = """
 SELECT 
     t.trip_id AS "ID Perjalanan",
@@ -106,7 +125,7 @@ LIMIT 500;
 """
 df_trips = pd.read_sql_query(query_trips, conn)
 
-# 5. Sheet 5: Dekomposisi 5 Tahap Delay (fact_trip_stages)
+# 6. Sheet 6: Tahapan Delay
 query_stages = """
 SELECT 
     s.stage_name AS "Tahapan Perjalanan",
@@ -123,17 +142,32 @@ df_stages = pd.read_sql_query(query_stages, conn)
 
 conn.close()
 
-# 6. Save to Excel
-with pd.ExcelWriter(OUTPUT_EXCEL, engine="openpyxl") as writer:
-    df_sentiment.to_excel(writer, sheet_name="1_Ulasan_Sentimen_10_PO", index=False)
-    df_raw_scraped.to_excel(writer, sheet_name="2_Jadwal_Scraped_RedBus", index=False)
-    df_operators.to_excel(writer, sheet_name="3_Peringkat_Kinerja_PO", index=False)
-    df_trips.to_excel(writer, sheet_name="4_Sampel_Perjalanan_TransJawa", index=False)
-    df_stages.to_excel(writer, sheet_name="5_Akar_Masalah_Delay_Etape", index=False)
+# 7. Write into Excel with multiple styled sheets
+target_file = OUTPUT_EXCEL
+writer = None
+try:
+    writer = pd.ExcelWriter(target_file, engine="openpyxl")
+    writer.__enter__()
+except PermissionError:
+    target_file = os.path.join(BASE_DIR, "data", "nusantarabus_passenger_sentiment_complete.xlsx")
+    print(f"Original file is open in another app. Writing to fallback: {target_file}")
+    writer = pd.ExcelWriter(target_file, engine="openpyxl")
+    writer.__enter__()
 
-# 7. Polish Styling with OpenPyXL
+try:
+    df_granular_reviews.to_excel(writer, sheet_name="1_Ulasan_Riil_Per_Penumpang", index=False)
+    df_sentiment_summary.to_excel(writer, sheet_name="2_Ringkasan_Sentimen_PO", index=False)
+    df_raw_scraped.to_excel(writer, sheet_name="3_Jadwal_Scraped_RedBus", index=False)
+    df_operators.to_excel(writer, sheet_name="4_Peringkat_Kinerja_PO", index=False)
+    df_trips.to_excel(writer, sheet_name="5_Sampel_Perjalanan_TransJawa", index=False)
+    df_stages.to_excel(writer, sheet_name="6_Akar_Masalah_Delay_Etape", index=False)
+finally:
+    if writer:
+        writer.__exit__(None, None, None)
+
+# 8. Polish Styling
 from openpyxl import load_workbook
-wb = load_workbook(OUTPUT_EXCEL)
+wb = load_workbook(target_file)
 
 header_fill = PatternFill(start_color="0F172A", end_color="0F172A", fill_type="solid") # Deep Slate 900
 header_font = Font(name="Segoe UI", size=10, bold=True, color="F8FAFC")
@@ -162,7 +196,7 @@ for ws in wb.worksheets:
             val_str = str(cell.value or "")
             if len(val_str) > max_len:
                 max_len = len(val_str)
-        ws.column_dimensions[col_letter].width = min(max(max_len + 3, 14), 60)
+        ws.column_dimensions[col_letter].width = min(max(max_len + 3, 14), 70)
 
-wb.save(OUTPUT_EXCEL)
-print(f"Excel export complete! File saved at: {OUTPUT_EXCEL}")
+wb.save(target_file)
+print(f"Updated complete dataset with granular passenger reviews saved to: {target_file}")
