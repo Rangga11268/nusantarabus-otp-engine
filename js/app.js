@@ -14,6 +14,11 @@
   }
 
   const DATA = window.NUSANTARABUS_DATA;
+  const DATA_FRESHNESS = {
+    scheduleSnapshot: "25 Okt 2026, 16:34 WIB",
+    sourceLabel: "RedBus ID & verifikasi operator",
+    bookingStatus: "Belum terhubung ke inventori booking live",
+  };
 
   // Chart Instances Registry
   const charts = {
@@ -839,9 +844,12 @@
 
     container.innerHTML = `
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4); flex-wrap: wrap; gap: 8px;">
-        <span style="font-size: 13.5px; font-weight: 700; color: #f8fafc;">
+        <div>
+        <span style="font-size: 13.5px; font-weight: 700; color: #f8fafc; display: block;">
           Menampilkan Tiket Rekomendasi Bus: Jakarta ke ${curRoute.destCity}
         </span>
+        <span class="recommendation-freshness">Jadwal referensi diperbarui ${DATA_FRESHNESS.scheduleSnapshot} · ${DATA_FRESHNESS.sourceLabel}</span>
+        </div>
         <span class="fare-estimate-pill font-mono">Full Tol Trans-Jawa &bull; Tanpa Ngetem Parah</span>
       </div>
 
@@ -898,9 +906,9 @@
         <!-- Sidebar: Fare & Rating -->
         <div class="ticket-sidebar-section">
           <div class="ticket-fare-box">
-            <span class="ticket-fare-caption">Tarif Tiket Riil</span>
+            <span class="ticket-fare-caption">Tarif referensi</span>
             <div class="ticket-fare-value font-mono">${metaTop.fare_range.split("–")[0].trim()}</div>
-            <span class="ticket-fare-caption">Rentang s.d. ${metaTop.fare_range.split("–")[1] ? metaTop.fare_range.split("–")[1].trim() : ""}</span>
+            <span class="ticket-fare-caption">Indikatif · rentang s.d. ${metaTop.fare_range.split("–")[1] ? metaTop.fare_range.split("–")[1].trim() : ""}</span>
           </div>
 
           <div class="ticket-rating-strip">
@@ -915,6 +923,9 @@
 
           <button type="button" class="btn-view-reviews" onclick="const f = document.getElementById('reviewPoFilter'); if(f) { f.value='${top.po_name}'; f.dispatchEvent(new Event('change')); document.getElementById('reviewsFeedContainer').scrollIntoView({behavior: 'smooth'}); }">
             Lihat Ulasan Penumpang &rarr;
+          </button>
+          <button type="button" class="btn-book-ticket" data-booking-operator="${top.po_name}" data-booking-class="${top.service_class}" data-booking-destination="${curRoute.destCity}" data-booking-departure="${curRoute.dep}" data-booking-arrival="${curRoute.arr}" data-booking-fare="${metaTop.fare_range}">
+            Pilih untuk dipesan
           </button>
         </div>
       </article>
@@ -969,9 +980,9 @@
 
         <div class="ticket-sidebar-section">
           <div class="ticket-fare-box">
-            <span class="ticket-fare-caption">Tarif Tiket Riil</span>
+            <span class="ticket-fare-caption">Tarif referensi</span>
             <div class="ticket-fare-value font-mono">${metaRunner.fare_range.split("–")[0].trim()}</div>
-            <span class="ticket-fare-caption">Rentang s.d. ${metaRunner.fare_range.split("–")[1] ? metaRunner.fare_range.split("–")[1].trim() : ""}</span>
+            <span class="ticket-fare-caption">Indikatif · rentang s.d. ${metaRunner.fare_range.split("–")[1] ? metaRunner.fare_range.split("–")[1].trim() : ""}</span>
           </div>
 
           <div class="ticket-rating-strip">
@@ -986,6 +997,9 @@
 
           <button type="button" class="btn-view-reviews" onclick="const f = document.getElementById('reviewPoFilter'); if(f) { f.value='${runnerUp.po_name}'; f.dispatchEvent(new Event('change')); document.getElementById('reviewsFeedContainer').scrollIntoView({behavior: 'smooth'}); }">
             Lihat Ulasan Penumpang &rarr;
+          </button>
+          <button type="button" class="btn-book-ticket" data-booking-operator="${runnerUp.po_name}" data-booking-class="${runnerUp.service_class}" data-booking-destination="${curRoute.destCity}" data-booking-departure="${curRoute.dep}" data-booking-arrival="${curRoute.arr}" data-booking-fare="${metaRunner.fare_range}">
+            Pilih untuk dipesan
           </button>
         </div>
       </article>
@@ -1040,9 +1054,9 @@
 
         <div class="ticket-sidebar-section">
           <div class="ticket-fare-box">
-            <span class="ticket-fare-caption">Tarif Tiket Riil</span>
+            <span class="ticket-fare-caption">Tarif referensi</span>
             <div class="ticket-fare-value font-mono">${metaBudget.fare_range.split("–")[0].trim()}</div>
-            <span class="ticket-fare-caption">Rentang s.d. ${metaBudget.fare_range.split("–")[1] ? metaBudget.fare_range.split("–")[1].trim() : ""}</span>
+            <span class="ticket-fare-caption">Indikatif · rentang s.d. ${metaBudget.fare_range.split("–")[1] ? metaBudget.fare_range.split("–")[1].trim() : ""}</span>
           </div>
 
           <div class="ticket-rating-strip">
@@ -1057,6 +1071,9 @@
 
           <button type="button" class="btn-view-reviews" onclick="const f = document.getElementById('reviewPoFilter'); if(f) { f.value='${budgetPick.po_name}'; f.dispatchEvent(new Event('change')); document.getElementById('reviewsFeedContainer').scrollIntoView({behavior: 'smooth'}); }">
             Lihat Ulasan Penumpang &rarr;
+          </button>
+          <button type="button" class="btn-book-ticket" data-booking-operator="${budgetPick.po_name}" data-booking-class="${budgetPick.service_class}" data-booking-destination="${curRoute.destCity}" data-booking-departure="${curRoute.dep}" data-booking-arrival="${curRoute.arr}" data-booking-fare="${metaBudget.fare_range}">
+            Pilih untuk dipesan
           </button>
         </div>
       </article>
@@ -1117,15 +1134,37 @@
             </div>
           </div>
         </td>
-        <td style="max-width: 280px; font-size: 12px; color: var(--text-secondary); line-height: 1.4;">
-          ${s.top_strengths}
-        </td>
-        <td style="max-width: 240px; font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
-          ${s.top_considerations}
+        <td style="max-width: 320px; font-size: 12px; color: var(--text-secondary); line-height: 1.4;">
+          <strong>${s.top_strengths}</strong>
+          <span class="table-note">Perhatian: ${s.top_considerations}</span>
         </td>
       `;
       tbody.appendChild(tr);
     });
+  }
+
+  function renderSentimentHighlights() {
+    const container = document.getElementById("sentimentHighlights");
+    if (!container || !DATA.sentiment) return;
+
+    const entries = Object.entries(DATA.sentiment)
+      .sort(([, a], [, b]) => b.rating_score - a.rating_score)
+      .slice(0, 3);
+
+    container.innerHTML = entries.map(([poName, s], index) => `
+      <article class="sentiment-highlight-card${index === 0 ? " featured" : ""}">
+        <div class="sentiment-highlight-top">
+          <span class="eyebrow">${index === 0 ? "SKOR TERTINGGI" : "PILIHAN DATASET"}</span>
+          <strong class="sentiment-rating">${s.rating_score.toFixed(1)}<small>/5</small></strong>
+        </div>
+        <h3>${poName}</h3>
+        <p>${s.top_strengths}</p>
+        <div class="sentiment-highlight-meta">
+          <span>${formatNumber(s.total_reviews)} ulasan di dataset</span>
+          <span class="sentiment-positive">${s.sentiment_positive_pct}% positif</span>
+        </div>
+      </article>
+    `).join("");
   }
 
   /**
@@ -1136,7 +1175,7 @@
     if (!feed || !DATA.reviews) return;
 
     feed.innerHTML = "";
-    const list = filterPo === "all" ? DATA.reviews : DATA.reviews.filter((r) => r.operator_name === filterPo);
+    const list = filterPo === "all" ? DATA.reviews.slice(0, 3) : DATA.reviews.filter((r) => r.operator_name === filterPo).slice(0, 3);
 
     list.forEach((r) => {
       const logoSrc = LOGO_MAP[r.operator_name] || "assets/logos/sinarjaya.png";
@@ -1188,6 +1227,17 @@
       `;
       feed.appendChild(card);
     });
+
+    const dialogFeed = document.getElementById("dialogReviews");
+    if (dialogFeed && dialogFeed !== feed) {
+      dialogFeed.innerHTML = "";
+      list.forEach((r) => {
+        const card = document.createElement("article");
+        card.className = "review-card";
+        card.innerHTML = `<strong>${r.operator_name}</strong><h4 class="review-title-text">${r.review_title}</h4><p class="review-body-text">"${r.review_comment}"</p><span class="review-source-badge">${r.source_platform}</span>`;
+        dialogFeed.appendChild(card);
+      });
+    }
   }
 
   /**
@@ -1251,7 +1301,7 @@
         renderPassengerRecommender();
         const resultsSec = document.getElementById("resultsSection");
         if (resultsSec) {
-          resultsSec.scrollIntoView({ behavior: "smooth" });
+          resultsSec.scrollIntoView({ behavior: "auto", block: "start" });
         }
       });
     }
@@ -1280,6 +1330,10 @@
 
     document.querySelectorAll(".btn-cta-analytics").forEach((btn) => {
       btn.addEventListener("click", () => {
+        if (!landingWrap || !dashboardWrap) {
+          window.location.href = "dashboard.html";
+          return;
+        }
         if (landingWrap) landingWrap.style.display = "none";
         if (dashboardWrap) dashboardWrap.style.display = "block";
         switchTab("leaderboard");
@@ -1289,6 +1343,10 @@
 
     if (btnBackToLanding) {
       btnBackToLanding.addEventListener("click", () => {
+        if (!landingWrap || !dashboardWrap) {
+          window.location.href = "landing.html";
+          return;
+        }
         if (dashboardWrap) dashboardWrap.style.display = "none";
         if (landingWrap) landingWrap.style.display = "block";
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1300,6 +1358,56 @@
     if (reviewPoFilter) {
       reviewPoFilter.addEventListener("change", (e) => {
         renderPassengerReviewsFeed(e.target.value);
+      });
+    }
+
+    const sentimentDialog = document.getElementById("sentimentDialog");
+    const openSentiment = document.getElementById("btnOpenSentiment");
+    const closeSentiment = document.getElementById("btnCloseSentiment");
+    if (sentimentDialog && openSentiment) {
+      openSentiment.addEventListener("click", () => {
+        renderSentimentTable();
+        renderPassengerReviewsFeed(reviewPoFilter ? reviewPoFilter.value : "all");
+        sentimentDialog.showModal();
+      });
+    }
+    if (sentimentDialog && closeSentiment) {
+      closeSentiment.addEventListener("click", () => sentimentDialog.close());
+    }
+
+    const bookingDialog = document.getElementById("bookingDialog");
+    const bookingSummary = document.getElementById("bookingSummary");
+    const bookingCopyStatus = document.getElementById("bookingCopyStatus");
+    const closeBooking = document.getElementById("btnCloseBooking");
+    const copyBooking = document.getElementById("btnCopyBooking");
+    if (bookingDialog && bookingSummary) {
+      document.addEventListener("click", (event) => {
+        const button = event.target.closest(".btn-book-ticket");
+        if (!button) return;
+        const details = [
+          `${button.dataset.bookingOperator} | ${button.dataset.bookingClass}`,
+          `Jakarta ke ${button.dataset.bookingDestination}`,
+          `${button.dataset.bookingDeparture} - ${button.dataset.bookingArrival}`,
+          `Perkiraan tarif: ${button.dataset.bookingFare}`,
+        ];
+        bookingSummary.textContent = details.join("\n");
+        bookingSummary.dataset.copyText = details.join("\n");
+        if (bookingCopyStatus) bookingCopyStatus.textContent = "";
+        bookingDialog.showModal();
+      });
+    }
+    if (bookingDialog && closeBooking) {
+      closeBooking.addEventListener("click", () => bookingDialog.close());
+    }
+    if (bookingDialog && copyBooking && bookingSummary) {
+      copyBooking.addEventListener("click", async () => {
+        const text = bookingSummary.dataset.copyText || bookingSummary.textContent;
+        try {
+          await navigator.clipboard.writeText(text);
+          if (bookingCopyStatus) bookingCopyStatus.textContent = "Ringkasan tersalin.";
+        } catch (error) {
+          if (bookingCopyStatus) bookingCopyStatus.textContent = "Tidak dapat menyalin otomatis. Blok teks di atas untuk menyalinnya.";
+        }
       });
     }
 
@@ -1326,14 +1434,35 @@
    */
   function init() {
     setupEventListeners();
-    renderPassengerRecommender();
-    renderSentimentTable();
-    renderPassengerReviewsFeed("all");
-    updateKPIs(state.activeCorridor);
-    renderLeaderboard(state.activeCorridor);
-    renderWaterfall();
-    runFuelSimulation();
-    renderHourlyRecommender(state.activeDest);
+    const isDashboard = Boolean(document.getElementById("dashboardPageWrap"));
+    const isLanding = Boolean(document.getElementById("landingPageWrap"));
+
+    if (isLanding) {
+      renderPassengerRecommender();
+      renderSentimentHighlights();
+
+      // Reviews sit well below the recommendation flow. Defer their card
+      // construction until the section is close to the viewport.
+      const reviewsSection = document.getElementById("reviewsSection");
+      if (reviewsSection && "IntersectionObserver" in window) {
+        const reviewsObserver = new IntersectionObserver((entries, observer) => {
+          if (!entries.some((entry) => entry.isIntersecting)) return;
+          renderPassengerReviewsFeed("all");
+          observer.disconnect();
+        }, { rootMargin: "300px 0px" });
+        reviewsObserver.observe(reviewsSection);
+      } else {
+        renderPassengerReviewsFeed("all");
+      }
+    }
+
+    if (isDashboard) {
+      updateKPIs(state.activeCorridor);
+      renderLeaderboard(state.activeCorridor);
+      renderWaterfall();
+      runFuelSimulation();
+      renderHourlyRecommender(state.activeDest);
+    }
   }
 
   if (document.readyState === "loading") {

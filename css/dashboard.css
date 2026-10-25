@@ -1,0 +1,31 @@
+/*
+ * Operations console boundary.
+ * The dark palette is intentional here: fleet operators scan charts and thresholds
+ * in a focused workspace, while the passenger page uses a warmer reading palette.
+ */
+
+body:has(.dashboard-page-wrap) {
+  background: var(--bg-canvas);
+}
+
+.dashboard-page-wrap {
+  display: block !important;
+}
+
+.dashboard-page-wrap .btn-back-to-landing,
+.dashboard-page-wrap .btn-excel-download,
+.dashboard-page-wrap .corridor-select,
+.dashboard-page-wrap .tab-btn,
+.dashboard-page-wrap input,
+.dashboard-page-wrap select,
+.dashboard-page-wrap button {
+  min-height: 44px;
+}
+
+.dashboard-page-wrap button:focus-visible,
+.dashboard-page-wrap a:focus-visible,
+.dashboard-page-wrap select:focus-visible,
+.dashboard-page-wrap input:focus-visible {
+  outline: 3px solid var(--accent-blue);
+  outline-offset: 3px;
+}

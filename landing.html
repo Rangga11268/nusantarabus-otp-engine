@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NusantaraBus | Pilih perjalanan dengan lebih tenang</title>
+  <meta name="description" content="Panduan perjalanan bus AKAP Trans-Jawa berbasis jadwal dan data simulasi operasional.">
+  <link rel="icon" type="image/svg+xml" href="assets/branding/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+  <div class="app-container">
+    <div id="landingPageWrap" class="landing-page-wrap">
+      
+      <!-- Landing Navbar -->
+      <nav class="landing-navbar">
+        <div class="landing-brand">
+          <img src="assets/branding/logo-symbol.svg" alt="NusantaraBus Official Brand Logo" class="landing-brand-logo">
+          <div>
+            <div class="landing-brand-title">NusantaraBus</div>
+            <div class="landing-brand-sub">Trans-Java Travel Guide & Telematics</div>
+          </div>
+        </div>
+
+        <ul class="landing-nav-links">
+          <li><a href="#searchSection" class="landing-nav-link">Cari Bus</a></li>
+          <li><a href="#operatorsSection" class="landing-nav-link">10 Operator Bus</a></li>
+          <li><a href="#reviewsSection" class="landing-nav-link">Ulasan Penumpang</a></li>
+          <li><a href="#guideSection" class="landing-nav-link">Panduan Perjalanan</a></li>
+        </ul>
+
+        <div class="landing-nav-actions">
+          <a href="data/nusantarabus_complete_dataset.xlsx" download="nusantarabus_complete_dataset.xlsx" class="btn-excel-download" title="Unduh dataset mentah 80 ulasan sentimen dan jadwal PO bus dalam format Excel (.xlsx)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>Unduh Excel (.xlsx)</span>
+          </a>
+
+          <button type="button" id="btnCtaAnalytics" class="btn-cta-analytics" title="Buka Dashboard Analitik Operasional Armada">
+            <span>Buka Dashboard Analitik</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Landing Hero Section -->
+      <header class="landing-hero">
+        <div class="landing-badge-pill">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span>DATA SIMULASI 3.500 PERJALANAN &bull; TOL TRANS-JAWA</span>
+        </div>
+
+        <h1 class="landing-headline">Perjalanan Bus Tol Trans-Jawa, Tanpa Drama Ngetem.</h1>
+        <p class="landing-subheadline">
+          Pilih perjalanan bus AKAP dengan konteks yang lebih jelas dari Jakarta menuju Semarang, Solo, Surabaya, dan Malang. Rekomendasi ini memakai jadwal terkurasi dan telemetri operasional simulasi, sehingga Anda dapat membandingkan ketepatan waktu, kenyamanan, dan pola keberangkatan tanpa klaim data lapangan.
+        </p>
+      </header>
+
+      <!-- Floating Modern Travel Search Widget -->
+      <section id="searchSection" class="landing-section">
+        <div class="landing-search-card">
+          <div class="search-card-intro">
+            <span class="search-card-kicker">TRIP BRIEF</span>
+            <p>Pilih konteks perjalanan, kami urutkan opsi yang paling masuk akal.</p>
+          </div>
+          <div class="search-card-grid">
+            <div class="search-field-group">
+              <label class="search-field-label">Kota Asal</label>
+              <input type="text" class="search-field-input" value="Jakarta (Jabodetabek)" readonly style="cursor: default; opacity: 0.9;">
+            </div>
+
+            <div class="search-field-group">
+              <label class="search-field-label">Kota Tujuan</label>
+              <select id="passengerRouteSelect" class="search-field-input" style="cursor: pointer;">
+                <option value="sby">Surabaya (782 km &bull; Via Tol Trans-Jawa)</option>
+                <option value="slo">Solo (540 km &bull; Via Tol Trans-Jawa)</option>
+                <option value="smg">Semarang (440 km &bull; Via Tol Trans-Jawa)</option>
+                <option value="mlg">Malang (850 km &bull; Via Tol Trans-Jawa)</option>
+              </select>
+            </div>
+
+            <div class="search-field-group">
+              <label class="search-field-label">Status Keberangkatan</label>
+              <div class="search-field-input" style="display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 13px;">
+                <span class="radar-dot"></span>
+                <span>Jadwal Aktif Hari Ini</span>
+              </div>
+            </div>
+
+            <div>
+              <button type="button" id="btnSearchSubmit" class="btn-search-bus">
+                <span>Tampilkan Rekomendasi</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                  <polyline points="12 5 19 12 12 19"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Search Filter Chips (Priority & Departure Time) -->
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid rgba(255, 255, 255, 0.05);">
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <span style="font-size: 11.5px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Prioritas Perjalanan:</span>
+              <div id="passengerPriorityChips" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" class="search-filter-chip active" data-priority="ontime">Anti-Telat (Rasio OTP Tertinggi)</button>
+                <button type="button" class="search-filter-chip" data-priority="comfort">Kenyamanan Sleeper Bus</button>
+                <button type="button" class="search-filter-chip" data-priority="speed">Kecepatan Jelajah Tol</button>
+                <button type="button" class="search-filter-chip" data-priority="budget">Paling Ekonomis</button>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <span style="font-size: 11.5px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Jam Keberangkatan:</span>
+              <div id="passengerTimeChips" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" class="search-filter-chip" data-time="morning">Pagi (06:00 - 08:30 WIB)</button>
+                <button type="button" class="search-filter-chip" data-time="afternoon">Siang (12:00 - 14:00 WIB)</button>
+                <button type="button" class="search-filter-chip active" data-time="evening">Malam (18:00 - 20:30 WIB &bull; Sangat Dianjurkan)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ticket Recommendations Results -->
+      <section id="resultsSection" class="landing-section">
+        <div class="landing-section-header">
+          <div>
+            <h2 class="landing-section-title">Tiket Rekomendasi Sesuai Pilihan Anda</h2>
+            <p class="landing-section-sub">Format boarding pass dengan informasi jadwal referensi, waktu tiba, fasilitas kursi, dan ringkasan pengalaman penumpang yang diberi label sesuai sumbernya.</p>
+          </div>
+        </div>
+
+        <div id="passengerRecommendationsContainer" class="ticket-results-container">
+          <!-- Rendered dynamically by renderPassengerRecommender() in js/app.js -->
+        </div>
+      </section>
+
+      <!-- Operator reference showcase -->
+      <section id="operatorsSection" class="landing-section">
+        <div class="landing-section-header">
+          <div>
+            <h2 class="landing-section-title">Operator Bus AKAP dalam Dataset Referensi</h2>
+            <p class="landing-section-sub">Profil operator yang tersedia di dataset referensi dan digunakan sebagai konteks perbandingan simulasi perjalanan.</p>
+          </div>
+        </div>
+
+        <div class="operators-showcase-grid">
+          <!-- 1. Rosalia Indah -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/rosalia.png" alt="PO Rosalia Indah" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO Rosalia Indah</div>
+                  <div class="operator-showcase-hub">Palur, Solo &bull; Sejak 1983</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">Pionir Double Decker & First Class Sleeper bus di koridor Solo dan Madiun. Memiliki fasilitas Rest Area Eksklusif KM 379 B dan RM Rosalia Indah dengan waktu makan disiplin.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-ontime" style="font-size: 11px;">OTP 28.5% (Tinggi)</span>
+              <span style="color: var(--text-muted); font-size: 11px;">Double Decker &bull; Sleeper</span>
+            </div>
+          </article>
+
+          <!-- 2. Harapan Jaya -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/harapanjaya.png" alt="PO Harapan Jaya" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO Harapan Jaya</div>
+                  <div class="operator-showcase-hub">Tulungagung &bull; Sejak 1977</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">Spesialis rute Jawa Timur via Tol Trans-Jawa. Mengoperasikan sasis Scania K410IB dan Mercedes-Benz dengan servis makan legendaris di RM Utama Sedayu & Ngawi.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-ontime" style="font-size: 11px;">OTP 24.2%</span>
+              <span style="color: var(--text-muted); font-size: 11px;">Scania Sleeper &bull; Super VIP</span>
+            </div>
+          </article>
+
+          <!-- 3. Sinar Jaya -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/sinarjaya.png" alt="PO Sinar Jaya" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO Sinar Jaya</div>
+                  <div class="operator-showcase-hub">Bekasi / Brebes &bull; Sejak 1982</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">Operator dengan armada terbesar dan frekuensi keberangkatan tertinggi di Tol Trans-Jawa. Memiliki rest area sendiri di KM 207 Cipali dengan tarif paling kompetitif.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-moderate" style="font-size: 11px;">Frekuensi Tertinggi</span>
+              <span style="color: var(--text-muted); font-size: 11px;">Executive &bull; Suite Class</span>
+            </div>
+          </article>
+
+          <!-- 4. Gunung Harta -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/gunungharta.png" alt="PO Gunung Harta Solutions" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO Gunung Harta</div>
+                  <div class="operator-showcase-hub">Malang &bull; Ciri Khas Bus Hijau</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">Armada berkelas Mercedes-Benz OC500RF 2542 & Volvo B11R. Menawarkan konsistensi servis makan malam lezat dan kenyamanan kursi legrest luas.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-ontime" style="font-size: 11px;">OTP 21.0%</span>
+              <span style="color: var(--text-muted); font-size: 11px;">Green Luxury &bull; Double Decker</span>
+            </div>
+          </article>
+
+          <!-- 5. Juragan 99 Trans -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/juragan99.png" alt="PO Juragan 99 Trans" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO Juragan 99 Trans</div>
+                  <div class="operator-showcase-hub">Malang &bull; Ultra Luxury Bus</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">Fokus 100% armada Sleeper 18-seat dan First Class. Zero ngetem di jalan dengan fasilitas hot coffee, snack box melimpah, dan onboard crew pramugari.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-ontime" style="font-size: 11px;">Skor Kepuasan 4.9/5</span>
+              <span style="color: var(--text-muted); font-size: 11px;">Full Sleeper Class</span>
+            </div>
+          </article>
+
+          <!-- 6. 27Trans -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/27trans.png" alt="PO 27 Trans" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO 27 Trans</div>
+                  <div class="operator-showcase-hub">Malang / Surabaya &bull; Executive</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">President Class dan Urban Class dengan interior mewah bertema oranye-hitam. Dikenal tepat waktu dan konsisten melintasi Tol Trans-Jawa penuh.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-ontime" style="font-size: 11px;">Skor Kepuasan 4.8/5</span>
+              <span style="color: var(--text-muted); font-size: 11px;">President &bull; Urban Class</span>
+            </div>
+          </article>
+
+          <!-- 7. PO Haryanto -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/haryanto.png" alt="PO Haryanto" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO Haryanto</div>
+                  <div class="operator-showcase-hub">Kudus &bull; Pasukan Muria</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">Operator legendaris jalur Kudus, Jepara, dan Pantura. Dikenal dengan laju jelajah mantap di tol dan rumah makan transit sendiri di Menara Kudus.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-ontime" style="font-size: 11px;">Kecepatan Jelajah Cepat</span>
+              <span style="color: var(--text-muted); font-size: 11px;">Executive 30-Seat</span>
+            </div>
+          </article>
+
+          <!-- 8. Agra Mas -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/agramas.png" alt="PO Agra Mas" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO Agra Mas</div>
+                  <div class="operator-showcase-hub">Jakarta &bull; Red Bus Semut Merah</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">Menghubungkan ratusan titik Jabodetabek ke Wonogiri, Solo, dan Madiun dengan armada Double Decker Scania dan bus Big Top konfigurasi 2-1.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-minor" style="font-size: 11px;">Jaringan Pul Terluas</span>
+              <span style="color: var(--text-muted); font-size: 11px;">Double Decker &bull; Big Top</span>
+            </div>
+          </article>
+
+          <!-- 9. Kramat Djati -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/kramatdjati.png" alt="PO Kramat Djati" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO Kramat Djati</div>
+                  <div class="operator-showcase-hub">Bandung / Jakarta &bull; Sejak 1968</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">Pelopor transportasi bus antarkota dengan dedikasi lebih dari 5 dekade. Melayani rute Trans-Jawa dengan armada eksekutif berfasilitas lengkap.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-minor" style="font-size: 11px;">Rute Legendaris</span>
+              <span style="color: var(--text-muted); font-size: 11px;">Executive AC</span>
+            </div>
+          </article>
+
+          <!-- 10. Nusantara -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/nusantara.svg" alt="PO Nusantara" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO Nusantara</div>
+                  <div class="operator-showcase-hub">Kudus &bull; Sasis Eropa Scania/Volvo</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">Pelopor penggunaan sasis premium Eropa di Indonesia. Menawarkan pengalaman suspensi udara halus untuk perjalanan jarak jauh Semarang dan Pantura.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-ontime" style="font-size: 11px;">Suspensi Udara Halus</span>
+              <span style="color: var(--text-muted); font-size: 11px;">Signature Class</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Compact Passenger Sentiment Summary -->
+      <section id="reviewsSection" class="landing-section">
+        <div class="landing-section-header">
+          <div>
+            <h2 class="landing-section-title">Ulasan Jujur & Analisis Sentimen Penumpang</h2>
+            <p class="landing-section-sub">Ringkasan sentiment yang tersedia di dataset proyek. Data contoh ditampilkan sebagai konteks eksplorasi, bukan sebagai klaim ulasan terverifikasi.</p>
+          </div>
+          <button type="button" id="btnOpenSentiment" class="sentiment-open-button">Lihat ringkasan operator</button>
+        </div>
+
+        <div id="sentimentHighlights" class="sentiment-highlights" aria-live="polite">
+          <!-- Rendered dynamically by renderSentimentHighlights() in js/app.js -->
+        </div>
+
+        <div id="reviewsFeedContainer" class="reviews-feed-grid sentiment-preview" style="margin-bottom: var(--space-6);">
+          <!-- Rendered dynamically by renderPassengerReviewsFeed() in js/app.js -->
+        </div>
+
+        <dialog id="sentimentDialog" class="sentiment-dialog" aria-labelledby="sentimentDialogTitle">
+          <div class="sentiment-dialog-inner">
+            <div class="sentiment-dialog-header">
+              <div>
+                <span class="eyebrow">DATASET VIEW</span>
+                <h3 id="sentimentDialogTitle">Ringkasan sentiment operator</h3>
+              </div>
+              <button type="button" id="btnCloseSentiment" class="dialog-close-button" aria-label="Tutup ringkasan">Tutup</button>
+            </div>
+            <div class="sentiment-filter-row">
+              <label for="reviewPoFilter">Operator</label>
+              <select id="reviewPoFilter" class="corridor-select">
+                <option value="all">Semua operator</option>
+                <option value="PO Rosalia Indah">PO Rosalia Indah</option>
+                <option value="PO Harapan Jaya">PO Harapan Jaya</option>
+                <option value="PO Sinar Jaya">PO Sinar Jaya</option>
+                <option value="PO Juragan 99">PO Juragan 99</option>
+                <option value="PO Gunung Harta">PO Gunung Harta</option>
+                <option value="PO 27 Trans">PO 27 Trans</option>
+                <option value="PO Haryanto">PO Haryanto</option>
+                <option value="PO Agra Mas">PO Agra Mas</option>
+                <option value="PO Kramat Djati">PO Kramat Djati</option>
+                <option value="PO Nusantara">PO Nusantara</option>
+              </select>
+            </div>
+            <div class="table-responsive sentiment-table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Operator</th>
+                    <th>Skor</th>
+                    <th>Ulasan</th>
+                    <th>Sentiment</th>
+                    <th>Ringkasan</th>
+                  </tr>
+                </thead>
+                <tbody id="sentimentTableBody"></tbody>
+              </table>
+            </div>
+            <div id="dialogReviews" class="reviews-feed-grid dialog-reviews"></div>
+          </div>
+        </dialog>
+
+        <dialog id="bookingDialog" class="booking-dialog" aria-labelledby="bookingDialogTitle">
+          <div class="booking-dialog-inner">
+            <div class="booking-dialog-header">
+              <div>
+                <span class="eyebrow">NEXT STEP</span>
+                <h3 id="bookingDialogTitle">Siapkan pemesanan</h3>
+              </div>
+              <button type="button" id="btnCloseBooking" class="dialog-close-button" aria-label="Tutup ringkasan pemesanan">Tutup</button>
+            </div>
+            <p class="booking-dialog-copy">Ringkasan ini berasal dari jadwal referensi yang diperbarui 25 Okt 2026, 16:34 WIB. NusantaraBus belum menerima inventori kursi, harga live, atau konfirmasi booking dari provider resmi.</p>
+            <div id="bookingSummary" class="booking-summary"></div>
+            <div class="booking-dialog-actions">
+              <button type="button" id="btnCopyBooking" class="booking-copy-button">Salin ringkasan</button>
+              <a class="booking-external-button" href="https://www.redbus.id/" target="_blank" rel="noopener noreferrer">Buka provider booking</a>
+            </div>
+            <p id="bookingCopyStatus" class="booking-copy-status" role="status" aria-live="polite"></p>
+          </div>
+        </dialog>
+
+        <!-- Detailed sentiment data stays behind an intentional disclosure dialog. -->
+        <div class="sentiment-data-note">
+          <span>Ringkasan utama ditampilkan di halaman. Detail ulasan dibuka saat diperlukan.</span>
+          <span class="font-mono">DATASET SENTIMENT</span>
+        </div>
+      </section>
+
+      <!-- Travel Survival Guide & Anti-Ngetem Tips -->
+      <section id="guideSection" class="landing-section">
+        <div class="landing-section-header">
+          <div>
+            <h2 class="landing-section-title">Panduan Cerdas Perjalanan Tol Trans-Jawa</h2>
+            <p class="landing-section-sub">Tips praktis yang diturunkan dari pola pada telemetri simulasi agar Anda dapat menilai risiko ngetem dan keterlambatan dengan lebih tenang.</p>
+          </div>
+        </div>
+
+        <div class="travel-guide-grid">
+          <div class="travel-guide-card">
+            <div class="travel-guide-icon-box">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h3 class="travel-guide-card-title">1. Antisipasi Deviasi Jadwal Riil</h3>
+            <p class="travel-guide-card-text">Audit 3.500 perjalanan menemukan rata-rata kedatangan di terminal tujuan mengalami penyesuaian +50,7 menit dari jadwal tiket agen. Selalu siapkan waktu luang minimal 1 jam untuk janji temu atau transit lanjutan.</p>
+          </div>
+
+          <div class="travel-guide-card">
+            <div class="travel-guide-icon-box">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11 2 11.5 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+            </div>
+            <h3 class="travel-guide-card-title">2. Pilih Keberangkatan Pul Utama</h3>
+            <p class="travel-guide-card-text">Bus yang singgah di lebih dari 4 titik jemput bayangan (seperti Cikokol, Pasar Rebo, Bekasi Timur) menyumbang delay awal hingga 45 menit sebelum masuk tol. Pilih agen pul utama pemberangkatan pertama.</p>
+          </div>
+
+          <div class="travel-guide-card">
+            <div class="travel-guide-icon-box">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <h3 class="travel-guide-card-title">3. Bus Sleeper Lebih Cepat Turun Penumpang</h3>
+            <p class="travel-guide-card-text">Bukan karena mengebut kencang, melainkan kapasitas kursi yang ringkas (18-24 kursi) memangkas waktu bongkar kargo bagasi dan naik-turun hingga 70% dibanding bus eksekutif 40-kursi.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Landing Page Footer -->
+      <footer class="landing-footer">
+        <div class="landing-footer-left">
+          <strong>NusantaraBus Travel Engine &copy; 2026</strong> &bull; Platform Analitik & Rekomendasi Bus Tol Trans-Jawa
+        </div>
+
+        <div style="display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap;">
+          <a href="https://github.com/Rangga11268/nusantarabus-otp-engine" target="_blank" rel="noopener noreferrer" style="color: var(--text-secondary); text-decoration: none; font-size: 13px; font-weight: 500;">GitHub Repository</a>
+          <a href="data/nusantarabus_complete_dataset.xlsx" download="nusantarabus_complete_dataset.xlsx" style="color: #22c55e; text-decoration: none; font-size: 13px; font-weight: 600;">Unduh Dataset Excel</a>
+          <button type="button" class="btn-cta-analytics" style="padding: 7px 14px; font-size: 12px;">Masuk Dashboard Analitik &rarr;</button>
+        </div>
+      </footer>
+
+
+
+
+    <!-- ========================================================
+         2. ENTERPRISE ANALYTICS DASHBOARD (FLEET OPS CONSOLE)
+         ======================================================== -->
+  </div>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
