@@ -61,8 +61,100 @@
       </div>
     </header>
 
-    <!-- Global KPI Operational Overview Cards -->
-    <section class="kpi-row" aria-label="Indikator Kinerja Utama">
+    <!-- View Mode Switcher: Mode Penumpang (Warga) vs Mode Analitik Operasional -->
+    <div class="view-mode-bar">
+      <div class="view-mode-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="16" x2="12" y2="12"/>
+          <line x1="12" y1="8" x2="12.01" y2="8"/>
+        </svg>
+        <span>Pilih Tampilan:</span>
+      </div>
+
+      <div class="view-mode-toggle-group">
+        <button type="button" class="mode-btn active" id="btnModePassenger" data-view="passenger">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11 2 11.5 2 12v4c0 .6.4 1 1 1h2"/>
+            <circle cx="7" cy="17" r="2"/>
+            <path d="M9 17h6"/>
+            <circle cx="17" cy="17" r="2"/>
+          </svg>
+          <span>Mode Penumpang (Warga)</span>
+        </button>
+
+        <button type="button" class="mode-btn" id="btnModeAnalytics" data-view="analytics">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"/>
+            <line x1="12" y1="20" x2="12" y2="4"/>
+            <line x1="6" y1="20" x2="6" y2="14"/>
+          </svg>
+          <span>Mode Analitik (Fleet Ops)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 1. Passenger Mode KPI Quick Info Cards (Active by Default) -->
+    <section id="kpiRowPassenger" class="kpi-row" aria-label="Ringkasan Info Penumpang">
+      <article class="kpi-card">
+        <div class="kpi-header">
+          <span>Pilihan Operator Terverifikasi</span>
+          <span class="font-mono text-ontime">RESMI</span>
+        </div>
+        <div class="kpi-value-wrap">
+          <div class="kpi-value text-ontime">10 PO</div>
+          <span class="kpi-unit">AKAP</span>
+        </div>
+        <div class="kpi-footer">
+          <span class="text-dim">Juragan 99, Rosalia, Sinar Jaya, dll.</span>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-header">
+          <span>Kisaran Harga Tiket Riil</span>
+          <span class="font-mono text-dim">SCRAPED</span>
+        </div>
+        <div class="kpi-value-wrap">
+          <div class="kpi-value font-mono">230k - 635k</div>
+          <span class="kpi-unit">IDR</span>
+        </div>
+        <div class="kpi-footer">
+          <span class="text-dim">Eksekutif s.d. Sleeper Luxury</span>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-header">
+          <span>Kenyamanan Tertinggi</span>
+          <span class="font-mono" style="color: #fbbf24;">★ 4.8 / 5</span>
+        </div>
+        <div class="kpi-value-wrap">
+          <div class="kpi-value" style="color: #a855f7;">Sleeper 180°</div>
+          <span class="kpi-unit">pod</span>
+        </div>
+        <div class="kpi-footer">
+          <span class="text-dim">Toilet bersih, selimut, makan malam</span>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-header">
+          <span>Jam Berangkat Paling Pas</span>
+          <span class="font-mono text-ontime">OPTIMAL</span>
+        </div>
+        <div class="kpi-value-wrap">
+          <div class="kpi-value font-mono text-ontime">18:00 - 20:00</div>
+          <span class="kpi-unit">WIB</span>
+        </div>
+        <div class="kpi-footer">
+          <span class="text-dim">Bebas antrean truk Cikampek</span>
+        </div>
+      </article>
+    </section>
+
+    <!-- 2. Technical Operational KPI Cards (Visible in Analytics Mode) -->
+    <section id="kpiRowAnalytics" class="kpi-row" style="display: none;" aria-label="Indikator Kinerja Utama Teknis">
       <article class="kpi-card">
         <div class="kpi-header">
           <span>Total Perjalanan Armada</span>

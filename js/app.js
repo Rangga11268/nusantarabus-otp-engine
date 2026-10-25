@@ -1179,6 +1179,30 @@
       });
     });
 
+    // View Mode Switcher (Passenger vs Analytics)
+    const btnModePass = document.getElementById("btnModePassenger");
+    const btnModeAnal = document.getElementById("btnModeAnalytics");
+    const kpiPass = document.getElementById("kpiRowPassenger");
+    const kpiAnal = document.getElementById("kpiRowAnalytics");
+
+    if (btnModePass && btnModeAnal) {
+      btnModePass.addEventListener("click", () => {
+        btnModePass.classList.add("active");
+        btnModeAnal.classList.remove("active", "analytics");
+        if (kpiPass) kpiPass.style.display = "grid";
+        if (kpiAnal) kpiAnal.style.display = "none";
+        switchTab("passenger");
+      });
+
+      btnModeAnal.addEventListener("click", () => {
+        btnModeAnal.classList.add("active", "analytics");
+        btnModePass.classList.remove("active");
+        if (kpiPass) kpiPass.style.display = "none";
+        if (kpiAnal) kpiAnal.style.display = "grid";
+        switchTab("leaderboard");
+      });
+    }
+
     // Review PO Filter
     const reviewPoFilter = document.getElementById("reviewPoFilter");
     if (reviewPoFilter) {
