@@ -121,6 +121,726 @@ header.app-header {
 }
 
 /* View Mode Bar & Switcher */
+/* ==========================================================================
+   LANDING PAGE (PASSENGER VIEW) — Dribbble Clean & Anti-Slop Design
+   ========================================================================== */
+
+.landing-page-wrap {
+  display: block;
+  width: 100%;
+}
+
+.dashboard-page-wrap {
+  display: none;
+  width: 100%;
+}
+
+/* Landing Navbar */
+.landing-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0 28px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.landing-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.landing-brand-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  display: block;
+}
+
+.landing-brand-title {
+  font-size: 19px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.landing-brand-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.landing-nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  list-style: none;
+}
+
+.landing-nav-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.landing-nav-link:hover {
+  color: #ffffff;
+}
+
+.landing-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.btn-cta-analytics {
+  background: #38bdf8;
+  color: #0c0f14;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 18px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.btn-cta-analytics:hover {
+  background: #7dd3fc;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
+}
+
+.btn-back-to-landing {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-subtle);
+  color: #f8fafc;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+
+.btn-back-to-landing:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+/* Landing Hero Section */
+.landing-hero {
+  padding: var(--space-6) 0 var(--space-7) 0;
+  text-align: center;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.landing-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #22c55e;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: var(--space-4);
+  letter-spacing: 0.3px;
+}
+
+.landing-headline {
+  font-size: 40px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  margin-bottom: var(--space-3);
+}
+
+.landing-subheadline {
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-6);
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Floating Travel Search Widget (Dribbble Travel Style) */
+.landing-search-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  margin-bottom: var(--space-7);
+  text-align: left;
+}
+
+.search-card-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1.3fr 1.3fr auto;
+  gap: var(--space-4);
+  align-items: flex-end;
+}
+
+.search-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.search-field-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.search-field-input {
+  background: var(--bg-canvas);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 11px 14px;
+  outline: none;
+  transition: border-color var(--transition-fast);
+  width: 100%;
+}
+
+.search-field-input:focus {
+  border-color: #22c55e;
+}
+
+.btn-search-bus {
+  background: #22c55e;
+  color: #0c0f14;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 12px 24px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  height: 44px;
+}
+
+.btn-search-bus:hover {
+  background: #4ade80;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.35);
+}
+
+.search-filter-chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  flex-wrap: wrap;
+}
+
+.search-filter-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.search-filter-chip:hover {
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
+}
+
+.search-filter-chip.active {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: #22c55e;
+  color: #22c55e;
+  font-weight: 700;
+}
+
+/* Landing Content Sections */
+.landing-section {
+  margin-bottom: var(--space-7);
+}
+
+.landing-section-header {
+  margin-bottom: var(--space-5);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.landing-section-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.landing-section-sub {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  margin-top: 3px;
+}
+
+/* 10 Verified Operators Grid */
+.operators-showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-4);
+}
+
+.operator-showcase-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.operator-showcase-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.operator-showcase-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: var(--space-3);
+}
+
+.operator-showcase-logo {
+  width: 48px;
+  height: 32px;
+  border-radius: 4px;
+  background: #1b202c;
+  padding: 3px;
+  object-fit: contain;
+}
+
+.operator-showcase-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.operator-showcase-hub {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.operator-showcase-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: var(--space-3);
+}
+
+.operator-showcase-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: var(--space-3);
+  font-size: 12px;
+}
+
+/* Landing Travel Guide Grid */
+.travel-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+.travel-guide-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.travel-guide-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: rgba(34, 197, 94, 0.12);
+  color: #22c55e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.travel-guide-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.travel-guide-card-text {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Landing Footer */
+.landing-footer {
+  border-top: 1px solid var(--border-subtle);
+  padding: var(--space-6) 0 var(--space-4) 0;
+  margin-top: var(--space-7);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.landing-footer-left {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.landing-footer-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.landing-footer-link {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.landing-footer-link:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 900px) {
+  .search-card-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .travel-guide-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .search-card-grid {
+    grid-template-columns: 1fr;
+  }
+  .landing-headline {
+    font-size: 28px;
+  }
+  .landing-nav-links {
+    display: none;
+  }
+}
+
+/* Consumer Bus Ticket Card Styling (Passenger View) */
+.ticket-results-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.ticket-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: var(--space-5);
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.ticket-card:hover {
+  border-color: rgba(34, 197, 94, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+.ticket-card.featured {
+  border-left: 4px solid #22c55e;
+}
+
+.ticket-main-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.ticket-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.ticket-po-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ticket-po-logo {
+  width: 44px;
+  height: 30px;
+  border-radius: 4px;
+  background: #1e2430;
+  padding: 2px;
+  object-fit: contain;
+}
+
+.ticket-po-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0;
+}
+
+.ticket-po-class {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.ticket-rank-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.ticket-rank-badge.best-otp {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+.ticket-rank-badge.best-comfort {
+  background: rgba(168, 85, 247, 0.15);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.35);
+}
+
+.ticket-rank-badge.best-budget {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+/* Flight/Bus Journey Timeline */
+.ticket-journey-strip {
+  display: grid;
+  grid-template-columns: 140px 1fr 140px;
+  align-items: center;
+  gap: var(--space-3);
+  background: rgba(15, 23, 42, 0.5);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.journey-stop {
+  display: flex;
+  flex-direction: column;
+}
+
+.journey-stop.dest {
+  text-align: right;
+}
+
+.journey-time-big {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.journey-city-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.journey-terminal-name {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+
+.journey-mid-track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.journey-duration-tag {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.journey-visual-line {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 4px;
+}
+
+.journey-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #64748b;
+}
+
+.journey-dot.start {
+  background: #22c55e;
+}
+
+.journey-dot.end {
+  background: #38bdf8;
+}
+
+.journey-bar {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, #22c55e, #38bdf8);
+  border-radius: 1px;
+}
+
+.journey-route-badge {
+  font-size: 10.5px;
+  color: var(--text-muted);
+}
+
+/* Sidebar Price & Booking */
+.ticket-sidebar-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: 1px dashed rgba(255, 255, 255, 0.1);
+  padding-left: var(--space-5);
+  text-align: right;
+}
+
+.ticket-fare-box {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ticket-fare-caption {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.ticket-fare-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: #22c55e;
+  letter-spacing: -0.5px;
+}
+
+.ticket-rating-strip {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin: 6px 0;
+}
+
+.btn-view-reviews {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: #f1f5f9;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  width: 100%;
+  text-align: center;
+}
+
+.btn-view-reviews:hover {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+@media (max-width: 850px) {
+  .ticket-card {
+    grid-template-columns: 1fr;
+  }
+  .ticket-sidebar-section {
+    border-left: none;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    padding-left: 0;
+    padding-top: var(--space-4);
+    text-align: left;
+  }
+  .ticket-rating-strip {
+    justify-content: flex-start;
+  }
+}
+
 .view-mode-bar {
   display: flex;
   align-items: center;

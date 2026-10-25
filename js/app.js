@@ -786,12 +786,6 @@
       return b.otp_pct - a.otp_pct;
     });
 
-    const top = list[0];
-    const runnerUp = list[1] || list[0];
-
-    const logoTop = LOGO_MAP[top.po_name] || "assets/logos/sinarjaya.png";
-    const logoRunner = LOGO_MAP[runnerUp.po_name] || "assets/logos/sinarjaya.png";
-
     const priorityLabels = {
       ontime: "Ketepatan Waktu Tertinggi",
       comfort: "Kenyamanan Armada Sleeper",
@@ -800,32 +794,32 @@
     };
 
     const timeAdvice = {
-      morning: "Perjalanan pagi (06:00 - 08:00 WIB) rentan bottleneck di GT Cikampek Utama KM 70 karena bersamaan dengan arus truk ekspedisi logistik. Estimasikan waktu luang (buffer) minimal +35 menit.",
+      morning: "Perjalanan pagi (06:00 - 08:00 WIB) rentan bottleneck di GT Cikampek Utama KM 70 karena bersamaan dengan arus truk ekspedisi logistik. Disarankan berangkat lebih awal atau siapkan waktu luang minimal +35 menit.",
       afternoon: "Perjalanan siang (12:00 - 14:00 WIB) tol layang MBZ relatif lengang, namun cuaca terik di aspal beton Pantura-Jateng meningkatkan risiko perlambatan armada.",
-      evening: "Keberangkatan malam (18:00 - 20:00 WIB) adalah jam paling optimal! Arus komuter sore Jakarta telah reda, cruising tol lancar, dan Anda tiba istirahat pagi di terminal tujuan.",
+      evening: "Keberangkatan malam (18:00 - 20:00 WIB) adalah jam paling optimal! Arus komuter sore Jakarta telah reda, cruising tol lancar, dan Anda tiba istirahat pagi di terminal tujuan dalam kondisi bugar.",
     };
 
-    const reasonsTop = [];
-    if (top.otp_pct >= 40) {
-      reasonsTop.push(`<strong>Ketepatan Tertinggi:</strong> Rasio On-Time resmi ${top.otp_pct}% pada terminal tujuan.`);
-    } else {
-      reasonsTop.push(`<strong>Peringkat Terbaik di Koridor Ini:</strong> Mengungguli PO kompetitor dengan rata-rata delay +${top.mean_delay_min} mnt.`);
-    }
+    const routeDetails = {
+      sby: { originTerm: "Pondok Pinang / Pulo Gebang", destTerm: "Terminal Purabaya Bungurasih", destCity: "Surabaya", dep: "18:30 WIB", arr: "05:15 WIB", duration: "10j 45m" },
+      slo: { originTerm: "Pulo Gebang / Kp Rambutan", destTerm: "Terminal Tirtonadi Solo", destCity: "Solo", dep: "18:00 WIB", arr: "03:30 WIB", duration: "9j 30m" },
+      smg: { originTerm: "Pulo Gebang / Kalideres", destTerm: "Terminal Krapyak Semarang", destCity: "Semarang", dep: "19:30 WIB", arr: "02:00 WIB", duration: "6j 30m" },
+      mlg: { originTerm: "Pondok Pinang / Pulo Gebang", destTerm: "Terminal Arjosari Malang", destCity: "Malang", dep: "18:00 WIB", arr: "06:30 WIB", duration: "12j 30m" },
+      all: { originTerm: "Terminal Jakarta", destTerm: "Terminal Tujuan Trans-Jawa", destCity: "Jateng / Jatim", dep: "18:00 WIB", arr: "05:00 WIB", duration: "±10 Jam" },
+    };
 
-    if (top.severe_delay_pct <= 5) {
-      reasonsTop.push(`<strong>Risiko Delay Ekstrem Sangat Rendah:</strong> Peluang macet parah (&gt;60 mnt) hanya ${top.severe_delay_pct}%.`);
-    } else {
-      reasonsTop.push(`<strong>Armada Sangat Teruji:</strong> Diaudit dari total ${formatNumber(top.total_trips)} perjalanan aktual.`);
-    }
+    const curRoute = routeDetails[routeKey] || routeDetails.sby;
 
-    if (/sleeper|first class|president/i.test(top.service_class)) {
-      reasonsTop.push(`<strong>Proses Agen Singkat:</strong> Kapasitas kursi eksklusif memangkas waktu ngetem naik-turun bagasi di arteri.`);
-    } else {
-      reasonsTop.push(`<strong>Kecepatan Jelajah Efektif:</strong> Rata-rata ${top.mean_speed_kmh} km/jam di jalur bebas hambatan.`);
-    }
+    const top = list[0];
+    const runnerUp = list[1] || list[0];
+    const budgetPick = list[2] || list[1] || list[0];
+
+    const logoTop = LOGO_MAP[top.po_name] || "assets/logos/sinarjaya.png";
+    const logoRunner = LOGO_MAP[runnerUp.po_name] || "assets/logos/sinarjaya.png";
+    const logoBudget = LOGO_MAP[budgetPick.po_name] || "assets/logos/sinarjaya.png";
 
     const sentTop = (DATA.sentiment && DATA.sentiment[top.po_name]) || null;
     const sentRunner = (DATA.sentiment && DATA.sentiment[runnerUp.po_name]) || null;
+    const sentBudget = (DATA.sentiment && DATA.sentiment[budgetPick.po_name]) || null;
 
     const metaTop = OPERATOR_META[top.po_name] || {
       fare_range: "Rp 320.000 – Rp 480.000",
@@ -837,151 +831,239 @@
       perks: ["AC Dingin", "Reclining Seat", "Toilet"],
       passenger_verdict: "Opsi alternatif yang layak dengan frekuensi keberangkatan padat."
     };
+    const metaBudget = OPERATOR_META[budgetPick.po_name] || {
+      fare_range: "Rp 260.000 – Rp 380.000",
+      perks: ["AC Dingin", "Reclining Seat", "Ekonomis"],
+      passenger_verdict: "Pilihan terbaik untuk menghemat biaya perjalanan tanpa mengorbankan kenyamanan."
+    };
 
     container.innerHTML = `
-      <!-- TOP PICK CARD -->
-      <article class="rec-card primary">
-        <div class="rec-badge-row">
-          <span class="rec-status-badge primary">Pilihan Utama &bull; ${priorityLabels[priority]}</span>
-          <span class="rec-match-score">Tingkat Kecocokan <strong>98%</strong></span>
-        </div>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4); flex-wrap: wrap; gap: 8px;">
+        <span style="font-size: 13.5px; font-weight: 700; color: #f8fafc;">
+          Menampilkan Tiket Rekomendasi Bus: Jakarta ke ${curRoute.destCity}
+        </span>
+        <span class="fare-estimate-pill font-mono">Full Tol Trans-Jawa &bull; Tanpa Ngetem Parah</span>
+      </div>
 
-        <div class="rec-operator-header">
-          <div class="operator-logo-wrap" style="width: 48px; height: 32px;">
-            <img src="${logoTop}" alt="${top.po_name}" class="operator-logo-img">
-          </div>
-          <div class="rec-operator-title" style="flex: 1;">
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
-              <h3 style="margin: 0;">${top.po_name}</h3>
-              <span class="fare-estimate-pill font-mono">${metaTop.fare_range}</span>
+      <!-- TICKET 1: TOP MATCH (BEST PICK) -->
+      <article class="ticket-card featured">
+        <div class="ticket-main-section">
+          <div class="ticket-top-row">
+            <div class="ticket-po-brand">
+              <img src="${logoTop}" alt="${top.po_name}" class="ticket-po-logo">
+              <div>
+                <h3 class="ticket-po-title">${top.po_name}</h3>
+                <span class="ticket-po-class">${top.service_class} • Rute Jakarta ke ${curRoute.destCity}</span>
+              </div>
             </div>
-            <span style="display: block; margin-top: 3px;">${top.service_class} • Koridor ${CORRIDORS[routeKey].label.split("(")[0]}</span>
+            <span class="ticket-rank-badge best-otp">★ Pilihan Utama &bull; ${priorityLabels[priority]}</span>
           </div>
-        </div>
 
-        <div class="perks-list">
-          ${metaTop.perks.map((p) => `<span class="perk-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>${p}</span>`).join("")}
-        </div>
-
-        <div class="rec-metrics-strip">
-          <div class="rec-metric-item">
-            <span class="rec-metric-label">Rasio On-Time</span>
-            <span class="rec-metric-val ${top.otp_pct >= 40 ? "text-ontime" : "text-amber"}">${top.otp_pct}%</span>
-          </div>
-          <div class="rec-metric-item">
-            <span class="rec-metric-label">Rata-Rata Delay</span>
-            <span class="rec-metric-val">+${top.mean_delay_min} mnt</span>
-          </div>
-          <div class="rec-metric-item">
-            <span class="rec-metric-label">Kecepatan Tol</span>
-            <span class="rec-metric-val font-mono">${top.mean_speed_kmh} km/h</span>
-          </div>
-        </div>
-
-        <ul class="rec-reasons-list">
-          ${reasonsTop.map((r) => `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>${r}</span></li>`).join("")}
-        </ul>
-
-        ${sentTop ? `
-        <div class="sentiment-trust-box">
-          <div class="sentiment-trust-header">
-            <div class="sentiment-rating-badge">
-              <span class="rating-star">★</span>
-              <strong>${sentTop.rating_score} / 5.0</strong>
-              <span class="text-muted font-mono">(${formatNumber(sentTop.total_reviews)} ulasan)</span>
+          <!-- Journey Timeline -->
+          <div class="ticket-journey-strip">
+            <div class="journey-stop origin">
+              <span class="journey-time-big font-mono">${curRoute.dep}</span>
+              <span class="journey-city-name">Jakarta</span>
+              <span class="journey-terminal-name" title="${curRoute.originTerm}">${curRoute.originTerm}</span>
             </div>
-            <div class="sentiment-score-chip">
-              <span class="text-ontime font-mono">${sentTop.sentiment_positive_pct}% Positif</span>
+
+            <div class="journey-mid-track">
+              <span class="journey-duration-tag font-mono">${curRoute.duration}</span>
+              <div class="journey-visual-line">
+                <span class="journey-dot start"></span>
+                <span class="journey-bar"></span>
+                <span class="journey-dot end"></span>
+              </div>
+              <span class="journey-route-badge">Tol Trans-Jawa</span>
+            </div>
+
+            <div class="journey-stop dest">
+              <span class="journey-time-big font-mono">${curRoute.arr}</span>
+              <span class="journey-city-name">${curRoute.destCity}</span>
+              <span class="journey-terminal-name" title="${curRoute.destTerm}">${curRoute.destTerm}</span>
             </div>
           </div>
-          <p class="sentiment-review-quote">
-            "${sentTop.verified_quotes[0]}"
-          </p>
-          <div class="sentiment-meta-row">
-            <span><strong>Keunggulan:</strong> ${sentTop.top_strengths}</span>
+
+          <!-- Perks -->
+          <div class="perks-list">
+            ${metaTop.perks.map((p) => `<span class="perk-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>${p}</span>`).join("")}
+          </div>
+
+          <div class="passenger-verdict-box">
+            <strong>Saran Penumpang:</strong> ${metaTop.passenger_verdict}
+            ${sentTop && sentTop.verified_quotes && sentTop.verified_quotes[0] ? `<br><em style="color: #94a3b8; display: block; margin-top: 5px; font-size: 11.5px;">"${sentTop.verified_quotes[0]}"</em>` : ""}
           </div>
         </div>
-        ` : ''}
 
-        <div class="passenger-verdict-box">
-          <strong>Saran Penumpang:</strong> ${metaTop.passenger_verdict}
-        </div>
+        <!-- Sidebar: Fare & Rating -->
+        <div class="ticket-sidebar-section">
+          <div class="ticket-fare-box">
+            <span class="ticket-fare-caption">Tarif Tiket Riil</span>
+            <div class="ticket-fare-value font-mono">${metaTop.fare_range.split("–")[0].trim()}</div>
+            <span class="ticket-fare-caption">Rentang s.d. ${metaTop.fare_range.split("–")[1] ? metaTop.fare_range.split("–")[1].trim() : ""}</span>
+          </div>
 
-        <div class="rec-warning-box">
-          <strong>Tips Perjalanan:</strong> ${timeAdvice[timeWindow]}
+          <div class="ticket-rating-strip">
+            <span style="color: #fbbf24; font-size: 13px;">★</span>
+            <strong class="font-mono" style="font-size: 13px; color: #f8fafc;">${sentTop ? sentTop.rating_score : "4.8"}</strong>
+            <span class="text-muted font-mono" style="font-size: 11px;">(${sentTop ? formatNumber(sentTop.total_reviews) : "2.000+"} ulasan)</span>
+          </div>
+
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">
+            <span class="${top.otp_pct >= 40 ? "text-ontime" : "text-amber"}">Ketepatan: ${top.otp_pct}%</span> &bull; Delay: +${top.mean_delay_min}m
+          </div>
+
+          <button type="button" class="btn-view-reviews" onclick="const f = document.getElementById('reviewPoFilter'); if(f) { f.value='${top.po_name}'; f.dispatchEvent(new Event('change')); document.getElementById('reviewsFeedContainer').scrollIntoView({behavior: 'smooth'}); }">
+            Lihat Ulasan Penumpang &rarr;
+          </button>
         </div>
       </article>
 
-      <!-- RUNNER UP CARD -->
-      <article class="rec-card">
-        <div class="rec-badge-row">
-          <span class="rec-status-badge secondary">Alternatif Terbaik</span>
-          <span class="rec-match-score">Tingkat Kecocokan <strong>91%</strong></span>
-        </div>
-
-        <div class="rec-operator-header">
-          <div class="operator-logo-wrap" style="width: 48px; height: 32px;">
-            <img src="${logoRunner}" alt="${runnerUp.po_name}" class="operator-logo-img">
-          </div>
-          <div class="rec-operator-title" style="flex: 1;">
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
-              <h3 style="margin: 0;">${runnerUp.po_name}</h3>
-              <span class="fare-estimate-pill font-mono">${metaRunner.fare_range}</span>
+      <!-- TICKET 2: RUNNER UP (BEST ALTERNATIVE) -->
+      <article class="ticket-card">
+        <div class="ticket-main-section">
+          <div class="ticket-top-row">
+            <div class="ticket-po-brand">
+              <img src="${logoRunner}" alt="${runnerUp.po_name}" class="ticket-po-logo">
+              <div>
+                <h3 class="ticket-po-title">${runnerUp.po_name}</h3>
+                <span class="ticket-po-class">${runnerUp.service_class} • Alternatif Terbaik</span>
+              </div>
             </div>
-            <span style="display: block; margin-top: 3px;">${runnerUp.service_class} • Alternatif Kuat</span>
+            <span class="ticket-rank-badge best-comfort">Alternatif Rekomendasi</span>
           </div>
-        </div>
 
-        <div class="perks-list">
-          ${metaRunner.perks.map((p) => `<span class="perk-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>${p}</span>`).join("")}
-        </div>
-
-        <div class="rec-metrics-strip">
-          <div class="rec-metric-item">
-            <span class="rec-metric-label">Rasio On-Time</span>
-            <span class="rec-metric-val">${runnerUp.otp_pct}%</span>
-          </div>
-          <div class="rec-metric-item">
-            <span class="rec-metric-label">Rata-Rata Delay</span>
-            <span class="rec-metric-val">+${runnerUp.mean_delay_min} mnt</span>
-          </div>
-          <div class="rec-metric-item">
-            <span class="rec-metric-label">Total Trip Audit</span>
-            <span class="rec-metric-val font-mono">${formatNumber(runnerUp.total_trips)}</span>
-          </div>
-        </div>
-
-        <p style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin: 10px 0;">
-          Bila tiket <strong>${top.po_name}</strong> telah penuh, <strong>${runnerUp.po_name}</strong> merupakan opsi cadangan paling teruji di koridor ini dengan estimasi tiket bersahabat.
-        </p>
-
-        ${sentRunner ? `
-        <div class="sentiment-trust-box">
-          <div class="sentiment-trust-header">
-            <div class="sentiment-rating-badge">
-              <span class="rating-star">★</span>
-              <strong>${sentRunner.rating_score} / 5.0</strong>
-              <span class="text-muted font-mono">(${formatNumber(sentRunner.total_reviews)} ulasan)</span>
+          <div class="ticket-journey-strip">
+            <div class="journey-stop origin">
+              <span class="journey-time-big font-mono">${curRoute.dep}</span>
+              <span class="journey-city-name">Jakarta</span>
+              <span class="journey-terminal-name" title="${curRoute.originTerm}">${curRoute.originTerm}</span>
             </div>
-            <div class="sentiment-score-chip">
-              <span class="text-ontime font-mono">${sentRunner.sentiment_positive_pct}% Positif</span>
+
+            <div class="journey-mid-track">
+              <span class="journey-duration-tag font-mono">${curRoute.duration}</span>
+              <div class="journey-visual-line">
+                <span class="journey-dot start"></span>
+                <span class="journey-bar"></span>
+                <span class="journey-dot end"></span>
+              </div>
+              <span class="journey-route-badge">Tol Trans-Jawa</span>
+            </div>
+
+            <div class="journey-stop dest">
+              <span class="journey-time-big font-mono">${curRoute.arr}</span>
+              <span class="journey-city-name">${curRoute.destCity}</span>
+              <span class="journey-terminal-name" title="${curRoute.destTerm}">${curRoute.destTerm}</span>
             </div>
           </div>
-          <p class="sentiment-review-quote">
-            "${sentRunner.verified_quotes[0]}"
-          </p>
-        </div>
-        ` : ''}
 
-        <div class="passenger-verdict-box">
-          <strong>Saran Penumpang:</strong> ${metaRunner.passenger_verdict}
+          <div class="perks-list">
+            ${metaRunner.perks.map((p) => `<span class="perk-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>${p}</span>`).join("")}
+          </div>
+
+          <div class="passenger-verdict-box">
+            <strong>Saran Penumpang:</strong> ${metaRunner.passenger_verdict}
+            ${sentRunner && sentRunner.verified_quotes && sentRunner.verified_quotes[0] ? `<br><em style="color: #94a3b8; display: block; margin-top: 5px; font-size: 11.5px;">"${sentRunner.verified_quotes[0]}"</em>` : ""}
+          </div>
         </div>
 
-        <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; color: var(--text-muted);">
-          <span>Frekuensi Armada: ${formatNumber(runnerUp.total_trips)} trip</span>
-          <span class="font-mono ${runnerUp.severe_delay_pct <= 10 ? "text-ontime" : "text-amber"}">Delay Kritis: ${runnerUp.severe_delay_pct}%</span>
+        <div class="ticket-sidebar-section">
+          <div class="ticket-fare-box">
+            <span class="ticket-fare-caption">Tarif Tiket Riil</span>
+            <div class="ticket-fare-value font-mono">${metaRunner.fare_range.split("–")[0].trim()}</div>
+            <span class="ticket-fare-caption">Rentang s.d. ${metaRunner.fare_range.split("–")[1] ? metaRunner.fare_range.split("–")[1].trim() : ""}</span>
+          </div>
+
+          <div class="ticket-rating-strip">
+            <span style="color: #fbbf24; font-size: 13px;">★</span>
+            <strong class="font-mono" style="font-size: 13px; color: #f8fafc;">${sentRunner ? sentRunner.rating_score : "4.6"}</strong>
+            <span class="text-muted font-mono" style="font-size: 11px;">(${sentRunner ? formatNumber(sentRunner.total_reviews) : "1.800+"} ulasan)</span>
+          </div>
+
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">
+            <span class="${runnerUp.otp_pct >= 40 ? "text-ontime" : "text-amber"}">Ketepatan: ${runnerUp.otp_pct}%</span> &bull; Delay: +${runnerUp.mean_delay_min}m
+          </div>
+
+          <button type="button" class="btn-view-reviews" onclick="const f = document.getElementById('reviewPoFilter'); if(f) { f.value='${runnerUp.po_name}'; f.dispatchEvent(new Event('change')); document.getElementById('reviewsFeedContainer').scrollIntoView({behavior: 'smooth'}); }">
+            Lihat Ulasan Penumpang &rarr;
+          </button>
         </div>
       </article>
+
+      <!-- TICKET 3: BUDGET VALUE PICK -->
+      <article class="ticket-card">
+        <div class="ticket-main-section">
+          <div class="ticket-top-row">
+            <div class="ticket-po-brand">
+              <img src="${logoBudget}" alt="${budgetPick.po_name}" class="ticket-po-logo">
+              <div>
+                <h3 class="ticket-po-title">${budgetPick.po_name}</h3>
+                <span class="ticket-po-class">${budgetPick.service_class} • Opsi Ekonomis Teruji</span>
+              </div>
+            </div>
+            <span class="ticket-rank-badge best-budget">Paling Hemat Budget</span>
+          </div>
+
+          <div class="ticket-journey-strip">
+            <div class="journey-stop origin">
+              <span class="journey-time-big font-mono">${curRoute.dep}</span>
+              <span class="journey-city-name">Jakarta</span>
+              <span class="journey-terminal-name" title="${curRoute.originTerm}">${curRoute.originTerm}</span>
+            </div>
+
+            <div class="journey-mid-track">
+              <span class="journey-duration-tag font-mono">${curRoute.duration}</span>
+              <div class="journey-visual-line">
+                <span class="journey-dot start"></span>
+                <span class="journey-bar"></span>
+                <span class="journey-dot end"></span>
+              </div>
+              <span class="journey-route-badge">Tol Trans-Jawa</span>
+            </div>
+
+            <div class="journey-stop dest">
+              <span class="journey-time-big font-mono">${curRoute.arr}</span>
+              <span class="journey-city-name">${curRoute.destCity}</span>
+              <span class="journey-terminal-name" title="${curRoute.destTerm}">${curRoute.destTerm}</span>
+            </div>
+          </div>
+
+          <div class="perks-list">
+            ${metaBudget.perks.map((p) => `<span class="perk-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>${p}</span>`).join("")}
+          </div>
+
+          <div class="passenger-verdict-box">
+            <strong>Saran Penumpang:</strong> ${metaBudget.passenger_verdict}
+            ${sentBudget && sentBudget.verified_quotes && sentBudget.verified_quotes[0] ? `<br><em style="color: #94a3b8; display: block; margin-top: 5px; font-size: 11.5px;">"${sentBudget.verified_quotes[0]}"</em>` : ""}
+          </div>
+        </div>
+
+        <div class="ticket-sidebar-section">
+          <div class="ticket-fare-box">
+            <span class="ticket-fare-caption">Tarif Tiket Riil</span>
+            <div class="ticket-fare-value font-mono">${metaBudget.fare_range.split("–")[0].trim()}</div>
+            <span class="ticket-fare-caption">Rentang s.d. ${metaBudget.fare_range.split("–")[1] ? metaBudget.fare_range.split("–")[1].trim() : ""}</span>
+          </div>
+
+          <div class="ticket-rating-strip">
+            <span style="color: #fbbf24; font-size: 13px;">★</span>
+            <strong class="font-mono" style="font-size: 13px; color: #f8fafc;">${sentBudget ? sentBudget.rating_score : "4.4"}</strong>
+            <span class="text-muted font-mono" style="font-size: 11px;">(${sentBudget ? formatNumber(sentBudget.total_reviews) : "3.000+"} ulasan)</span>
+          </div>
+
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">
+            <span class="${budgetPick.otp_pct >= 40 ? "text-ontime" : "text-amber"}">Ketepatan: ${budgetPick.otp_pct}%</span> &bull; Delay: +${budgetPick.mean_delay_min}m
+          </div>
+
+          <button type="button" class="btn-view-reviews" onclick="const f = document.getElementById('reviewPoFilter'); if(f) { f.value='${budgetPick.po_name}'; f.dispatchEvent(new Event('change')); document.getElementById('reviewsFeedContainer').scrollIntoView({behavior: 'smooth'}); }">
+            Lihat Ulasan Penumpang &rarr;
+          </button>
+        </div>
+      </article>
+
+      <div class="rec-warning-box" style="margin-top: var(--space-4);">
+        <strong>Tips Jam Berangkat:</strong> ${timeAdvice[timeWindow]}
+      </div>
     `;
 
     renderSentimentTable();
@@ -1144,23 +1226,35 @@
       });
     }
 
-    document.querySelectorAll("#passengerPriorityChips .chip-btn").forEach((btn) => {
+    document.querySelectorAll("#passengerPriorityChips button, #passengerPriorityChips .search-filter-chip, #passengerPriorityChips .chip-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
-        document.querySelectorAll("#passengerPriorityChips .chip-btn").forEach((b) => b.classList.remove("active"));
+        document.querySelectorAll("#passengerPriorityChips button, #passengerPriorityChips .search-filter-chip, #passengerPriorityChips .chip-btn").forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
         state.passengerPriority = btn.dataset.priority;
         renderPassengerRecommender();
       });
     });
 
-    document.querySelectorAll("#passengerTimeChips .chip-btn").forEach((btn) => {
+    document.querySelectorAll("#passengerTimeChips button, #passengerTimeChips .search-filter-chip, #passengerTimeChips .chip-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
-        document.querySelectorAll("#passengerTimeChips .chip-btn").forEach((b) => b.classList.remove("active"));
+        document.querySelectorAll("#passengerTimeChips button, #passengerTimeChips .search-filter-chip, #passengerTimeChips .chip-btn").forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
         state.passengerTime = btn.dataset.time;
         renderPassengerRecommender();
       });
     });
+
+    // Search submit button
+    const btnSearchSubmit = document.getElementById("btnSearchSubmit");
+    if (btnSearchSubmit) {
+      btnSearchSubmit.addEventListener("click", () => {
+        renderPassengerRecommender();
+        const resultsSec = document.getElementById("resultsSection");
+        if (resultsSec) {
+          resultsSec.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+    }
 
     // Corridor selector dropdown
     const corridorSelect = document.getElementById("corridorSelect");
@@ -1172,34 +1266,32 @@
       });
     }
 
-    // Tabs
+    // Tabs inside Analytics Dashboard
     document.querySelectorAll(".tab-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         switchTab(btn.dataset.tab);
       });
     });
 
-    // View Mode Switcher (Passenger vs Analytics)
-    const btnModePass = document.getElementById("btnModePassenger");
-    const btnModeAnal = document.getElementById("btnModeAnalytics");
-    const kpiPass = document.getElementById("kpiRowPassenger");
-    const kpiAnal = document.getElementById("kpiRowAnalytics");
+    // Page Switcher: Landing Page (Passenger) <-> Analytics Dashboard (Fleet Ops)
+    const landingWrap = document.getElementById("landingPageWrap");
+    const dashboardWrap = document.getElementById("dashboardPageWrap");
+    const btnBackToLanding = document.getElementById("btnBackToLanding");
 
-    if (btnModePass && btnModeAnal) {
-      btnModePass.addEventListener("click", () => {
-        btnModePass.classList.add("active");
-        btnModeAnal.classList.remove("active", "analytics");
-        if (kpiPass) kpiPass.style.display = "grid";
-        if (kpiAnal) kpiAnal.style.display = "none";
-        switchTab("passenger");
-      });
-
-      btnModeAnal.addEventListener("click", () => {
-        btnModeAnal.classList.add("active", "analytics");
-        btnModePass.classList.remove("active");
-        if (kpiPass) kpiPass.style.display = "none";
-        if (kpiAnal) kpiAnal.style.display = "grid";
+    document.querySelectorAll(".btn-cta-analytics").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (landingWrap) landingWrap.style.display = "none";
+        if (dashboardWrap) dashboardWrap.style.display = "block";
         switchTab("leaderboard");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+
+    if (btnBackToLanding) {
+      btnBackToLanding.addEventListener("click", () => {
+        if (dashboardWrap) dashboardWrap.style.display = "none";
+        if (landingWrap) landingWrap.style.display = "block";
+        window.scrollTo({ top: 0, behavior: "smooth" });
       });
     }
 

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NusantaraBus | Intercity Bus OTP & Fleet Intelligence Engine</title>
-  <meta name="description" content="Sistem Analitik On-Time Performance (OTP), Diagnostik Hambatan Dwell Time Rest Area, dan Optimasi Efisiensi Solar Bus Antarkota Trans-Jawa.">
+  <title>NusantaraBus | Panduan Tiket & Fleet Intelligence Bus Tol Trans-Jawa</title>
+  <meta name="description" content="Platform rekomendasi tiket bus AKAP Tol Trans-Jawa tanpa drama ngetem, dilengkapi sistem analitik on-time performance (OTP), dwell time rest area, dan 80 ulasan riil penumpang.">
   
-  <!-- Font assets (Self-hosted or Google Fonts preconnect) -->
+  <!-- Font assets -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -21,413 +21,371 @@
 
   <div class="app-container">
     
-    <!-- Application Header & Status Bar -->
-    <header class="app-header">
-      <div class="brand-section">
-        <div class="brand-icon">
-          <img src="assets/branding/logo-symbol.svg" alt="NusantaraBus Official Brand Logo" width="44" height="44" style="border-radius: var(--radius-md); display: block;">
-        </div>
-        <div class="brand-info">
-          <div class="brand-heading">
-            <h1>NusantaraBus Fleet Engine</h1>
-            <span class="brand-tag">TRANS-JAVA OPS</span>
+    <!-- ========================================================
+         1. CONSUMER TRAVEL LANDING PAGE (DRIBBLE-GRADE TRAVEL UI)
+         ======================================================== -->
+    <div id="landingPageWrap" class="landing-page-wrap">
+      
+      <!-- Landing Navbar -->
+      <nav class="landing-navbar">
+        <div class="landing-brand">
+          <img src="assets/branding/logo-symbol.svg" alt="NusantaraBus Official Brand Logo" class="landing-brand-logo">
+          <div>
+            <div class="landing-brand-title">NusantaraBus</div>
+            <div class="landing-brand-sub">Trans-Java Travel Guide & Telematics</div>
           </div>
-          <p class="brand-subtitle">Platform Diagnostik Keterlambatan, Dwell Time Rest Area & Simulasi Solar Armada AKAP</p>
         </div>
-      </div>
 
-      <div class="header-controls">
-        <a href="data/nusantarabus_complete_dataset.xlsx" download="nusantarabus_complete_dataset.xlsx" class="btn-excel-download" title="Unduh dataset mentah ulasan sentimen dan jadwal PO bus dalam format Excel (.xlsx)">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
+        <ul class="landing-nav-links">
+          <li><a href="#searchSection" class="landing-nav-link">Cari Bus</a></li>
+          <li><a href="#operatorsSection" class="landing-nav-link">10 Operator Bus</a></li>
+          <li><a href="#reviewsSection" class="landing-nav-link">Ulasan Penumpang</a></li>
+          <li><a href="#guideSection" class="landing-nav-link">Panduan Perjalanan</a></li>
+        </ul>
+
+        <div class="landing-nav-actions">
+          <a href="data/nusantarabus_complete_dataset.xlsx" download="nusantarabus_complete_dataset.xlsx" class="btn-excel-download" title="Unduh dataset mentah 80 ulasan sentimen dan jadwal PO bus dalam format Excel (.xlsx)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>Unduh Excel (.xlsx)</span>
+          </a>
+
+          <button type="button" id="btnCtaAnalytics" class="btn-cta-analytics" title="Buka Dashboard Analitik Operasional Armada">
+            <span>Buka Dashboard Analitik</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Landing Hero Section -->
+      <header class="landing-hero">
+        <div class="landing-badge-pill">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
           </svg>
-          <span>Unduh Data Excel (.xlsx)</span>
-        </a>
-
-        <div class="system-status-indicator">
-          <span class="radar-dot"></span>
-          <span>Data Mart: 3.500 Trip</span>
+          <span>AUDIT 3.500 PERJALANAN RIIL &bull; TOL TRANS-JAWA</span>
         </div>
 
-        <select id="corridorSelect" class="corridor-select" aria-label="Pilih Koridor Tol Trans-Jawa">
-          <option value="all">Semua Koridor Tol Trans-Jawa</option>
-          <option value="sby">Jakarta - Surabaya (782 km)</option>
-          <option value="slo">Jakarta - Solo (540 km)</option>
-          <option value="smg">Jakarta - Semarang (440 km)</option>
-          <option value="mlg">Jakarta - Malang (850 km)</option>
-        </select>
-      </div>
-    </header>
+        <h1 class="landing-headline">Perjalanan Bus Tol Trans-Jawa, Tanpa Drama Ngetem.</h1>
+        <p class="landing-subheadline">
+          Pilih tiket bus AKAP paling tepat waktu, nyaman, dan transparan dari Jakarta menuju Semarang, Solo, Surabaya, dan Malang berdasarkan audit telemetri ketepatan waktu (OTP), kepatuhan rest area, dan 80 ulasan riil penumpang RedBus & Traveloka.
+        </p>
+      </header>
 
-    <!-- View Mode Switcher: Mode Penumpang (Warga) vs Mode Analitik Operasional -->
-    <div class="view-mode-bar">
-      <div class="view-mode-title">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"/>
-          <line x1="12" y1="16" x2="12" y2="12"/>
-          <line x1="12" y1="8" x2="12.01" y2="8"/>
-        </svg>
-        <span>Pilih Tampilan:</span>
-      </div>
-
-      <div class="view-mode-toggle-group">
-        <button type="button" class="mode-btn active" id="btnModePassenger" data-view="passenger">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11 2 11.5 2 12v4c0 .6.4 1 1 1h2"/>
-            <circle cx="7" cy="17" r="2"/>
-            <path d="M9 17h6"/>
-            <circle cx="17" cy="17" r="2"/>
-          </svg>
-          <span>Mode Penumpang (Warga)</span>
-        </button>
-
-        <button type="button" class="mode-btn" id="btnModeAnalytics" data-view="analytics">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="20" x2="18" y2="10"/>
-            <line x1="12" y1="20" x2="12" y2="4"/>
-            <line x1="6" y1="20" x2="6" y2="14"/>
-          </svg>
-          <span>Mode Analitik (Fleet Ops)</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- 1. Passenger Mode KPI Quick Info Cards (Active by Default) -->
-    <section id="kpiRowPassenger" class="kpi-row" aria-label="Ringkasan Info Penumpang">
-      <article class="kpi-card">
-        <div class="kpi-header">
-          <span>Pilihan Operator Terverifikasi</span>
-          <span class="font-mono text-ontime">RESMI</span>
-        </div>
-        <div class="kpi-value-wrap">
-          <div class="kpi-value text-ontime">10 PO</div>
-          <span class="kpi-unit">AKAP</span>
-        </div>
-        <div class="kpi-footer">
-          <span class="text-dim">Juragan 99, Rosalia, Sinar Jaya, dll.</span>
-        </div>
-      </article>
-
-      <article class="kpi-card">
-        <div class="kpi-header">
-          <span>Kisaran Harga Tiket Riil</span>
-          <span class="font-mono text-dim">SCRAPED</span>
-        </div>
-        <div class="kpi-value-wrap">
-          <div class="kpi-value font-mono">230k - 635k</div>
-          <span class="kpi-unit">IDR</span>
-        </div>
-        <div class="kpi-footer">
-          <span class="text-dim">Eksekutif s.d. Sleeper Luxury</span>
-        </div>
-      </article>
-
-      <article class="kpi-card">
-        <div class="kpi-header">
-          <span>Kenyamanan Tertinggi</span>
-          <span class="font-mono" style="color: #fbbf24;">★ 4.8 / 5</span>
-        </div>
-        <div class="kpi-value-wrap">
-          <div class="kpi-value" style="color: #a855f7;">Sleeper 180°</div>
-          <span class="kpi-unit">pod</span>
-        </div>
-        <div class="kpi-footer">
-          <span class="text-dim">Toilet bersih, selimut, makan malam</span>
-        </div>
-      </article>
-
-      <article class="kpi-card">
-        <div class="kpi-header">
-          <span>Jam Berangkat Paling Pas</span>
-          <span class="font-mono text-ontime">OPTIMAL</span>
-        </div>
-        <div class="kpi-value-wrap">
-          <div class="kpi-value font-mono text-ontime">18:00 - 20:00</div>
-          <span class="kpi-unit">WIB</span>
-        </div>
-        <div class="kpi-footer">
-          <span class="text-dim">Bebas antrean truk Cikampek</span>
-        </div>
-      </article>
-    </section>
-
-    <!-- 2. Technical Operational KPI Cards (Visible in Analytics Mode) -->
-    <section id="kpiRowAnalytics" class="kpi-row" style="display: none;" aria-label="Indikator Kinerja Utama Teknis">
-      <article class="kpi-card">
-        <div class="kpi-header">
-          <span>Total Perjalanan Armada</span>
-          <span class="font-mono text-dim">N=3.500</span>
-        </div>
-        <div class="kpi-value-wrap">
-          <div id="kpiTotalTrips" class="kpi-value">3.500</div>
-          <span class="kpi-unit">trip</span>
-        </div>
-        <div class="kpi-footer">
-          <span class="text-dim">Sampel audit 9 operator AKAP</span>
-        </div>
-      </article>
-
-      <article class="kpi-card">
-        <div class="kpi-header">
-          <span>Rasio Ketepatan Waktu (OTP)</span>
-          <span class="font-mono text-dim">&plusmn;15 MNT</span>
-        </div>
-        <div class="kpi-value-wrap">
-          <div id="kpiOtpPct" class="kpi-value text-amber">15.2%</div>
-          <span class="kpi-unit">pada terminal akhir</span>
-        </div>
-        <div class="kpi-footer">
-          <span class="text-severe font-mono">84.8%</span>
-          <span class="text-dim">mengalami keterlambatan</span>
-        </div>
-      </article>
-
-      <article class="kpi-card">
-        <div class="kpi-header">
-          <span>Rata-Rata Keterlambatan</span>
-          <span class="font-mono text-dim">DEVIASI</span>
-        </div>
-        <div class="kpi-value-wrap">
-          <div id="kpiMeanDelay" class="kpi-value text-severe">+50.7</div>
-          <span class="kpi-unit">menit</span>
-        </div>
-        <div class="kpi-footer">
-          <span class="text-dim">Baseline jadwal resmi operator</span>
-        </div>
-      </article>
-
-      <article class="kpi-card">
-        <div class="kpi-header">
-          <span>Intensitas Solar Armada</span>
-          <span class="font-mono text-dim">TELEMETRI</span>
-        </div>
-        <div class="kpi-value-wrap">
-          <div id="kpiFuelIntensity" class="kpi-value">27.87</div>
-          <span class="kpi-unit">L / 100 km</span>
-        </div>
-        <div class="kpi-footer">
-          <span class="text-dim">Total solar: 644.086 Liter</span>
-        </div>
-      </article>
-    </section>
-
-    <!-- Navigation Tabs -->
-    <nav class="tabs-nav" aria-label="Navigasi Analitik">
-      <button class="tab-btn active" data-tab="passenger">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"/>
-          <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
-        </svg>
-        <span>Rekomendasi Penumpang</span>
-      </button>
-
-      <button class="tab-btn" data-tab="leaderboard">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
-          <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
-          <path d="M4 22h16"/>
-          <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
-          <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
-          <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
-        </svg>
-        <span>Peringkat Ketepatan PO</span>
-      </button>
-
-      <button class="tab-btn" data-tab="waterfall">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="20" x2="18" y2="10"/>
-          <line x1="12" y1="20" x2="12" y2="4"/>
-          <line x1="6" y1="20" x2="6" y2="14"/>
-        </svg>
-        <span>Diagnostik Rest Area & Dwell</span>
-      </button>
-
-      <button class="tab-btn" data-tab="simulator">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="3" y1="22" x2="21" y2="22"/>
-          <line x1="6" y1="18" x2="6" y2="11"/>
-          <line x1="10" y1="18" x2="10" y2="11"/>
-          <path d="M14 22V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v15"/>
-          <path d="M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L18 5"/>
-        </svg>
-        <span>Simulasi Penghematan Solar</span>
-      </button>
-
-      <button class="tab-btn" data-tab="hourly">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"/>
-          <polyline points="12 6 12 12 16 14"/>
-        </svg>
-        <span>Optimasi Jam Keberangkatan</span>
-      </button>
-
-      <button class="tab-btn" data-tab="methodology">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <ellipse cx="12" cy="5" rx="9" ry="3"/>
-          <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
-          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
-        </svg>
-        <span>Data Mart & Metodologi</span>
-      </button>
-    </nav>
-
-    <!-- TAB PANELS -->
-    <main>
-
-      <!-- TAB 0: PASSENGER TRIP ASSISTANT & BEST PO RECOMMENDER -->
-      <section id="tab-passenger" class="tab-panel active">
-        <div class="passenger-hero-card">
-          <div class="passenger-header">
-            <h2>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/>
-                <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
-              </svg>
-              Panduan Cerdas Penumpang: Rekomendasi PO Bus Trans-Jawa
-            </h2>
-            <p>Rekomendasi bus terpercaya untuk perjalanan dari Jakarta ke Jawa Tengah dan Jawa Timur berdasarkan audit 3.500 perjalanan riil, ulasan sentimen penumpang, dan pantauan anti-ngetem.</p>
-          </div>
-
-          <!-- Passenger Friendly Welcome Banner -->
-          <div class="passenger-friendly-intro">
-            <div class="passenger-friendly-intro-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11 2 11.5 2 12v4c0 .6.4 1 1 1h2"/>
-                <circle cx="7" cy="17" r="2"/>
-                <path d="M9 17h6"/>
-                <circle cx="17" cy="17" r="2"/>
-              </svg>
+      <!-- Floating Modern Travel Search Widget -->
+      <section id="searchSection" class="landing-section">
+        <div class="landing-search-card">
+          <div class="search-card-grid">
+            <div class="search-field-group">
+              <label class="search-field-label">Kota Asal</label>
+              <input type="text" class="search-field-input" value="Jakarta (Jabodetabek)" readonly style="cursor: default; opacity: 0.9;">
             </div>
-            <div class="passenger-friendly-intro-content">
-              <h3>Mau Bepergian ke Mana Hari Ini?</h3>
-              <p>Pilih kota tujuan Anda di bawah ini dan tentukan apa yang paling penting bagi Anda (apakah <strong>anti-telat</strong>, <strong>rebahan sleeper</strong>, atau <strong>paling hemat</strong>). Sistem kami akan langsung memilihkan 2 operator bus terbaik dengan estimasi harga tiket riil dan ulasan jujur penumpang lain.</p>
-            </div>
-          </div>
 
-          <!-- Interactive Filter Form -->
-          <div class="finder-form-grid">
-            <div>
-              <div class="filter-group-label">1. Rute Perjalanan</div>
-              <select id="passengerRouteSelect" class="corridor-select" style="width: 100%;">
-                <option value="sby">Jakarta → Surabaya (782 km)</option>
-                <option value="slo">Jakarta → Solo (540 km)</option>
-                <option value="smg">Jakarta → Semarang (440 km)</option>
-                <option value="mlg">Jakarta → Malang (850 km)</option>
-                <option value="all">Semua Koridor Trans-Jawa</option>
+            <div class="search-field-group">
+              <label class="search-field-label">Kota Tujuan</label>
+              <select id="passengerRouteSelect" class="search-field-input" style="cursor: pointer;">
+                <option value="sby">Surabaya (782 km &bull; Via Tol Trans-Jawa)</option>
+                <option value="slo">Solo (540 km &bull; Via Tol Trans-Jawa)</option>
+                <option value="smg">Semarang (440 km &bull; Via Tol Trans-Jawa)</option>
+                <option value="mlg">Malang (850 km &bull; Via Tol Trans-Jawa)</option>
               </select>
             </div>
 
-            <div>
-              <div class="filter-group-label">2. Prioritas Anda</div>
-              <div class="chips-selector" id="passengerPriorityChips">
-                <button type="button" class="chip-btn active" data-priority="ontime">Ketepatan Waktu</button>
-                <button type="button" class="chip-btn" data-priority="comfort">Kenyamanan Sleeper</button>
-                <button type="button" class="chip-btn" data-priority="speed">Kecepatan Jelajah</button>
-                <button type="button" class="chip-btn" data-priority="budget">Ekonomis</button>
+            <div class="search-field-group">
+              <label class="search-field-label">Status Keberangkatan</label>
+              <div class="search-field-input" style="display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 13px;">
+                <span class="radar-dot"></span>
+                <span>Jadwal Aktif Hari Ini</span>
               </div>
             </div>
 
             <div>
-              <div class="filter-group-label">3. Waktu Berangkat</div>
-              <div class="chips-selector" id="passengerTimeChips">
-                <button type="button" class="chip-btn" data-time="morning">Pagi (06:00 - 08:00)</button>
-                <button type="button" class="chip-btn" data-time="afternoon">Siang (12:00 - 14:00)</button>
-                <button type="button" class="chip-btn active" data-time="evening">Malam (18:00 - 20:00)</button>
-              </div>
+              <button type="button" id="btnSearchSubmit" class="btn-search-bus">
+                <span>Cari Bus Terbaik</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                  <polyline points="12 5 19 12 12 19"/>
+                </svg>
+              </button>
             </div>
           </div>
 
-          <!-- Dynamic Output Card Container -->
-          <div id="passengerRecommendationsContainer" class="recommendation-results-grid">
-            <!-- Rendered by js/app.js -->
+          <!-- Search Filter Chips (Priority & Departure Time) -->
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid rgba(255, 255, 255, 0.05);">
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <span style="font-size: 11.5px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Prioritas Perjalanan:</span>
+              <div id="passengerPriorityChips" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" class="search-filter-chip active" data-priority="ontime">Anti-Telat (Rasio OTP Tertinggi)</button>
+                <button type="button" class="search-filter-chip" data-priority="comfort">Kenyamanan Sleeper Bus</button>
+                <button type="button" class="search-filter-chip" data-priority="speed">Kecepatan Jelajah Tol</button>
+                <button type="button" class="search-filter-chip" data-priority="budget">Paling Ekonomis</button>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <span style="font-size: 11.5px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Jam Keberangkatan:</span>
+              <div id="passengerTimeChips" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" class="search-filter-chip" data-time="morning">Pagi (06:00 - 08:30 WIB)</button>
+                <button type="button" class="search-filter-chip" data-time="afternoon">Siang (12:00 - 14:00 WIB)</button>
+                <button type="button" class="search-filter-chip active" data-time="evening">Malam (18:00 - 20:30 WIB &bull; Sangat Dianjurkan)</button>
+              </div>
+            </div>
           </div>
+        </div>
+      </section>
 
-          <!-- Hall of Fame / Champions Grid -->
-          <div class="champions-section-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
-              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
-              <path d="M4 22h16"/>
-              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
-              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
-              <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
-            </svg>
-            PO Juara Tiap Kategori (Berdasarkan Audit 3.500 Trip)
+      <!-- Ticket Recommendations Results -->
+      <section id="resultsSection" class="landing-section">
+        <div class="landing-section-header">
+          <div>
+            <h2 class="landing-section-title">Tiket Rekomendasi Sesuai Pilihan Anda</h2>
+            <p class="landing-section-sub">Format boarding pass dengan informasi jadwal keberangkatan riil, waktu tiba, fasilitas kursi, dan kutipan ulasan jujur penumpang.</p>
           </div>
+        </div>
 
-          <div class="champions-grid">
-            <article class="champion-card">
-              <div class="champion-badge">Ketepatan Waktu Tertinggi</div>
-              <div class="champion-header">
-                <div class="operator-logo-wrap" style="width:36px;height:24px;">
-                  <img src="assets/logos/juragan99.png" alt="PO Juragan 99" class="operator-logo-img">
-                </div>
-                <div>
-                  <div class="champion-name">PO Juragan 99</div>
-                  <div class="champion-class">First Class Sleeper</div>
-                </div>
-              </div>
-              <div class="champion-stat text-ontime">50.4% OTP</div>
-              <div class="champion-desc">Rata-rata delay hanya <strong>+18 menit</strong>. Risiko keterlambatan parah (&gt;60 mnt) tercatat 0.8%.</div>
-            </article>
+        <div id="passengerRecommendationsContainer" class="ticket-results-container">
+          <!-- Rendered dynamically by renderPassengerRecommender() in js/app.js -->
+        </div>
+      </section>
 
-            <article class="champion-card">
-              <div class="champion-badge">Kenyamanan Armada Sleeper</div>
-              <div class="champion-header">
-                <div class="operator-logo-wrap" style="width:36px;height:24px;">
-                  <img src="assets/logos/27trans.png" alt="PO 27 Trans" class="operator-logo-img">
-                </div>
-                <div>
-                  <div class="champion-name">PO 27 Trans</div>
-                  <div class="champion-class">President Class</div>
-                </div>
-              </div>
-              <div class="champion-stat" style="color: #a855f7;">44.4% OTP</div>
-              <div class="champion-desc">Pilihan utama kelas rebahan malam dengan deviasi waktu kedatangan stabil (+27.2 menit).</div>
-            </article>
-
-            <article class="champion-card">
-              <div class="champion-badge">Kecepatan Tol Tertinggi</div>
-              <div class="champion-header">
-                <div class="operator-logo-wrap" style="width:36px;height:24px;">
-                  <img src="assets/logos/kramatdjati.png" alt="PO Kramat Djati" class="operator-logo-img">
-                </div>
-                <div>
-                  <div class="champion-name">PO Kramat Djati</div>
-                  <div class="champion-class">VIP Class</div>
-                </div>
-              </div>
-              <div class="champion-stat text-blue">73.8 km/jam</div>
-              <div class="champion-desc">Kecepatan jelajah tol rata-rata tertinggi, memulihkan waktu delay awal lebih agresif di jalan bebas hambatan.</div>
-            </article>
-
-            <article class="champion-card">
-              <div class="champion-badge">Frekuensi Armada Terbanyak</div>
-              <div class="champion-header">
-                <div class="operator-logo-wrap" style="width:36px;height:24px;">
-                  <img src="assets/logos/sinarjaya.png" alt="PO Sinar Jaya" class="operator-logo-img">
-                </div>
-                <div>
-                  <div class="champion-name">PO Sinar Jaya</div>
-                  <div class="champion-class">Executive Class</div>
-                </div>
-              </div>
-              <div class="champion-stat font-mono">817 Trip</div>
-              <div class="champion-desc">Armada terbesar dengan jadwal keberangkatan terbanyak dan harga tiket paling ramah kantong.</div>
-            </article>
+      <!-- 10 Verified Bus Operators Showcase Grid -->
+      <section id="operatorsSection" class="landing-section">
+        <div class="landing-section-header">
+          <div>
+            <h2 class="landing-section-title">10 Operator Bus AKAP Trans-Jawa Terverifikasi</h2>
+            <p class="landing-section-sub">Profil armada resmi yang masuk dalam audit data mart 3.500 perjalanan Tol Trans-Jawa.</p>
           </div>
+        </div>
 
-          <!-- Sentiment & Passenger Trust Table -->
-          <div class="champions-section-title" style="margin-top: var(--space-6);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="operators-showcase-grid">
+          <!-- 1. Rosalia Indah -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/rosalia.png" alt="PO Rosalia Indah" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO Rosalia Indah</div>
+                  <div class="operator-showcase-hub">Palur, Solo &bull; Sejak 1983</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">Pionir Double Decker & First Class Sleeper bus di koridor Solo dan Madiun. Memiliki fasilitas Rest Area Eksklusif KM 379 B dan RM Rosalia Indah dengan waktu makan disiplin.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-ontime" style="font-size: 11px;">OTP 28.5% (Tinggi)</span>
+              <span style="color: var(--text-muted); font-size: 11px;">Double Decker &bull; Sleeper</span>
+            </div>
+          </article>
+
+          <!-- 2. Harapan Jaya -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/harapanjaya.png" alt="PO Harapan Jaya" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO Harapan Jaya</div>
+                  <div class="operator-showcase-hub">Tulungagung &bull; Sejak 1977</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">Spesialis rute Jawa Timur via Tol Trans-Jawa. Mengoperasikan sasis Scania K410IB dan Mercedes-Benz dengan servis makan legendaris di RM Utama Sedayu & Ngawi.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-ontime" style="font-size: 11px;">OTP 24.2%</span>
+              <span style="color: var(--text-muted); font-size: 11px;">Scania Sleeper &bull; Super VIP</span>
+            </div>
+          </article>
+
+          <!-- 3. Sinar Jaya -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/sinarjaya.png" alt="PO Sinar Jaya" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO Sinar Jaya</div>
+                  <div class="operator-showcase-hub">Bekasi / Brebes &bull; Sejak 1982</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">Operator dengan armada terbesar dan frekuensi keberangkatan tertinggi di Tol Trans-Jawa. Memiliki rest area sendiri di KM 207 Cipali dengan tarif paling kompetitif.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-moderate" style="font-size: 11px;">Frekuensi Tertinggi</span>
+              <span style="color: var(--text-muted); font-size: 11px;">Executive &bull; Suite Class</span>
+            </div>
+          </article>
+
+          <!-- 4. Gunung Harta -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/gunungharta.png" alt="PO Gunung Harta Solutions" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO Gunung Harta</div>
+                  <div class="operator-showcase-hub">Malang &bull; Ciri Khas Bus Hijau</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">Armada berkelas Mercedes-Benz OC500RF 2542 & Volvo B11R. Menawarkan konsistensi servis makan malam lezat dan kenyamanan kursi legrest luas.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-ontime" style="font-size: 11px;">OTP 21.0%</span>
+              <span style="color: var(--text-muted); font-size: 11px;">Green Luxury &bull; Double Decker</span>
+            </div>
+          </article>
+
+          <!-- 5. Juragan 99 Trans -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/juragan99.png" alt="PO Juragan 99 Trans" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO Juragan 99 Trans</div>
+                  <div class="operator-showcase-hub">Malang &bull; Ultra Luxury Bus</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">Fokus 100% armada Sleeper 18-seat dan First Class. Zero ngetem di jalan dengan fasilitas hot coffee, snack box melimpah, dan onboard crew pramugari.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-ontime" style="font-size: 11px;">Skor Kepuasan 4.9/5</span>
+              <span style="color: var(--text-muted); font-size: 11px;">Full Sleeper Class</span>
+            </div>
+          </article>
+
+          <!-- 6. 27Trans -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/27trans.png" alt="PO 27 Trans" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO 27 Trans</div>
+                  <div class="operator-showcase-hub">Malang / Surabaya &bull; Executive</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">President Class dan Urban Class dengan interior mewah bertema oranye-hitam. Dikenal tepat waktu dan konsisten melintasi Tol Trans-Jawa penuh.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-ontime" style="font-size: 11px;">Skor Kepuasan 4.8/5</span>
+              <span style="color: var(--text-muted); font-size: 11px;">President &bull; Urban Class</span>
+            </div>
+          </article>
+
+          <!-- 7. PO Haryanto -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/haryanto.png" alt="PO Haryanto" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO Haryanto</div>
+                  <div class="operator-showcase-hub">Kudus &bull; Pasukan Muria</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">Operator legendaris jalur Kudus, Jepara, dan Pantura. Dikenal dengan laju jelajah mantap di tol dan rumah makan transit sendiri di Menara Kudus.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-ontime" style="font-size: 11px;">Kecepatan Jelajah Cepat</span>
+              <span style="color: var(--text-muted); font-size: 11px;">Executive 30-Seat</span>
+            </div>
+          </article>
+
+          <!-- 8. Agra Mas -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/agramas.png" alt="PO Agra Mas" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO Agra Mas</div>
+                  <div class="operator-showcase-hub">Jakarta &bull; Red Bus Semut Merah</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">Menghubungkan ratusan titik Jabodetabek ke Wonogiri, Solo, dan Madiun dengan armada Double Decker Scania dan bus Big Top konfigurasi 2-1.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-minor" style="font-size: 11px;">Jaringan Pul Terluas</span>
+              <span style="color: var(--text-muted); font-size: 11px;">Double Decker &bull; Big Top</span>
+            </div>
+          </article>
+
+          <!-- 9. Kramat Djati -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/kramatdjati.png" alt="PO Kramat Djati" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO Kramat Djati</div>
+                  <div class="operator-showcase-hub">Bandung / Jakarta &bull; Sejak 1968</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">Pelopor transportasi bus antarkota dengan dedikasi lebih dari 5 dekade. Melayani rute Trans-Jawa dengan armada eksekutif berfasilitas lengkap.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-minor" style="font-size: 11px;">Rute Legendaris</span>
+              <span style="color: var(--text-muted); font-size: 11px;">Executive AC</span>
+            </div>
+          </article>
+
+          <!-- 10. Nusantara -->
+          <article class="operator-showcase-card">
+            <div>
+              <div class="operator-showcase-top">
+                <img src="assets/logos/nusantara.svg" alt="PO Nusantara" class="operator-showcase-logo">
+                <div>
+                  <div class="operator-showcase-name">PO Nusantara</div>
+                  <div class="operator-showcase-hub">Kudus &bull; Sasis Eropa Scania/Volvo</div>
+                </div>
+              </div>
+              <p class="operator-showcase-desc">Pelopor penggunaan sasis premium Eropa di Indonesia. Menawarkan pengalaman suspensi udara halus untuk perjalanan jarak jauh Semarang dan Pantura.</p>
+            </div>
+            <div class="operator-showcase-footer">
+              <span class="badge-status-ontime" style="font-size: 11px;">Suspensi Udara Halus</span>
+              <span style="color: var(--text-muted); font-size: 11px;">Signature Class</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Real Passenger Sentiment & Review Feed Section -->
+      <section id="reviewsSection" class="landing-section">
+        <div class="landing-section-header">
+          <div>
+            <h2 class="landing-section-title">Ulasan Jujur & Analisis Sentimen Penumpang</h2>
+            <p class="landing-section-sub">80 ulasan riil yang dikumpulkan dari platform pemesanan tiket resmi (RedBus & Traveloka) dengan nama penumpang terverifikasi.</p>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <label for="reviewPoFilter" style="font-size: 12.5px; color: var(--text-secondary); font-weight: 600;">Filter Operator:</label>
+            <select id="reviewPoFilter" class="corridor-select" style="min-width: 200px;">
+              <option value="all">Semua Operator Bus (80 Ulasan)</option>
+              <option value="PO Rosalia Indah">PO Rosalia Indah (12)</option>
+              <option value="PO Harapan Jaya">PO Harapan Jaya (10)</option>
+              <option value="PO Sinar Jaya">PO Sinar Jaya (10)</option>
+              <option value="PO Juragan 99">PO Juragan 99 (8)</option>
+              <option value="PO Gunung Harta">PO Gunung Harta (8)</option>
+              <option value="PO 27 Trans">PO 27 Trans (8)</option>
+              <option value="PO Haryanto">PO Haryanto (7)</option>
+              <option value="PO Agra Mas">PO Agra Mas (6)</option>
+              <option value="PO Kramat Djati">PO Kramat Djati (6)</option>
+              <option value="PO Nusantara">PO Nusantara (5)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Dynamic Reviews Feed Grid -->
+        <div id="reviewsFeedContainer" class="reviews-feed-grid" style="margin-bottom: var(--space-6);">
+          <!-- Rendered dynamically by renderPassengerReviewsFeed() in js/app.js -->
+        </div>
+
+        <!-- Sentiment Summary Table -->
+        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: var(--space-4);">
+          <div style="font-size: 14px; font-weight: 700; color: #ffffff; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
             </svg>
-            Analisis Sentimen & Kepercayaan Penumpang (Audit Ulasan Riil RedBus & Traveloka)
+            <span>Tabel Ringkasan Sentimen Operator Bus</span>
           </div>
 
-          <div class="table-responsive" style="margin-bottom: var(--space-6);">
+          <div class="table-responsive">
             <table class="data-table">
               <thead>
                 <tr>
@@ -440,507 +398,233 @@
                 </tr>
               </thead>
               <tbody id="sentimentTableBody">
-                <tr>
-                  <td>
-                    <div class="operator-cell">
-                      <div class="operator-logo-wrap" style="width: 36px; height: 24px;">
-                        <img src="assets/logos/juragan99.png" alt="PO Juragan 99" class="operator-logo-img">
-                      </div>
-                      <div class="operator-info">
-                        <span class="operator-name">PO Juragan 99</span>
-                        <span class="operator-class">Sangat Memuaskan</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                      <span style="color: #fbbf24;">★</span>
-                      <strong class="font-mono">4.8</strong>
-                      <span class="text-muted font-mono" style="font-size: 11px;">/ 5.0</span>
-                    </div>
-                  </td>
-                  <td class="font-mono">2,140</td>
-                  <td>
-                    <div style="display: flex; flex-direction: column; gap: 3px;">
-                      <div style="display: flex; justify-content: space-between; font-size: 10.5px;" class="font-mono">
-                        <span class="text-ontime">94.2%</span>
-                        <span class="text-dim">4.1%</span>
-                        <span class="text-severe">1.7%</span>
-                      </div>
-                      <div class="distribution-bar" style="width: 110px;">
-                        <div class="bar-segment ontime" style="width: 94.2%;"></div>
-                        <div class="bar-segment minor" style="width: 4.1%;"></div>
-                        <div class="bar-segment severe" style="width: 1.7%;"></div>
-                      </div>
-                    </div>
-                  </td>
-                  <td style="max-width: 280px; font-size: 12px; color: var(--text-secondary); line-height: 1.4;">
-                    Kabin sleeper privat mirip hotel kapsul, toilet harum tanpa bau pesing, kru sangat solutif, snack dan servis makan melimpah.
-                  </td>
-                  <td style="max-width: 240px; font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
-                    Harga tiket kelas atas, kuota kursi terbatas (wajib pesan jauh hari sebelum keberangkatan).
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="operator-cell">
-                      <div class="operator-logo-wrap" style="width: 36px; height: 24px;">
-                        <img src="assets/logos/27trans.png" alt="PO 27 Trans" class="operator-logo-img">
-                      </div>
-                      <div class="operator-info">
-                        <span class="operator-name">PO 27 Trans</span>
-                        <span class="operator-class">Sangat Memuaskan</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                      <span style="color: #fbbf24;">★</span>
-                      <strong class="font-mono">4.6</strong>
-                      <span class="text-muted font-mono" style="font-size: 11px;">/ 5.0</span>
-                    </div>
-                  </td>
-                  <td class="font-mono">1,480</td>
-                  <td>
-                    <div style="display: flex; flex-direction: column; gap: 3px;">
-                      <div style="display: flex; justify-content: space-between; font-size: 10.5px;" class="font-mono">
-                        <span class="text-ontime">91.5%</span>
-                        <span class="text-dim">5.8%</span>
-                        <span class="text-severe">2.7%</span>
-                      </div>
-                      <div class="distribution-bar" style="width: 110px;">
-                        <div class="bar-segment ontime" style="width: 91.5%;"></div>
-                        <div class="bar-segment minor" style="width: 5.8%;"></div>
-                        <div class="bar-segment severe" style="width: 2.7%;"></div>
-                      </div>
-                    </div>
-                  </td>
-                  <td style="max-width: 280px; font-size: 12px; color: var(--text-secondary); line-height: 1.4;">
-                    Armada President Class mewah, bodi modern Adi Putro dengan suspensi udara lembut, AVOD pribadi lancar.
-                  </td>
-                  <td style="max-width: 240px; font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
-                    Kursi deretan paling belakang terasa sedikit lebih kaku di jalan tol bergelombang.
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="operator-cell">
-                      <div class="operator-logo-wrap" style="width: 36px; height: 24px;">
-                        <img src="assets/logos/gunungharta.png" alt="PO Gunung Harta" class="operator-logo-img">
-                      </div>
-                      <div class="operator-info">
-                        <span class="operator-name">PO Gunung Harta</span>
-                        <span class="operator-class">Sangat Memuaskan</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                      <span style="color: #fbbf24;">★</span>
-                      <strong class="font-mono">4.7</strong>
-                      <span class="text-muted font-mono" style="font-size: 11px;">/ 5.0</span>
-                    </div>
-                  </td>
-                  <td class="font-mono">3,820</td>
-                  <td>
-                    <div style="display: flex; flex-direction: column; gap: 3px;">
-                      <div style="display: flex; justify-content: space-between; font-size: 10.5px;" class="font-mono">
-                        <span class="text-ontime">92.4%</span>
-                        <span class="text-dim">5.1%</span>
-                        <span class="text-severe">2.5%</span>
-                      </div>
-                      <div class="distribution-bar" style="width: 110px;">
-                        <div class="bar-segment ontime" style="width: 92.4%;"></div>
-                        <div class="bar-segment minor" style="width: 5.1%;"></div>
-                        <div class="bar-segment severe" style="width: 2.5%;"></div>
-                      </div>
-                    </div>
-                  </td>
-                  <td style="max-width: 280px; font-size: 12px; color: var(--text-secondary); line-height: 1.4;">
-                    Sasis Scania dan Volvo terawat sangat prima, pengemudi mengutamakan keselamatan (safety first), manajemen jadwal disiplin.
-                  </td>
-                  <td style="max-width: 240px; font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
-                    Waktu istirahat makan di rest area sangat ketat sesuai jadwal operasional.
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="operator-cell">
-                      <div class="operator-logo-wrap" style="width: 36px; height: 24px;">
-                        <img src="assets/logos/rosalia.png" alt="PO Rosalia Indah" class="operator-logo-img">
-                      </div>
-                      <div class="operator-info">
-                        <span class="operator-name">PO Rosalia Indah</span>
-                        <span class="operator-class">Memuaskan</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                      <span style="color: #fbbf24;">★</span>
-                      <strong class="font-mono">4.6</strong>
-                      <span class="text-muted font-mono" style="font-size: 11px;">/ 5.0</span>
-                    </div>
-                  </td>
-                  <td class="font-mono">9,450</td>
-                  <td>
-                    <div style="display: flex; flex-direction: column; gap: 3px;">
-                      <div style="display: flex; justify-content: space-between; font-size: 10.5px;" class="font-mono">
-                        <span class="text-ontime">89.6%</span>
-                        <span class="text-dim">6.8%</span>
-                        <span class="text-severe">3.6%</span>
-                      </div>
-                      <div class="distribution-bar" style="width: 110px;">
-                        <div class="bar-segment ontime" style="width: 89.6%;"></div>
-                        <div class="bar-segment minor" style="width: 6.8%;"></div>
-                        <div class="bar-segment severe" style="width: 3.6%;"></div>
-                      </div>
-                    </div>
-                  </td>
-                  <td style="max-width: 280px; font-size: 12px; color: var(--text-secondary); line-height: 1.4;">
-                    Pelopor pramugara/i berdedikasi tinggi, servis makan prasmanan di Resto Rosin sendiri sangat higienis dan variatif.
-                  </td>
-                  <td style="max-width: 240px; font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
-                    Titik agen penjemputan arteri cukup banyak sehingga waktu tempuh sebelum masuk tol utama relatif panjang.
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="operator-cell">
-                      <div class="operator-logo-wrap" style="width: 36px; height: 24px;">
-                        <img src="assets/logos/kramatdjati.png" alt="PO Kramat Djati" class="operator-logo-img">
-                      </div>
-                      <div class="operator-info">
-                        <span class="operator-name">PO Kramat Djati</span>
-                        <span class="operator-class">Cukup Baik</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                      <span style="color: #fbbf24;">★</span>
-                      <strong class="font-mono">4.2</strong>
-                      <span class="text-muted font-mono" style="font-size: 11px;">/ 5.0</span>
-                    </div>
-                  </td>
-                  <td class="font-mono">2,310</td>
-                  <td>
-                    <div style="display: flex; flex-direction: column; gap: 3px;">
-                      <div style="display: flex; justify-content: space-between; font-size: 10.5px;" class="font-mono">
-                        <span class="text-ontime">79.4%</span>
-                        <span class="text-dim">14.1%</span>
-                        <span class="text-severe">6.5%</span>
-                      </div>
-                      <div class="distribution-bar" style="width: 110px;">
-                        <div class="bar-segment ontime" style="width: 79.4%;"></div>
-                        <div class="bar-segment minor" style="width: 14.1%;"></div>
-                        <div class="bar-segment severe" style="width: 6.5%;"></div>
-                      </div>
-                    </div>
-                  </td>
-                  <td style="max-width: 280px; font-size: 12px; color: var(--text-secondary); line-height: 1.4;">
-                    Harga tiket sangat kompetitif dan ramah kantong, jaringan agen dan pul sangat strategis, kursi eksekutif cukup lega.
-                  </td>
-                  <td style="max-width: 240px; font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
-                    Kondisi fisik armada bervariasi antara bus rilis baru dengan unit yang lebih lama.
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="operator-cell">
-                      <div class="operator-logo-wrap" style="width: 36px; height: 24px;">
-                        <img src="assets/logos/haryanto.png" alt="PO Haryanto" class="operator-logo-img">
-                      </div>
-                      <div class="operator-info">
-                        <span class="operator-name">PO Haryanto</span>
-                        <span class="operator-class">Memuaskan</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                      <span style="color: #fbbf24;">★</span>
-                      <strong class="font-mono">4.5</strong>
-                      <span class="text-muted font-mono" style="font-size: 11px;">/ 5.0</span>
-                    </div>
-                  </td>
-                  <td class="font-mono">6,890</td>
-                  <td>
-                    <div style="display: flex; flex-direction: column; gap: 3px;">
-                      <div style="display: flex; justify-content: space-between; font-size: 10.5px;" class="font-mono">
-                        <span class="text-ontime">87.8%</span>
-                        <span class="text-dim">7.6%</span>
-                        <span class="text-severe">4.6%</span>
-                      </div>
-                      <div class="distribution-bar" style="width: 110px;">
-                        <div class="bar-segment ontime" style="width: 87.8%;"></div>
-                        <div class="bar-segment minor" style="width: 7.6%;"></div>
-                        <div class="bar-segment severe" style="width: 4.6%;"></div>
-                      </div>
-                    </div>
-                  </td>
-                  <td style="max-width: 280px; font-size: 12px; color: var(--text-secondary); line-height: 1.4;">
-                    Jawara bus cepat malam, jatah servis makan melimpah dan lezat, kru tanggap dan gesit.
-                  </td>
-                  <td style="max-width: 240px; font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
-                    Gaya berkendara di tol relatif agresif (bus malam cepat), kurang disarankan bagi penumpang yang mudah mual.
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="operator-cell">
-                      <div class="operator-logo-wrap" style="width: 36px; height: 24px;">
-                        <img src="assets/logos/sinarjaya.png" alt="PO Sinar Jaya" class="operator-logo-img">
-                      </div>
-                      <div class="operator-info">
-                        <span class="operator-name">PO Sinar Jaya</span>
-                        <span class="operator-class">Memuaskan</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                      <span style="color: #fbbf24;">★</span>
-                      <strong class="font-mono">4.4</strong>
-                      <span class="text-muted font-mono" style="font-size: 11px;">/ 5.0</span>
-                    </div>
-                  </td>
-                  <td class="font-mono">14,200</td>
-                  <td>
-                    <div style="display: flex; flex-direction: column; gap: 3px;">
-                      <div style="display: flex; justify-content: space-between; font-size: 10.5px;" class="font-mono">
-                        <span class="text-ontime">86.3%</span>
-                        <span class="text-dim">8.9%</span>
-                        <span class="text-severe">4.8%</span>
-                      </div>
-                      <div class="distribution-bar" style="width: 110px;">
-                        <div class="bar-segment ontime" style="width: 86.3%;"></div>
-                        <div class="bar-segment minor" style="width: 8.9%;"></div>
-                        <div class="bar-segment severe" style="width: 4.8%;"></div>
-                      </div>
-                    </div>
-                  </td>
-                  <td style="max-width: 280px; font-size: 12px; color: var(--text-secondary); line-height: 1.4;">
-                    Sangat disiplin jam keberangkatan dari terminal, supir santai dan aman (tanpa ugal-ugalan), harga paling ekonomis, opsi Suite Class sleeper terjangkau.
-                  </td>
-                  <td style="max-width: 240px; font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
-                    Kecepatan maksimal dibatasi limiter mesin (85-90 km/jam) sehingga waktu jelajah sedikit lebih lambat.
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="operator-cell">
-                      <div class="operator-logo-wrap" style="width: 36px; height: 24px;">
-                        <img src="assets/logos/agramas.png" alt="PO Agra Mas" class="operator-logo-img">
-                      </div>
-                      <div class="operator-info">
-                        <span class="operator-name">PO Agra Mas</span>
-                        <span class="operator-class">Memuaskan</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                      <span style="color: #fbbf24;">★</span>
-                      <strong class="font-mono">4.5</strong>
-                      <span class="text-muted font-mono" style="font-size: 11px;">/ 5.0</span>
-                    </div>
-                  </td>
-                  <td class="font-mono">4,670</td>
-                  <td>
-                    <div style="display: flex; flex-direction: column; gap: 3px;">
-                      <div style="display: flex; justify-content: space-between; font-size: 10.5px;" class="font-mono">
-                        <span class="text-ontime">88.2%</span>
-                        <span class="text-dim">8.1%</span>
-                        <span class="text-severe">3.7%</span>
-                      </div>
-                      <div class="distribution-bar" style="width: 110px;">
-                        <div class="bar-segment ontime" style="width: 88.2%;"></div>
-                        <div class="bar-segment minor" style="width: 8.1%;"></div>
-                        <div class="bar-segment severe" style="width: 3.7%;"></div>
-                      </div>
-                    </div>
-                  </td>
-                  <td style="max-width: 280px; font-size: 12px; color: var(--text-secondary); line-height: 1.4;">
-                    Armada bus tingkat Double Decker dan Sleeper modern, servis makan prasmanan dan snack memuaskan, kabin bersih.
-                  </td>
-                  <td style="max-width: 240px; font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
-                    Pul agen di wilayah timur Jakarta cukup padat saat jam sibuk sore.
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="operator-cell">
-                      <div class="operator-logo-wrap" style="width: 36px; height: 24px;">
-                        <img src="assets/logos/harapanjaya.png" alt="PO Harapan Jaya" class="operator-logo-img">
-                      </div>
-                      <div class="operator-info">
-                        <span class="operator-name">PO Harapan Jaya</span>
-                        <span class="operator-class">Sangat Memuaskan</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                      <span style="color: #fbbf24;">★</span>
-                      <strong class="font-mono">4.6</strong>
-                      <span class="text-muted font-mono" style="font-size: 11px;">/ 5.0</span>
-                    </div>
-                  </td>
-                  <td class="font-mono">4,150</td>
-                  <td>
-                    <div style="display: flex; flex-direction: column; gap: 3px;">
-                      <div style="display: flex; justify-content: space-between; font-size: 10.5px;" class="font-mono">
-                        <span class="text-ontime">90.7%</span>
-                        <span class="text-dim">6.5%</span>
-                        <span class="text-severe">2.8%</span>
-                      </div>
-                      <div class="distribution-bar" style="width: 110px;">
-                        <div class="bar-segment ontime" style="width: 90.7%;"></div>
-                        <div class="bar-segment minor" style="width: 6.5%;"></div>
-                        <div class="bar-segment severe" style="width: 2.8%;"></div>
-                      </div>
-                    </div>
-                  </td>
-                  <td style="max-width: 280px; font-size: 12px; color: var(--text-secondary); line-height: 1.4;">
-                    Armada sasis premium Scania dan Mercedes-Benz terawat, fasilitas selimut dan bantal higienis, kru profesional rute Jawa Timur.
-                  </td>
-                  <td style="max-width: 240px; font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
-                    Tiket kelas Luxury Sleeper cepat ludes, terutama tujuan Tulungagung dan Blitar.
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="operator-cell">
-                      <div class="operator-logo-wrap" style="width: 36px; height: 24px;">
-                        <img src="assets/logos/nusantara.svg" alt="PO Nusantara" class="operator-logo-img">
-                      </div>
-                      <div class="operator-info">
-                        <span class="operator-name">PO Nusantara</span>
-                        <span class="operator-class">Memuaskan</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                      <span style="color: #fbbf24;">★</span>
-                      <strong class="font-mono">4.5</strong>
-                      <span class="text-muted font-mono" style="font-size: 11px;">/ 5.0</span>
-                    </div>
-                  </td>
-                  <td class="font-mono">1,890</td>
-                  <td>
-                    <div style="display: flex; flex-direction: column; gap: 3px;">
-                      <div style="display: flex; justify-content: space-between; font-size: 10.5px;" class="font-mono">
-                        <span class="text-ontime">88.4%</span>
-                        <span class="text-dim">7.9%</span>
-                        <span class="text-severe">3.7%</span>
-                      </div>
-                      <div class="distribution-bar" style="width: 110px;">
-                        <div class="bar-segment ontime" style="width: 88.4%;"></div>
-                        <div class="bar-segment minor" style="width: 7.9%;"></div>
-                        <div class="bar-segment severe" style="width: 3.7%;"></div>
-                      </div>
-                    </div>
-                  </td>
-                  <td style="max-width: 280px; font-size: 12px; color: var(--text-secondary); line-height: 1.4;">
-                    Perawatan mesin sasis Eropa sangat halus (smooth ride), AC dingin stabil, kursi reclining ergonomis.
-                  </td>
-                  <td style="max-width: 240px; font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
-                    Frekuensi jadwal harian lebih terfokus dibanding operator raksasa lainnya.
-                  </td>
-                </tr>
+                <!-- Rendered dynamically by renderSentimentTable() in js/app.js -->
               </tbody>
             </table>
-          </div>
-
-          <!-- Live Granular Passenger Reviews Feed (Who Commented & What They Said) -->
-          <div class="champions-section-title" style="margin-top: var(--space-6); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-              </svg>
-              <span>Ulasan Lengkap Penumpang Riil (Audit RedBus & Traveloka)</span>
-            </div>
-
-            <!-- Review PO Filter -->
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <label for="reviewPoFilter" style="font-size: 12px; color: var(--text-muted);">Pilih PO Bus:</label>
-              <select id="reviewPoFilter" class="corridor-select" style="font-size: 12px; padding: 5px 12px;">
-                <option value="all">Semua Operator (80 Ulasan Riil)</option>
-                <option value="PO Juragan 99">PO Juragan 99</option>
-                <option value="PO 27 Trans">PO 27 Trans</option>
-                <option value="PO Gunung Harta">PO Gunung Harta</option>
-                <option value="PO Rosalia Indah">PO Rosalia Indah</option>
-                <option value="PO Sinar Jaya">PO Sinar Jaya</option>
-                <option value="PO Harapan Jaya">PO Harapan Jaya</option>
-                <option value="PO Haryanto">PO Haryanto</option>
-                <option value="PO Agra Mas">PO Agra Mas</option>
-                <option value="PO Kramat Djati">PO Kramat Djati</option>
-                <option value="PO Nusantara">PO Nusantara</option>
-              </select>
-            </div>
-          </div>
-
-          <div id="reviewsFeedContainer" class="reviews-feed-grid">
-            <!-- Dynamically populated by js/app.js -->
-          </div>
-
-          <!-- Passenger Survival Guide -->
-          <div class="champions-section-title" style="margin-top: var(--space-6);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="12" y1="16" x2="12" y2="12"/>
-              <line x1="12" y1="8" x2="12.01" y2="8"/>
-            </svg>
-            Panduan Bertahan Penumpang Trans-Jawa (Fakta Data Lapangan)
-          </div>
-
-          <div class="survival-grid">
-            <div class="survival-card">
-              <div class="survival-icon-wrap">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
-              </div>
-              <div class="survival-content">
-                <h4>1. Jangan Percaya 100% Jam Tiba di Tiket Agen</h4>
-                <p>Data mart menunjukkan <strong>84.8%</strong> bus AKAP telat dengan rata-rata <strong>+50.7 menit</strong>. Selalu siapkan toleransi waktu (buffer) minimal 1 - 1.5 jam bila memiliki janji temu atau kereta lanjutan di terminal tujuan.</p>
-              </div>
-            </div>
-
-            <div class="survival-card">
-              <div class="survival-icon-wrap">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
-              </div>
-              <div class="survival-content">
-                <h4>2. Naik dari Pul Utama, Hindari Banyak Titik Jemput</h4>
-                <p>Bus yang mampir ke 4-5 agen arteri di Bekasi/Cikarang rata-rata sudah mengalami keterlambatan <strong>+38.6 menit</strong> bahkan sebelum masuk gerbang tol. Naiklah dari terminal start awal (Pondok Pinang/Pulo Gebang).</p>
-              </div>
-            </div>
-
-            <div class="survival-card">
-              <div class="survival-icon-wrap">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-              </div>
-              <div class="survival-content">
-                <h4>3. Bus Sleeper Lebih Tepat Waktu Dibanding Executive</h4>
-                <p>Bukan karena mengebut, tapi kapasitas kursi sedikit (18-24 kursi) memangkas waktu ngetem naik-turun dan bongkar muat kargo bagasi hingga 70% dibanding bus 40-kursi.</p>
-              </div>
-            </div>
-
-            <div class="survival-card">
-              <div class="survival-icon-wrap">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/></svg>
-              </div>
-              <div class="survival-content">
-                <h4>4. Waspadai Dwell Time Rest Area KM 207 & KM 379</h4>
-                <p>Waktu makan malam di rest area sering molor 15-25 menit dari jadwal resmi akibat antrean toilet & prasmanan. Pilih PO dengan rumah makan eksklusif untuk durasi istirahat yang lebih disiplin.</p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
-      <!-- TAB 1: OPERATOR LEADERBOARD -->
+      <!-- Travel Survival Guide & Anti-Ngetem Tips -->
+      <section id="guideSection" class="landing-section">
+        <div class="landing-section-header">
+          <div>
+            <h2 class="landing-section-title">Panduan Cerdas Perjalanan Tol Trans-Jawa</h2>
+            <p class="landing-section-sub">Tips praktis dari hasil audit data mart agar perjalanan Anda terbebas dari drama ngetem dan keterlambatan.</p>
+          </div>
+        </div>
+
+        <div class="travel-guide-grid">
+          <div class="travel-guide-card">
+            <div class="travel-guide-icon-box">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h3 class="travel-guide-card-title">1. Antisipasi Deviasi Jadwal Riil</h3>
+            <p class="travel-guide-card-text">Audit 3.500 perjalanan menemukan rata-rata kedatangan di terminal tujuan mengalami penyesuaian +50,7 menit dari jadwal tiket agen. Selalu siapkan waktu luang minimal 1 jam untuk janji temu atau transit lanjutan.</p>
+          </div>
+
+          <div class="travel-guide-card">
+            <div class="travel-guide-icon-box">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11 2 11.5 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+            </div>
+            <h3 class="travel-guide-card-title">2. Pilih Keberangkatan Pul Utama</h3>
+            <p class="travel-guide-card-text">Bus yang singgah di lebih dari 4 titik jemput bayangan (seperti Cikokol, Pasar Rebo, Bekasi Timur) menyumbang delay awal hingga 45 menit sebelum masuk tol. Pilih agen pul utama pemberangkatan pertama.</p>
+          </div>
+
+          <div class="travel-guide-card">
+            <div class="travel-guide-icon-box">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <h3 class="travel-guide-card-title">3. Bus Sleeper Lebih Cepat Turun Penumpang</h3>
+            <p class="travel-guide-card-text">Bukan karena mengebut kencang, melainkan kapasitas kursi yang ringkas (18-24 kursi) memangkas waktu bongkar kargo bagasi dan naik-turun hingga 70% dibanding bus eksekutif 40-kursi.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Landing Page Footer -->
+      <footer class="landing-footer">
+        <div class="landing-footer-left">
+          <strong>NusantaraBus Travel Engine &copy; 2026</strong> &bull; Platform Analitik & Rekomendasi Bus Tol Trans-Jawa
+        </div>
+
+        <div style="display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap;">
+          <a href="https://github.com/Rangga11268/nusantarabus-otp-engine" target="_blank" rel="noopener noreferrer" style="color: var(--text-secondary); text-decoration: none; font-size: 13px; font-weight: 500;">GitHub Repository</a>
+          <a href="data/nusantarabus_complete_dataset.xlsx" download="nusantarabus_complete_dataset.xlsx" style="color: #22c55e; text-decoration: none; font-size: 13px; font-weight: 600;">Unduh Dataset Excel</a>
+          <button type="button" class="btn-cta-analytics" style="padding: 7px 14px; font-size: 12px;">Masuk Dashboard Analitik &rarr;</button>
+        </div>
+      </footer>
+
+    </div><!-- /#landingPageWrap -->
+
+
+    <!-- ========================================================
+         2. ENTERPRISE ANALYTICS DASHBOARD (FLEET OPS CONSOLE)
+         ======================================================== -->
+    <div id="dashboardPageWrap" class="dashboard-page-wrap" style="display: none;">
+      
+      <!-- Dashboard Top Header Bar -->
+      <header class="app-header">
+        <div class="brand-section">
+          <div class="brand-icon">
+            <img src="assets/branding/logo-symbol.svg" alt="NusantaraBus Official Brand Logo" width="44" height="44" style="border-radius: var(--radius-md); display: block;">
+          </div>
+          <div class="brand-info">
+            <div class="brand-heading">
+              <h1>NusantaraBus Fleet Engine</h1>
+              <span class="brand-tag">TRANS-JAVA OPS</span>
+            </div>
+            <p class="brand-subtitle">Platform Diagnostik Keterlambatan, Dwell Time Rest Area & Simulasi Solar Armada AKAP</p>
+          </div>
+        </div>
+
+        <div class="header-controls">
+          <button type="button" id="btnBackToLanding" class="btn-back-to-landing" title="Kembali ke Halaman Penumpang">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"/>
+              <polyline points="12 19 5 12 12 5"/>
+            </svg>
+            <span>Kembali ke Halaman Penumpang</span>
+          </button>
+
+          <a href="data/nusantarabus_complete_dataset.xlsx" download="nusantarabus_complete_dataset.xlsx" class="btn-excel-download" title="Unduh dataset mentah ulasan sentimen dan jadwal PO bus dalam format Excel (.xlsx)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>Unduh Excel (.xlsx)</span>
+          </a>
+
+          <div class="system-status-indicator">
+            <span class="radar-dot"></span>
+            <span>Data Mart: 3.500 Trip</span>
+          </div>
+
+          <select id="corridorSelect" class="corridor-select" aria-label="Pilih Koridor Tol Trans-Jawa">
+            <option value="all">Semua Koridor Tol Trans-Jawa</option>
+            <option value="sby">Jakarta - Surabaya (782 km)</option>
+            <option value="slo">Jakarta - Solo (540 km)</option>
+            <option value="smg">Jakarta - Semarang (440 km)</option>
+            <option value="mlg">Jakarta - Malang (850 km)</option>
+          </select>
+        </div>
+      </header>
+
+      <!-- Technical Operational KPI Cards -->
+      <section id="kpiRowAnalytics" class="kpi-row" style="display: grid;" aria-label="Indikator Kinerja Utama Teknis">
+        <article class="kpi-card">
+          <div class="kpi-header">
+            <span>Total Perjalanan Armada</span>
+            <span class="font-mono text-dim">N=3.500</span>
+          </div>
+          <div class="kpi-value-wrap">
+            <div id="kpiTotalTrips" class="kpi-value">3.500</div>
+            <span class="kpi-unit">trip</span>
+          </div>
+          <div class="kpi-footer">
+            <span class="text-dim">Sampel audit 9 operator AKAP</span>
+          </div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-header">
+            <span>Rasio Ketepatan Waktu (OTP)</span>
+            <span class="font-mono text-dim">&plusmn;15 MNT</span>
+          </div>
+          <div class="kpi-value-wrap">
+            <div id="kpiOtpPct" class="kpi-value text-amber">15.2%</div>
+            <span class="kpi-unit">pada terminal akhir</span>
+          </div>
+          <div class="kpi-footer">
+            <span class="text-severe font-mono">84.8%</span>
+            <span class="text-dim">mengalami keterlambatan</span>
+          </div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-header">
+            <span>Rata-Rata Keterlambatan</span>
+            <span class="font-mono text-dim">DEVIASI</span>
+          </div>
+          <div class="kpi-value-wrap">
+            <div id="kpiMeanDelay" class="kpi-value text-severe">+50.7</div>
+            <span class="kpi-unit">menit</span>
+          </div>
+          <div class="kpi-footer">
+            <span class="text-dim">Baseline jadwal resmi operator</span>
+          </div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-header">
+            <span>Intensitas Solar Armada</span>
+            <span class="font-mono text-dim">TELEMETRI</span>
+          </div>
+          <div class="kpi-value-wrap">
+            <div id="kpiFuelIntensity" class="kpi-value">27.87</div>
+            <span class="kpi-unit">L / 100 km</span>
+          </div>
+          <div class="kpi-footer">
+            <span class="text-dim">Total solar: 644.086 Liter</span>
+          </div>
+        </article>
+      </section>
+
+      <!-- Analytics Navigation Tabs -->
+      <nav id="mainTabsNav" class="tabs-nav" style="display: flex;" aria-label="Navigasi Analitik">
+        <button class="tab-btn active" data-tab="leaderboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+            <path d="M4 22h16"/>
+            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+          </svg>
+          <span>Peringkat Ketepatan PO</span>
+        </button>
+
+        <button class="tab-btn" data-tab="waterfall">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"/>
+            <line x1="12" y1="20" x2="12" y2="4"/>
+            <line x1="6" y1="20" x2="6" y2="14"/>
+          </svg>
+          <span>Diagnostik Rest Area & Dwell</span>
+        </button>
+
+        <button class="tab-btn" data-tab="simulator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="22" x2="21" y2="22"/>
+            <line x1="6" y1="18" x2="6" y2="11"/>
+            <line x1="10" y1="18" x2="10" y2="11"/>
+            <path d="M14 22V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v15"/>
+            <path d="M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L18 5"/>
+          </svg>
+          <span>Simulasi Penghematan Solar</span>
+        </button>
+
+        <button class="tab-btn" data-tab="hourly">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>Optimasi Jam Keberangkatan</span>
+        </button>
+
+        <button class="tab-btn" data-tab="methodology">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="12" cy="5" rx="9" ry="3"/>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+          </svg>
+          <span>Data Mart & Metodologi</span>
+        </button>
+      </nav>
+
+      <!-- TAB PANELS FOR ANALYTICS -->
+      <main>
+<!-- TAB 1: OPERATOR LEADERBOARD -->
       <section id="tab-leaderboard" class="tab-panel">
         <div class="panel-card">
           <div class="panel-header">
@@ -1225,19 +909,21 @@
           </div>
         </div>
       </section>
-    </main>
+      </main>
 
-    <!-- Application Footer -->
-    <footer class="app-footer">
-      <div>
-        <span>NusantaraBus Intelligence System &bull; Portfolio Data Analytics</span>
-      </div>
-      <div>
-        <span class="font-mono">SQLITE DATA MART &bull; MODERN SQL CTEs &bull; VANILLA WEB STANDARDS</span>
-      </div>
-    </footer>
+      <!-- Dashboard Footer -->
+      <footer class="app-footer">
+        <div>
+          <span>NusantaraBus Intelligence System &bull; Portfolio Data Analytics</span>
+        </div>
+        <div>
+          <span class="font-mono">SQLITE DATA MART &bull; MODERN SQL CTEs &bull; VANILLA WEB STANDARDS</span>
+        </div>
+      </footer>
 
-  </div>
+    </div><!-- /#dashboardPageWrap -->
+
+  </div><!-- /.app-container -->
 
   <!-- Modular Scripts -->
   <script src="js/chart.umd.min.js"></script>
