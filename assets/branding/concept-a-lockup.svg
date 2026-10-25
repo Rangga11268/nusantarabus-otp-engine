@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 180" width="720" height="180">
+  <!-- Concept A Lockup: Symbol + NusantaraBus Typography -->
+  <g transform="translate(16, 10) scale(0.625)">
+    <path d="M 40,32 H 88 V 144 L 168,32 H 216 V 224 H 168 V 112 L 88,224 H 40 Z" fill="#000000"/>
+    <path d="M 108,128 L 148,72 V 104 L 124,136 Z" fill="#FFFFFF"/>
+  </g>
+  <text x="180" y="95" font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="44" font-weight="800" letter-spacing="-1" fill="#000000">NUSANTARABUS</text>
+  <text x="182" y="128" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="700" letter-spacing="4" fill="#64748B">FLEET INTELLIGENCE ENGINE</text>
+</svg>

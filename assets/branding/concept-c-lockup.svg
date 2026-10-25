@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 180" width="720" height="180">
+  <!-- Concept C Lockup: Highway Cloverleaf + NusantaraBus Typography -->
+  <g transform="translate(16, 10) scale(0.625)" fill-rule="evenodd">
+    <path d="M 128,24 C 152,24 172,44 172,68 C 172,82 165,94 154,102 C 162,113 174,120 188,120 C 212,120 232,140 232,164 C 232,188 212,208 188,208 C 174,208 162,201 154,190 C 143,201 131,208 116,208 C 92,208 72,188 72,164 C 72,150 79,138 90,130 C 82,119 70,112 56,112 C 32,112 12,92 12,68 C 12,44 32,24 56,24 C 70,24 82,31 90,42 C 101,31 113,24 128,24 Z" fill="#000000"/>
+    <path d="M 128,68 L 140,116 L 188,128 L 140,140 L 128,188 L 116,140 L 68,128 L 116,116 Z" fill="#FFFFFF"/>
+    <circle cx="128" cy="128" r="8" fill="#000000"/>
+  </g>
+  <text x="180" y="95" font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="44" font-weight="800" letter-spacing="-1" fill="#000000">NUSANTARABUS</text>
+  <text x="182" y="128" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="700" letter-spacing="4" fill="#64748B">FLEET INTELLIGENCE ENGINE</text>
+</svg>

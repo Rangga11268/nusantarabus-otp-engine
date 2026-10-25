@@ -1,0 +1,293 @@
+{
+  "collected_at": "2026-10-25 16:34:10",
+  "total_records": 26,
+  "source": "redBus ID & Official PO Operator Verification",
+  "schedules": [
+    {
+      "operator": "PO Sinar Jaya",
+      "route": "JKT-SBY",
+      "service_class": "Executive",
+      "departure": "06:30",
+      "arrival": "16:45",
+      "origin": "Pulo Gebang",
+      "destination": "Purabaya Bungurasih",
+      "price": 330000.0,
+      "rating": 4.6
+    },
+    {
+      "operator": "PO Sinar Jaya",
+      "route": "JKT-SBY",
+      "service_class": "Suite Class Sleeper",
+      "departure": "17:00",
+      "arrival": "03:15",
+      "origin": "Pulo Gebang",
+      "destination": "Purabaya Bungurasih",
+      "price": 540000.0,
+      "rating": 4.8
+    },
+    {
+      "operator": "PO Rosalia Indah",
+      "route": "JKT-SBY",
+      "service_class": "Super Executive",
+      "departure": "15:30",
+      "arrival": "02:15",
+      "origin": "Kalideres / Pulo Gebang",
+      "destination": "Purabaya Bungurasih",
+      "price": 385000.0,
+      "rating": 4.7
+    },
+    {
+      "operator": "PO Rosalia Indah",
+      "route": "JKT-SBY",
+      "service_class": "First Class Double Decker",
+      "departure": "17:30",
+      "arrival": "03:45",
+      "origin": "Pulo Gebang",
+      "destination": "Purabaya Bungurasih",
+      "price": 575000.0,
+      "rating": 4.9
+    },
+    {
+      "operator": "PO Harapan Jaya",
+      "route": "JKT-SBY",
+      "service_class": "Executive",
+      "departure": "16:00",
+      "arrival": "02:45",
+      "origin": "Pasar Rebo / Pulo Gebang",
+      "destination": "Purabaya Bungurasih",
+      "price": 350000.0,
+      "rating": 4.6
+    },
+    {
+      "operator": "PO Haryanto",
+      "route": "JKT-SBY",
+      "service_class": "Executive",
+      "departure": "18:00",
+      "arrival": "04:00",
+      "origin": "Pulo Gebang",
+      "destination": "Purabaya Bungurasih",
+      "price": 340000.0,
+      "rating": 4.5
+    },
+    {
+      "operator": "PO 27 Trans",
+      "route": "JKT-SBY",
+      "service_class": "President Class",
+      "departure": "16:30",
+      "arrival": "03:00",
+      "origin": "Pulo Gebang",
+      "destination": "Purabaya Bungurasih",
+      "price": 410000.0,
+      "rating": 4.7
+    },
+    {
+      "operator": "PO Gunung Harta",
+      "route": "JKT-SBY",
+      "service_class": "Green Titanium Sleeper",
+      "departure": "17:15",
+      "arrival": "03:30",
+      "origin": "Kampung Rambutan",
+      "destination": "Purabaya Bungurasih",
+      "price": 520000.0,
+      "rating": 4.8
+    },
+    {
+      "operator": "PO Kramat Djati",
+      "route": "JKT-SBY",
+      "service_class": "VIP",
+      "departure": "14:00",
+      "arrival": "01:30",
+      "origin": "Pondok Pinang",
+      "destination": "Purabaya Bungurasih",
+      "price": 295000.0,
+      "rating": 4.2
+    },
+    {
+      "operator": "PO Agra Mas",
+      "route": "JKT-SBY",
+      "service_class": "Executive",
+      "departure": "16:45",
+      "arrival": "03:15",
+      "origin": "Pulo Gebang",
+      "destination": "Purabaya Bungurasih",
+      "price": 360000.0,
+      "rating": 4.6
+    },
+    {
+      "operator": "PO Sinar Jaya",
+      "route": "JKT-SLO",
+      "service_class": "Executive",
+      "departure": "07:00",
+      "arrival": "14:30",
+      "origin": "Pulo Gebang",
+      "destination": "Tirtonadi",
+      "price": 220000.0,
+      "rating": 4.6
+    },
+    {
+      "operator": "PO Sinar Jaya",
+      "route": "JKT-SLO",
+      "service_class": "Suite Class Sleeper",
+      "departure": "19:00",
+      "arrival": "02:15",
+      "origin": "Pulo Gebang",
+      "destination": "Tirtonadi",
+      "price": 370000.0,
+      "rating": 4.8
+    },
+    {
+      "operator": "PO Rosalia Indah",
+      "route": "JKT-SLO",
+      "service_class": "Executive Plus",
+      "departure": "14:30",
+      "arrival": "22:00",
+      "origin": "Kampung Rambutan",
+      "destination": "Tirtonadi",
+      "price": 260000.0,
+      "rating": 4.7
+    },
+    {
+      "operator": "PO Rosalia Indah",
+      "route": "JKT-SLO",
+      "service_class": "Super Top",
+      "departure": "18:30",
+      "arrival": "01:45",
+      "origin": "Pulo Gebang",
+      "destination": "Tirtonadi",
+      "price": 310000.0,
+      "rating": 4.8
+    },
+    {
+      "operator": "PO Harapan Jaya",
+      "route": "JKT-SLO",
+      "service_class": "Executive",
+      "departure": "17:00",
+      "arrival": "00:30",
+      "origin": "Pulo Gebang",
+      "destination": "Tirtonadi",
+      "price": 240000.0,
+      "rating": 4.6
+    },
+    {
+      "operator": "PO Haryanto",
+      "route": "JKT-SLO",
+      "service_class": "Executive",
+      "departure": "18:45",
+      "arrival": "01:45",
+      "origin": "Pulo Gebang",
+      "destination": "Tirtonadi",
+      "price": 250000.0,
+      "rating": 4.5
+    },
+    {
+      "operator": "PO Agra Mas",
+      "route": "JKT-SLO",
+      "service_class": "Executive",
+      "departure": "17:15",
+      "arrival": "00:45",
+      "origin": "Pulo Gebang",
+      "destination": "Tirtonadi",
+      "price": 250000.0,
+      "rating": 4.6
+    },
+    {
+      "operator": "PO Sinar Jaya",
+      "route": "JKT-SMG",
+      "service_class": "Executive",
+      "departure": "07:30",
+      "arrival": "13:30",
+      "origin": "Kampung Rambutan",
+      "destination": "Penggaron / Krapyak",
+      "price": 180000.0,
+      "rating": 4.6
+    },
+    {
+      "operator": "PO Sinar Jaya",
+      "route": "JKT-SMG",
+      "service_class": "Suite Class Sleeper",
+      "departure": "20:00",
+      "arrival": "01:45",
+      "origin": "Pulo Gebang",
+      "destination": "Krapyak",
+      "price": 310000.0,
+      "rating": 4.8
+    },
+    {
+      "operator": "PO Haryanto",
+      "route": "JKT-SMG",
+      "service_class": "Executive",
+      "departure": "18:15",
+      "arrival": "23:45",
+      "origin": "Pulo Gebang",
+      "destination": "Terboyo / Kaligawe",
+      "price": 210000.0,
+      "rating": 4.6
+    },
+    {
+      "operator": "PO Rosalia Indah",
+      "route": "JKT-SMG",
+      "service_class": "Executive",
+      "departure": "15:00",
+      "arrival": "21:00",
+      "origin": "Pulo Gebang",
+      "destination": "Sukun Banyumanik",
+      "price": 215000.0,
+      "rating": 4.7
+    },
+    {
+      "operator": "PO Nusantara",
+      "route": "JKT-SMG",
+      "service_class": "Super Executive",
+      "departure": "19:30",
+      "arrival": "01:15",
+      "origin": "Pulo Gebang",
+      "destination": "Krapyak",
+      "price": 230000.0,
+      "rating": 4.5
+    },
+    {
+      "operator": "PO Gunung Harta",
+      "route": "JKT-MLG",
+      "service_class": "Green Titanium Sleeper",
+      "departure": "16:15",
+      "arrival": "04:15",
+      "origin": "Pulo Gebang",
+      "destination": "Arjosari",
+      "price": 540000.0,
+      "rating": 4.9
+    },
+    {
+      "operator": "PO 27 Trans",
+      "route": "JKT-MLG",
+      "service_class": "Urban Class",
+      "departure": "15:45",
+      "arrival": "03:45",
+      "origin": "Pulo Gebang",
+      "destination": "Arjosari",
+      "price": 440000.0,
+      "rating": 4.7
+    },
+    {
+      "operator": "PO Rosalia Indah",
+      "route": "JKT-MLG",
+      "service_class": "Executive Plus",
+      "departure": "15:00",
+      "arrival": "03:30",
+      "origin": "Kampung Rambutan",
+      "destination": "Arjosari",
+      "price": 395000.0,
+      "rating": 4.7
+    },
+    {
+      "operator": "PO Juragan 99",
+      "route": "JKT-MLG",
+      "service_class": "First Class Sleeper",
+      "departure": "17:30",
+      "arrival": "05:00",
+      "origin": "Pulo Gebang",
+      "destination": "Arjosari",
+      "price": 600000.0,
+      "rating": 4.9
+    }
+  ]
+}
