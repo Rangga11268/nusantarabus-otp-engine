@@ -30,7 +30,7 @@
         <ul class="landing-nav-links">
           <li><a href="#searchSection" class="landing-nav-link">Cari Bus</a></li>
           <li><a href="#operatorsSection" class="landing-nav-link">10 Operator Bus</a></li>
-          <li><a href="#reviewsSection" class="landing-nav-link">Ulasan Penumpang</a></li>
+          <li><a href="#reviewsSection" class="landing-nav-link">Sinyal Sentimen</a></li>
           <li><a href="#guideSection" class="landing-nav-link">Panduan Perjalanan</a></li>
         </ul>
 
@@ -73,17 +73,20 @@
       <section id="searchSection" class="landing-section">
         <div class="landing-search-card">
           <div class="search-card-intro">
-            <span class="search-card-kicker">TRIP BRIEF</span>
-            <p>Pilih konteks perjalanan, kami urutkan opsi yang paling masuk akal.</p>
+            <div>
+              <span class="search-card-kicker">RUTE PERJALANAN</span>
+              <h2>Mulai dari rutenya.</h2>
+            </div>
+            <p>Rekomendasi akan diurutkan dari data jadwal referensi dan prioritas Anda.</p>
           </div>
           <div class="search-card-grid">
             <div class="search-field-group">
-              <label class="search-field-label">Kota Asal</label>
+              <label class="search-field-label">Berangkat dari</label>
               <input type="text" class="search-field-input" value="Jakarta (Jabodetabek)" readonly style="cursor: default; opacity: 0.9;">
             </div>
 
             <div class="search-field-group">
-              <label class="search-field-label">Kota Tujuan</label>
+              <label class="search-field-label">Menuju</label>
               <select id="passengerRouteSelect" class="search-field-input" style="cursor: pointer;">
                 <option value="sby">Surabaya (782 km &bull; Via Tol Trans-Jawa)</option>
                 <option value="slo">Solo (540 km &bull; Via Tol Trans-Jawa)</option>
@@ -93,10 +96,10 @@
             </div>
 
             <div class="search-field-group">
-              <label class="search-field-label">Status Keberangkatan</label>
+              <label class="search-field-label">Kondisi data</label>
               <div class="search-field-input" style="display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 13px;">
                 <span class="radar-dot"></span>
-                <span>Jadwal Aktif Hari Ini</span>
+                <span>Jadwal referensi tersedia</span>
               </div>
             </div>
 
@@ -341,22 +344,18 @@
         </div>
       </section>
 
-      <!-- Compact Passenger Sentiment Summary -->
+      <!-- Compact aggregate sentiment summary -->
       <section id="reviewsSection" class="landing-section">
         <div class="landing-section-header">
           <div>
-            <h2 class="landing-section-title">Ulasan Jujur & Analisis Sentimen Penumpang</h2>
-            <p class="landing-section-sub">Ringkasan sentiment yang tersedia di dataset proyek. Data contoh ditampilkan sebagai konteks eksplorasi, bukan sebagai klaim ulasan terverifikasi.</p>
+            <h2 class="landing-section-title">Sinyal Sentimen per Operator</h2>
+            <p class="landing-section-sub">Ringkasan agregat dari dataset proyek. Kami menampilkan pola topik dan proporsi sentimen, bukan testimonial individu atau klaim verifikasi penumpang.</p>
           </div>
-          <button type="button" id="btnOpenSentiment" class="sentiment-open-button">Lihat ringkasan operator</button>
+          <button type="button" id="btnOpenSentiment" class="sentiment-open-button">Buka tabel operator</button>
         </div>
 
         <div id="sentimentHighlights" class="sentiment-highlights" aria-live="polite">
           <!-- Rendered dynamically by renderSentimentHighlights() in js/app.js -->
-        </div>
-
-        <div id="reviewsFeedContainer" class="reviews-feed-grid sentiment-preview" style="margin-bottom: var(--space-6);">
-          <!-- Rendered dynamically by renderPassengerReviewsFeed() in js/app.js -->
         </div>
 
         <dialog id="sentimentDialog" class="sentiment-dialog" aria-labelledby="sentimentDialogTitle">
@@ -398,7 +397,6 @@
                 <tbody id="sentimentTableBody"></tbody>
               </table>
             </div>
-            <div id="dialogReviews" class="reviews-feed-grid dialog-reviews"></div>
           </div>
         </dialog>
 

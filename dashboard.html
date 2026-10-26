@@ -16,6 +16,11 @@
 <body>
   <div class="app-container">
     <div id="dashboardPageWrap" class="dashboard-page-wrap" style="display: none;">
+      <button type="button" class="mobile-sidebar-toggle" id="mobileSidebarToggle" aria-controls="mainTabsNav" aria-expanded="false">
+        <span class="mobile-sidebar-toggle-icon" aria-hidden="true">&#9776;</span>
+        <span>Menu analitik</span>
+      </button>
+      <button type="button" class="mobile-sidebar-scrim" id="mobileSidebarScrim" aria-label="Tutup menu analitik"></button>
       
       <!-- Dashboard Top Header Bar -->
       <header class="app-header">
@@ -126,8 +131,8 @@
       </section>
 
       <!-- Analytics Navigation Tabs -->
-      <nav id="mainTabsNav" class="tabs-nav" style="display: flex;" aria-label="Navigasi Analitik">
-        <button class="tab-btn active" data-tab="leaderboard">
+      <nav id="mainTabsNav" class="tabs-nav dashboard-sidebar" style="display: flex;" aria-label="Navigasi Analitik">
+        <a class="tab-btn active" data-tab="leaderboard" href="dashboard.html">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
             <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
@@ -137,18 +142,18 @@
             <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
           </svg>
           <span>Peringkat Ketepatan PO</span>
-        </button>
+        </a>
 
-        <button class="tab-btn" data-tab="waterfall">
+        <a class="tab-btn" data-tab="waterfall" href="dashboard-waterfall.html">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="20" x2="18" y2="10"/>
             <line x1="12" y1="20" x2="12" y2="4"/>
             <line x1="6" y1="20" x2="6" y2="14"/>
           </svg>
           <span>Diagnostik Rest Area & Dwell</span>
-        </button>
+        </a>
 
-        <button class="tab-btn" data-tab="simulator">
+        <a class="tab-btn" data-tab="simulator" href="dashboard-fuel.html">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="3" y1="22" x2="21" y2="22"/>
             <line x1="6" y1="18" x2="6" y2="11"/>
@@ -157,24 +162,24 @@
             <path d="M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L18 5"/>
           </svg>
           <span>Simulasi Penghematan Solar</span>
-        </button>
+        </a>
 
-        <button class="tab-btn" data-tab="hourly">
+        <a class="tab-btn" data-tab="hourly" href="dashboard-hourly.html">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/>
             <polyline points="12 6 12 12 16 14"/>
           </svg>
           <span>Optimasi Jam Keberangkatan</span>
-        </button>
+        </a>
 
-        <button class="tab-btn" data-tab="methodology">
+        <a class="tab-btn" data-tab="methodology" href="dashboard-methodology.html">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <ellipse cx="12" cy="5" rx="9" ry="3"/>
             <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
             <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
           </svg>
           <span>Data Mart & Metodologi</span>
-        </button>
+        </a>
       </nav>
 
       <!-- TAB PANELS FOR ANALYTICS -->
@@ -206,6 +211,9 @@
             </div>
             <div class="chart-canvas-wrap">
               <canvas id="chartLeaderboardTradeoff"></canvas>
+            </div>
+            <div class="chart-reading-guide">
+              <strong>Cara membaca:</strong> setiap batang berjumlah 100% dari perjalanan operator. Hijau berarti tiba dalam toleransi 15 menit. Garis biru menunjukkan rata-rata keterlambatan dalam menit, bukan persentase.
             </div>
             <div class="chart-insight-box">
               <strong>Temuan Data Ketepatan Waktu:</strong> PO kelas First Class / Sleeper (Juragan 99 &amp; 27 Trans) mendominasi kedatangan tepat waktu (&gt;44%) dengan keterlambatan kritis di bawah 11%. Sebaliknya, bus eksekutif reguler dengan banyak agen bayangan mencatat keterlambatan moderat hingga kritis (&gt;30 menit) mencapai 55% hingga 68% perjalanan, memperpanjang rata-rata deviasi tiba hingga +45 sampai +58 menit.
@@ -254,6 +262,9 @@
             </div>
             <div class="chart-canvas-wrap">
               <canvas id="chartWaterfallProgression"></canvas>
+            </div>
+            <div class="chart-reading-guide">
+              <strong>Cara membaca:</strong> batang menunjukkan tambahan atau pengurangan delay di satu titik. Batang di bawah nol berarti bus memulihkan waktu. Garis menunjukkan total delay yang sudah terkumpul sampai titik tersebut.
             </div>
             <div class="chart-insight-box">
               <strong>Temuan Bottleneck:</strong> Sebanyak <strong>76.2%</strong> dari total penambahan keterlambatan terjadi sebelum bus masuk gerbang Tol Cikampek Utama (akibat ngetem terminal keberangkatan dan antrean arteri perkotaan). Jalur tol justru menjadi zona pemulihan waktu (<em>speed catch-up</em>) dengan deviasi negatif (-5,6 menit).
@@ -367,6 +378,9 @@
             <div class="chart-canvas-wrap">
               <canvas id="chartFuelSensitivity"></canvas>
             </div>
+            <div class="chart-reading-guide">
+              <strong>Cara membaca:</strong> sumbu mendatar adalah batas kecepatan bus. Sumbu tegak adalah estimasi biaya solar yang dapat dihemat. Titik hijau adalah pengaturan yang sedang dipilih pada slider.
+            </div>
             <div class="chart-insight-box">
               <strong>Rekomendasi Kebijakan:</strong> Memasang electronic speed governor pada <strong>90 km/jam</strong> merupakan titik optimal Pareto (<em>sweet spot</em>) yang memangkas konsumsi BBM armada secara signifikan tanpa mengorbankan waktu tempuh terjadwal.
             </div>
@@ -404,6 +418,9 @@
             </div>
             <div class="chart-canvas-wrap">
               <canvas id="chartHourlyProfile"></canvas>
+            </div>
+            <div class="chart-reading-guide">
+              <strong>Cara membaca:</strong> batang menunjukkan rata-rata keterlambatan dalam menit. Garis hijau menunjukkan persentase perjalanan yang tiba dalam toleransi 15 menit. Bandingkan jam dengan batang paling pendek dan garis paling tinggi.
             </div>
           </div>
 

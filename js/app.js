@@ -384,6 +384,8 @@
       },
       plugins: [barLogoPlugin],
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         interaction: {
           mode: "index",
           intersect: false,
@@ -520,11 +522,11 @@
     }
 
     const labels = [
-      "1. Ngetem Agen",
-      "2. Arteri Jkt-Bekasi",
-      "3. Cruising Tol",
-      "4. Rest Area Makan",
-      "5. Masuk Terminal",
+      "Ngetem agen",
+      "Arteri kota",
+      "Jalur tol",
+      "Rest area",
+      "Terminal",
     ];
 
     const stageAdded = [14.2, 24.4, -5.6, 2.5, 1.3];
@@ -559,6 +561,8 @@
         ],
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         interaction: {
           mode: "index",
           intersect: false,
@@ -566,10 +570,29 @@
         scales: {
           x: {
             grid: { display: false },
+            ticks: { maxRotation: 0, minRotation: 0, autoSkip: false, font: { size: 10 } },
           },
           y: {
+            beginAtZero: true,
+            beginAtZero: true,
             title: { display: true, text: "Deviasi Keterlambatan (Menit)" },
             grid: { color: "rgba(255, 255, 255, 0.04)" },
+          },
+        },
+        plugins: {
+          legend: { position: "bottom", labels: { color: "#cbd5e1", usePointStyle: true, padding: 16 } },
+          tooltip: {
+            callbacks: {
+              label: (context) => `${context.dataset.label}: ${context.parsed.y > 0 ? "+" : ""}${context.parsed.y} menit`,
+            },
+          },
+        },
+        plugins: {
+          legend: { position: "bottom", labels: { color: "#cbd5e1", usePointStyle: true, padding: 16 } },
+          tooltip: {
+            callbacks: {
+              label: (context) => `${context.dataset.label}: ${context.parsed.y > 0 ? "+" : ""}${context.parsed.y} menit`,
+            },
           },
         },
       },
@@ -672,6 +695,8 @@
         ],
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         interaction: {
           mode: "index",
           intersect: false,
@@ -684,6 +709,14 @@
           y: {
             title: { display: true, text: "Penghematan Bersih (Juta Rp)" },
             grid: { color: "rgba(255, 255, 255, 0.04)" },
+          },
+        },
+        plugins: {
+          legend: { position: "bottom", labels: { color: "#cbd5e1", usePointStyle: true, padding: 16 } },
+          tooltip: {
+            callbacks: {
+              label: (context) => `Estimasi hemat: Rp ${context.parsed.y.toFixed(1)} juta`,
+            },
           },
         },
       },
@@ -803,6 +836,8 @@
         ],
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         interaction: {
           mode: "index",
           intersect: false,
@@ -810,6 +845,12 @@
         scales: {
           x: {
             grid: { display: false },
+            ticks: {
+              maxRotation: 0,
+              minRotation: 0,
+              autoSkip: false,
+              font: { size: 10, weight: "600" },
+            },
           },
           y: {
             position: "left",
@@ -819,9 +860,19 @@
           y1: {
             position: "right",
             min: 0,
-            max: 30,
+            max: 25,
             title: { display: true, text: "Peluang OTP (%)", color: "#10b981" },
             grid: { display: false },
+          },
+        },
+        plugins: {
+          legend: { position: "bottom", labels: { color: "#cbd5e1", usePointStyle: true, padding: 16 } },
+          tooltip: {
+            callbacks: {
+              label: (context) => context.dataset.yAxisID === "y1"
+                ? `Tiba tepat waktu: ${context.parsed.y}%`
+                : `Rata-rata terlambat: ${context.parsed.y} menit`,
+            },
           },
         },
       },
@@ -966,8 +1017,7 @@
           </div>
 
           <div class="passenger-verdict-box">
-            <strong>Saran Penumpang:</strong> ${metaTop.passenger_verdict}
-            ${sentTop && sentTop.verified_quotes && sentTop.verified_quotes[0] ? `<br><em style="color: #94a3b8; display: block; margin-top: 5px; font-size: 11.5px;">"${sentTop.verified_quotes[0]}"</em>` : ""}
+            <strong>Ringkasan operator:</strong> ${metaTop.passenger_verdict}
           </div>
         </div>
 
@@ -989,8 +1039,8 @@
             <span class="${top.otp_pct >= 40 ? "text-ontime" : "text-amber"}">Ketepatan: ${top.otp_pct}%</span> &bull; Delay: +${top.mean_delay_min}m
           </div>
 
-          <button type="button" class="btn-view-reviews" onclick="const f = document.getElementById('reviewPoFilter'); if(f) { f.value='${top.po_name}'; f.dispatchEvent(new Event('change')); document.getElementById('reviewsFeedContainer').scrollIntoView({behavior: 'smooth'}); }">
-            Lihat Ulasan Penumpang &rarr;
+          <button type="button" class="btn-view-reviews btn-view-sentiment" data-sentiment-operator="${top.po_name}">
+            Lihat sinyal operator
           </button>
           <button type="button" class="btn-book-ticket" data-booking-operator="${top.po_name}" data-booking-class="${top.service_class}" data-booking-destination="${curRoute.destCity}" data-booking-departure="${curRoute.dep}" data-booking-arrival="${curRoute.arr}" data-booking-fare="${metaTop.fare_range}">
             Pilih untuk dipesan
@@ -1041,8 +1091,7 @@
           </div>
 
           <div class="passenger-verdict-box">
-            <strong>Saran Penumpang:</strong> ${metaRunner.passenger_verdict}
-            ${sentRunner && sentRunner.verified_quotes && sentRunner.verified_quotes[0] ? `<br><em style="color: #94a3b8; display: block; margin-top: 5px; font-size: 11.5px;">"${sentRunner.verified_quotes[0]}"</em>` : ""}
+            <strong>Ringkasan operator:</strong> ${metaRunner.passenger_verdict}
           </div>
         </div>
 
@@ -1063,8 +1112,8 @@
             <span class="${runnerUp.otp_pct >= 40 ? "text-ontime" : "text-amber"}">Ketepatan: ${runnerUp.otp_pct}%</span> &bull; Delay: +${runnerUp.mean_delay_min}m
           </div>
 
-          <button type="button" class="btn-view-reviews" onclick="const f = document.getElementById('reviewPoFilter'); if(f) { f.value='${runnerUp.po_name}'; f.dispatchEvent(new Event('change')); document.getElementById('reviewsFeedContainer').scrollIntoView({behavior: 'smooth'}); }">
-            Lihat Ulasan Penumpang &rarr;
+          <button type="button" class="btn-view-reviews btn-view-sentiment" data-sentiment-operator="${runnerUp.po_name}">
+            Lihat sinyal operator
           </button>
           <button type="button" class="btn-book-ticket" data-booking-operator="${runnerUp.po_name}" data-booking-class="${runnerUp.service_class}" data-booking-destination="${curRoute.destCity}" data-booking-departure="${curRoute.dep}" data-booking-arrival="${curRoute.arr}" data-booking-fare="${metaRunner.fare_range}">
             Pilih untuk dipesan
@@ -1115,8 +1164,7 @@
           </div>
 
           <div class="passenger-verdict-box">
-            <strong>Saran Penumpang:</strong> ${metaBudget.passenger_verdict}
-            ${sentBudget && sentBudget.verified_quotes && sentBudget.verified_quotes[0] ? `<br><em style="color: #94a3b8; display: block; margin-top: 5px; font-size: 11.5px;">"${sentBudget.verified_quotes[0]}"</em>` : ""}
+            <strong>Ringkasan operator:</strong> ${metaBudget.passenger_verdict}
           </div>
         </div>
 
@@ -1137,8 +1185,8 @@
             <span class="${budgetPick.otp_pct >= 40 ? "text-ontime" : "text-amber"}">Ketepatan: ${budgetPick.otp_pct}%</span> &bull; Delay: +${budgetPick.mean_delay_min}m
           </div>
 
-          <button type="button" class="btn-view-reviews" onclick="const f = document.getElementById('reviewPoFilter'); if(f) { f.value='${budgetPick.po_name}'; f.dispatchEvent(new Event('change')); document.getElementById('reviewsFeedContainer').scrollIntoView({behavior: 'smooth'}); }">
-            Lihat Ulasan Penumpang &rarr;
+          <button type="button" class="btn-view-reviews btn-view-sentiment" data-sentiment-operator="${budgetPick.po_name}">
+            Lihat sinyal operator
           </button>
           <button type="button" class="btn-book-ticket" data-booking-operator="${budgetPick.po_name}" data-booking-class="${budgetPick.service_class}" data-booking-destination="${curRoute.destCity}" data-booking-departure="${curRoute.dep}" data-booking-arrival="${curRoute.arr}" data-booking-fare="${metaBudget.fare_range}">
             Pilih untuk dipesan
@@ -1236,79 +1284,6 @@
   }
 
   /**
-   * Render Granular Passenger Reviews Feed (Who Commented & What They Said)
-   */
-  function renderPassengerReviewsFeed(filterPo = "all") {
-    const feed = document.getElementById("reviewsFeedContainer");
-    if (!feed || !DATA.reviews) return;
-
-    feed.innerHTML = "";
-    const list = filterPo === "all" ? DATA.reviews.slice(0, 3) : DATA.reviews.filter((r) => r.operator_name === filterPo).slice(0, 3);
-
-    list.forEach((r) => {
-      const logoSrc = LOGO_MAP[r.operator_name] || "assets/logos/sinarjaya.png";
-      const card = document.createElement("article");
-      card.className = "review-card";
-
-      const starCount = Math.round(r.rating_stars);
-      const starsStr = "★".repeat(starCount) + "☆".repeat(5 - starCount);
-
-      card.innerHTML = `
-        <div>
-          <div class="review-user-row">
-            <div class="review-user-info">
-              <div class="review-user-avatar">${r.reviewer_name.charAt(0)}</div>
-              <div>
-                <div class="review-user-name">${r.reviewer_name}</div>
-                <span class="review-source-badge font-mono">${r.source_platform}</span>
-              </div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 4px;">
-              <span style="color: #fbbf24; font-size: 13px;">${starsStr}</span>
-              <strong class="font-mono" style="font-size: 12px; color: #f8fafc;">${r.rating_stars.toFixed(1)}</strong>
-            </div>
-          </div>
-
-          <div class="review-meta-line">
-            <div class="operator-logo-wrap" style="width: 26px; height: 18px; display: inline-flex; vertical-align: middle;">
-              <img src="${logoSrc}" alt="${r.operator_name}" class="operator-logo-img">
-            </div>
-            <strong style="color: var(--text-primary); font-size: 11.5px;">${r.operator_name}</strong>
-            <span>•</span>
-            <span>${r.service_class}</span>
-          </div>
-
-          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">
-            Rute: <strong>${r.route_traveled}</strong> • Tanggal: ${r.review_date}
-          </div>
-
-          <h4 class="review-title-text">${r.review_title}</h4>
-          <p class="review-body-text">"${r.review_comment}"</p>
-        </div>
-
-        <div class="review-card-footer">
-          <span class="perk-tag" style="background: rgba(34, 197, 94, 0.1); color: #22c55e; border-color: rgba(34, 197, 94, 0.25);">
-            ${r.aspect_highlight}
-          </span>
-          <span class="font-mono text-dim" style="font-size: 10.5px;">${r.review_id}</span>
-        </div>
-      `;
-      feed.appendChild(card);
-    });
-
-    const dialogFeed = document.getElementById("dialogReviews");
-    if (dialogFeed && dialogFeed !== feed) {
-      dialogFeed.innerHTML = "";
-      list.forEach((r) => {
-        const card = document.createElement("article");
-        card.className = "review-card";
-        card.innerHTML = `<strong>${r.operator_name}</strong><h4 class="review-title-text">${r.review_title}</h4><p class="review-body-text">"${r.review_comment}"</p><span class="review-source-badge">${r.source_platform}</span>`;
-        dialogFeed.appendChild(card);
-      });
-    }
-  }
-
-  /**
    * Tab Switching with Chart Reflow
    */
   function switchTab(tabId) {
@@ -1316,6 +1291,11 @@
 
     document.querySelectorAll(".tab-btn").forEach((btn) => {
       btn.classList.toggle("active", btn.dataset.tab === tabId);
+      if (btn.dataset.tab === tabId) {
+        btn.setAttribute("aria-current", "page");
+      } else {
+        btn.removeAttribute("aria-current");
+      }
     });
 
     document.querySelectorAll(".tab-panel").forEach((panel) => {
@@ -1384,17 +1364,31 @@
       });
     }
 
-    // Tabs inside Analytics Dashboard
-    document.querySelectorAll(".tab-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        switchTab(btn.dataset.tab);
-      });
-    });
-
     // Page Switcher: Landing Page (Passenger) <-> Analytics Dashboard (Fleet Ops)
     const landingWrap = document.getElementById("landingPageWrap");
     const dashboardWrap = document.getElementById("dashboardPageWrap");
     const btnBackToLanding = document.getElementById("btnBackToLanding");
+    const mobileSidebarToggle = document.getElementById("mobileSidebarToggle");
+    const mobileSidebarScrim = document.getElementById("mobileSidebarScrim");
+    const closeMobileSidebar = () => {
+      if (!dashboardWrap || !mobileSidebarToggle) return;
+      dashboardWrap.classList.remove("mobile-sidebar-open");
+      mobileSidebarToggle.setAttribute("aria-expanded", "false");
+    };
+
+    if (mobileSidebarToggle && dashboardWrap) {
+      mobileSidebarToggle.addEventListener("click", () => {
+        const isOpen = dashboardWrap.classList.toggle("mobile-sidebar-open");
+        mobileSidebarToggle.setAttribute("aria-expanded", String(isOpen));
+      });
+    }
+    if (mobileSidebarScrim) mobileSidebarScrim.addEventListener("click", closeMobileSidebar);
+    document.querySelectorAll(".dashboard-sidebar .tab-btn").forEach((link) => {
+      link.addEventListener("click", closeMobileSidebar);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeMobileSidebar();
+    });
 
     document.querySelectorAll(".btn-cta-analytics").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -1421,27 +1415,27 @@
       });
     }
 
-    // Review PO Filter
+    // Aggregate sentiment operator filter
     const reviewPoFilter = document.getElementById("reviewPoFilter");
-    if (reviewPoFilter) {
-      reviewPoFilter.addEventListener("change", (e) => {
-        renderPassengerReviewsFeed(e.target.value);
-      });
-    }
-
     const sentimentDialog = document.getElementById("sentimentDialog");
     const openSentiment = document.getElementById("btnOpenSentiment");
     const closeSentiment = document.getElementById("btnCloseSentiment");
     if (sentimentDialog && openSentiment) {
       openSentiment.addEventListener("click", () => {
         renderSentimentTable();
-        renderPassengerReviewsFeed(reviewPoFilter ? reviewPoFilter.value : "all");
         sentimentDialog.showModal();
       });
     }
     if (sentimentDialog && closeSentiment) {
       closeSentiment.addEventListener("click", () => sentimentDialog.close());
     }
+    document.addEventListener("click", (event) => {
+      const button = event.target.closest(".btn-view-sentiment");
+      if (!button || !sentimentDialog) return;
+      if (reviewPoFilter) reviewPoFilter.value = button.dataset.sentimentOperator || "all";
+      renderSentimentTable();
+      sentimentDialog.showModal();
+    });
 
     const bookingDialog = document.getElementById("bookingDialog");
     const bookingSummary = document.getElementById("bookingSummary");
@@ -1508,24 +1502,26 @@
     if (isLanding) {
       renderPassengerRecommender();
       renderSentimentHighlights();
-
-      // Reviews sit well below the recommendation flow. Defer their card
-      // construction until the section is close to the viewport.
-      const reviewsSection = document.getElementById("reviewsSection");
-      if (reviewsSection && "IntersectionObserver" in window) {
-        const reviewsObserver = new IntersectionObserver((entries, observer) => {
-          if (!entries.some((entry) => entry.isIntersecting)) return;
-          renderPassengerReviewsFeed("all");
-          observer.disconnect();
-        }, { rootMargin: "300px 0px" });
-        reviewsObserver.observe(reviewsSection);
-      } else {
-        renderPassengerReviewsFeed("all");
-      }
     }
 
     if (isDashboard) {
-      switchTab("leaderboard");
+      const pageName = window.location.pathname.split("/").pop().toLowerCase();
+      const pageMap = {
+        "dashboard-waterfall.html": "waterfall",
+        "dashboard-fuel.html": "simulator",
+        "dashboard-hourly.html": "hourly",
+        "dashboard-methodology.html": "methodology",
+      };
+      const activePage = pageMap[pageName] || "leaderboard";
+      const pageTitles = {
+        leaderboard: "Peringkat Ketepatan PO",
+        waterfall: "Diagnostik Rest Area",
+        simulator: "Simulasi Penghematan Solar",
+        hourly: "Optimasi Jam Keberangkatan",
+        methodology: "Data Mart & Metodologi",
+      };
+      document.title = `NusantaraBus | ${pageTitles[activePage]}`;
+      switchTab(activePage);
       updateKPIs(state.activeCorridor);
       renderLeaderboard(state.activeCorridor);
       renderWaterfall();

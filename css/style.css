@@ -1380,6 +1380,20 @@ header.app-header {
   height: 310px;
 }
 
+.chart-reading-guide {
+  margin-top: 12px;
+  padding: 11px 13px;
+  border-left: 3px solid var(--accent-blue);
+  background: rgba(56, 189, 248, .07);
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.chart-reading-guide strong {
+  color: var(--text-primary);
+}
+
 .chart-insight-box {
   margin-top: var(--space-3);
   padding: var(--space-3) var(--space-4);

@@ -115,33 +115,40 @@ body:has(.landing-page-wrap) {
 }
 
 .landing-search-card {
-  background: rgba(23, 33, 29, .88);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 0;
-  border-radius: 8px;
-  padding: 25px;
-  box-shadow: 0 18px 36px rgba(23, 33, 29, .14);
+  background: var(--passenger-ink);
+  border: 1px solid var(--passenger-ink);
+  border-radius: 0;
+  padding: 28px;
+  box-shadow: 8px 8px 0 rgba(164, 61, 37, .22);
 }
 .search-card-intro {
   display: flex;
-  align-items: baseline;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 18px;
   color: #dce8dc;
 }
+.search-card-intro h2 {
+  margin: 5px 0 0;
+  color: #fffdf8;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  letter-spacing: -.04em;
+  line-height: 1;
+}
 .search-card-intro p {
   margin: 0;
   color: #b8c4bb;
   font-size: 12px;
+  max-width: 290px;
+  line-height: 1.5;
 }
 .search-card-kicker {
-  color: #f0b29f;
-  font-family: var(--font-mono);
+  color: #e7b09c;
+  font-family: var(--font-sans);
   font-size: 10px;
-  letter-spacing: .1em;
-  font-weight: 600;
+  letter-spacing: .08em;
+  font-weight: 800;
 }
 .landing-search-card .search-field-label { color: #b8c4bb; }
 .landing-search-card .search-field-input {
@@ -149,7 +156,7 @@ body:has(.landing-page-wrap) {
   background: #24312b;
   color: #fffdf8;
   border: 1px solid #3b4b41;
-  border-radius: 4px;
+  border-radius: 0;
 }
 .landing-search-card .search-field-input:focus-visible { outline: 3px solid #e7b09c; outline-offset: 2px; }
 .btn-search-bus {
@@ -160,7 +167,7 @@ body:has(.landing-page-wrap) {
   box-shadow: none;
 }
 .btn-search-bus:hover { background: #87321f; transform: none; }
-.search-filter-chip { min-height: 44px; border-radius: 4px; }
+.search-filter-chip { min-height: 44px; border-radius: 0; }
 
 /* Recommendation cards use the same paper/ink language as the page.
    The dark operations-console styles stay scoped to dashboard work. */
@@ -457,6 +464,7 @@ body:has(.landing-page-wrap) .landing-page-wrap select:focus-visible {
     display: block;
     margin-bottom: 14px;
   }
+  .landing-search-card { box-shadow: 4px 4px 0 rgba(164, 61, 37, .22); }
   .search-card-intro p {
     margin-top: 5px;
     line-height: 1.45;
