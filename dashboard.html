@@ -185,29 +185,30 @@
           <div class="panel-header">
             <div>
               <h2 class="panel-title">Peringkat Kinerja Ketepatan Waktu Operator Bus (PO)</h2>
-              <p class="panel-desc">Evaluasi multi-metrik perbandingan ketepatan kedatangan, distribusi delay, konsumsi BBM, dan kecepatan jelajah.</p>
+              <p class="panel-desc">Evaluasi komprehensif keandalan kedatangan armada: rasio on-time performance (OTP), dekomposisi 4-kategori keterlambatan, dan deviasi menit tiba di terminal tujuan.</p>
             </div>
             
             <div class="legend-group">
-              <span class="legend-item"><span class="legend-swatch" style="background:var(--status-ontime);"></span>Tepat Waktu (&lt;15 mnt)</span>
-              <span class="legend-item"><span class="legend-swatch" style="background:var(--status-minor);"></span>Minor (15-30 mnt)</span>
-              <span class="legend-item"><span class="legend-swatch" style="background:var(--status-moderate);"></span>Moderat (30-60 mnt)</span>
-              <span class="legend-item"><span class="legend-swatch" style="background:var(--status-severe);"></span>Kritis (&gt;60 mnt)</span>
+              <span class="legend-item"><span class="legend-swatch" style="background:#10b981;"></span>Tepat Waktu (&lt;15 mnt)</span>
+              <span class="legend-item"><span class="legend-swatch" style="background:#38bdf8;"></span>Minor (15-30 mnt)</span>
+              <span class="legend-item"><span class="legend-swatch" style="background:#f59e0b;"></span>Moderat (30-60 mnt)</span>
+              <span class="legend-item"><span class="legend-swatch" style="background:#ef4444;"></span>Kritis (&gt;60 mnt)</span>
+              <span class="legend-item"><span class="legend-swatch" style="background:#f8fafc; border-radius: 50%;"></span>Rata-Rata Delay (Menit)</span>
             </div>
           </div>
 
           <div class="chart-box">
             <div class="chart-header-row">
               <div class="chart-title-sm">
-                <span>Profil OTP dan Intensitas Solar per Operator</span>
+                <span>Distribusi Ketepatan Waktu &amp; Deviasi Keterlambatan per Operator</span>
               </div>
-              <span class="chart-badge">OPERATOR PROFILE</span>
+              <span class="chart-badge">PUNCTUALITY PROFILE</span>
             </div>
             <div class="chart-canvas-wrap">
               <canvas id="chartLeaderboardTradeoff"></canvas>
             </div>
             <div class="chart-insight-box">
-              <strong>Cara membaca:</strong> Batang membandingkan rasio OTP historis, sedangkan garis menunjukkan rata-rata intensitas solar. Keduanya memakai agregat operator yang sama, tetapi chart ini tidak membuktikan hubungan sebab-akibat. Gunakan tabel di bawah untuk melihat jumlah trip dan metrik pendukung.
+              <strong>Temuan Data Ketepatan Waktu:</strong> PO kelas First Class / Sleeper (Juragan 99 &amp; 27 Trans) mendominasi kedatangan tepat waktu (&gt;44%) dengan keterlambatan kritis di bawah 11%. Sebaliknya, bus eksekutif reguler dengan banyak agen bayangan mencatat keterlambatan moderat hingga kritis (&gt;30 menit) mencapai 55% hingga 68% perjalanan, memperpanjang rata-rata deviasi tiba hingga +45 sampai +58 menit.
             </div>
           </div>
 
@@ -219,11 +220,11 @@
                   <th>Perusahaan Otobus (PO)</th>
                   <th>Trip Selesai</th>
                   <th>Distribusi Ketepatan</th>
-                  <th>Rasio OTP</th>
+                  <th>Rasio OTP (&le;15 mnt)</th>
                   <th>Rata-Rata Delay</th>
-                  <th>Delay Kritis</th>
-                  <th>BBM (L/100km)</th>
-                  <th>Kecepatan</th>
+                  <th>Delay Kritis (&gt;60 mnt)</th>
+                  <th>Kecepatan Jelajah</th>
+                  <th>Status Keandalan</th>
                 </tr>
               </thead>
               <tbody id="leaderboardTableBody">

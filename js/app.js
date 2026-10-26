@@ -236,7 +236,7 @@
         </td>
         <td class="font-mono">${formatNumber(op.total_trips)}</td>
         <td>
-          <div class="distribution-bar" title="On-Time: ${op.otp_pct}%, Minor: ${op.minor_delay_pct}%, Moderat: ${op.moderate_delay_pct}%, Kritis: ${op.severe_delay_pct}%">
+          <div class="distribution-bar" title="Tepat Waktu: ${op.otp_pct}%, Minor: ${op.minor_delay_pct}%, Moderat: ${op.moderate_delay_pct}%, Kritis: ${op.severe_delay_pct}%">
             <div class="bar-segment ontime" style="width: ${op.otp_pct}%;"></div>
             <div class="bar-segment minor" style="width: ${op.minor_delay_pct}%;"></div>
             <div class="bar-segment moderate" style="width: ${op.moderate_delay_pct}%;"></div>
@@ -250,8 +250,12 @@
         </td>
         <td class="font-mono">+${op.mean_delay_min.toFixed(1)} mnt</td>
         <td class="font-mono text-severe">${op.severe_delay_pct}%</td>
-        <td class="font-mono">${op.mean_fuel_intensity.toFixed(2)}</td>
         <td class="font-mono text-muted">${op.mean_speed_kmh.toFixed(1)} km/h</td>
+        <td>
+          <span class="status-pill ${status.className}">
+            <span>${status.text}</span>
+          </span>
+        </td>
       `;
       tbody.appendChild(tr);
     });
@@ -260,8 +264,9 @@
   }
 
   /**
-   * Chart 1: Operator OTP profile with fuel-intensity overlay.
-   * Bar colors encode OTP bands; fuel remains a separate right-axis metric.
+   * Chart 1: Operator Punctuality & Delay Distribution Chart
+   * 100% Stacked Bar comparing the 4 delay categories (On-time, Minor, Moderate, Severe)
+   * with secondary line axis for Average Delay Deviation (Minutes).
    */
   function renderLeaderboardChart(list) {
     if (!window.Chart) return;
@@ -274,19 +279,18 @@
 
     const labels = list.map((item) => item.po_name.replace("PO ", ""));
     const otpData = list.map((item) => item.otp_pct);
-    const fuelData = list.map((item) => item.mean_fuel_intensity);
-    const barColors = otpData.map((otp) => {
-      if (otp >= 40) return "#10b981";
-      if (otp >= 15) return "#f59e0b";
-      return "#ef4444";
-    });
+    const minorData = list.map((item) => item.minor_delay_pct);
+    const moderateData = list.map((item) => item.moderate_delay_pct);
+    const severeData = list.map((item) => item.severe_delay_pct);
+    const meanDelayData = list.map((item) => item.mean_delay_min);
 
-    // Custom plugin: Render real operator logos directly atop each bar
+    // Custom plugin: Render real operator logos directly atop each stacked column
     const barLogoPlugin = {
       id: "barLogoPlugin",
       afterDatasetsDraw(chart) {
         const { ctx } = chart;
-        const meta = chart.getDatasetMeta(0);
+        // The top of the stacked bar is the 4th dataset (index 3)
+        const meta = chart.getDatasetMeta(3);
         if (!meta || !meta.data) return;
 
         meta.data.forEach((bar, index) => {
@@ -330,24 +334,49 @@
         labels: labels,
         datasets: [
           {
-            label: "Tingkat Ketepatan On-Time (%)",
+            label: "Tepat Waktu (<15 mnt)",
             data: otpData,
-            backgroundColor: barColors.map((c) => c + "cc"),
-            borderColor: barColors,
-            borderWidth: 1,
-            yAxisID: "y",
-            borderRadius: 3,
+            backgroundColor: "#10b981",
+            borderRadius: 0,
+            stack: "punctuality",
             order: 2,
           },
           {
-            label: "Intensitas Solar (L / 100km)",
-            data: fuelData,
-            type: "line",
-            borderColor: "#f59e0b",
+            label: "Minor (15-30 mnt)",
+            data: minorData,
+            backgroundColor: "#38bdf8",
+            borderRadius: 0,
+            stack: "punctuality",
+            order: 2,
+          },
+          {
+            label: "Moderat (30-60 mnt)",
+            data: moderateData,
             backgroundColor: "#f59e0b",
+            borderRadius: 0,
+            stack: "punctuality",
+            order: 2,
+          },
+          {
+            label: "Kritis (>60 mnt)",
+            data: severeData,
+            backgroundColor: "#ef4444",
+            borderRadius: { topLeft: 4, topRight: 4 },
+            stack: "punctuality",
+            order: 2,
+          },
+          {
+            label: "Rata-Rata Delay (Menit)",
+            data: meanDelayData,
+            type: "line",
+            borderColor: "#f8fafc",
+            backgroundColor: "#f8fafc",
             borderWidth: 2.5,
-            pointRadius: 4,
-            pointHoverRadius: 6,
+            pointBackgroundColor: "#38bdf8",
+            pointBorderColor: "#ffffff",
+            pointBorderWidth: 1.5,
+            pointRadius: 4.5,
+            pointHoverRadius: 7,
             yAxisID: "y1",
             order: 1,
           },
@@ -361,22 +390,56 @@
         },
         scales: {
           x: {
+            stacked: true,
             grid: { display: false },
-            ticks: { font: { size: 10 } },
+            ticks: { font: { size: 10, weight: "bold" }, color: "#94a3b8" },
           },
           y: {
+            stacked: true,
             position: "left",
             min: 0,
-            max: 70,
-            title: { display: true, text: "OTP %", color: "#10b981" },
-            grid: { color: "rgba(255, 255, 255, 0.04)" },
+            max: 100,
+            title: { display: true, text: "Komposisi Kedatangan (%)", color: "#10b981", font: { weight: "bold" } },
+            ticks: {
+              callback: (v) => v + "%",
+              stepSize: 20,
+              color: "#94a3b8",
+            },
+            grid: { color: "rgba(255, 255, 255, 0.05)" },
           },
           y1: {
             position: "right",
-            min: 22,
-            max: 36,
-            title: { display: true, text: "Liter / 100 km", color: "#f59e0b" },
+            min: 0,
+            max: 75,
+            title: { display: true, text: "Rata-Rata Keterlambatan (Menit)", color: "#f8fafc", font: { weight: "bold" } },
+            ticks: {
+              callback: (v) => "+" + v + "m",
+              stepSize: 15,
+              color: "#94a3b8",
+            },
             grid: { display: false },
+          },
+        },
+        plugins: {
+          legend: {
+            display: false,
+          },
+          tooltip: {
+            backgroundColor: "#0c0f14",
+            titleColor: "#f8fafc",
+            bodyColor: "#94a3b8",
+            borderColor: "rgba(255, 255, 255, 0.15)",
+            borderWidth: 1,
+            padding: 12,
+            boxPadding: 6,
+            callbacks: {
+              label: (context) => {
+                if (context.dataset.type === "line") {
+                  return `  ${context.dataset.label}: +${context.parsed.y.toFixed(1)} menit`;
+                }
+                return `  ${context.dataset.label}: ${context.parsed.y.toFixed(1)}%`;
+              },
+            },
           },
         },
       },
