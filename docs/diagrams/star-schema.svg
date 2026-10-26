@@ -1,0 +1,247 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="100%" height="100%" role="img" aria-labelledby="star-schema-title star-schema-desc" style="background:#0c0f14; font-family:'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <title id="star-schema-title">NusantaraBus Star Schema Dimensional Data Mart</title>
+  <desc id="star-schema-desc">Relational diagram showing fact_trips and fact_trip_stages joined with dimension tables for bus analytics.</desc>
+
+  <defs>
+    <pattern id="dotGridSchema" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#1e2638" />
+    </pattern>
+
+    <marker id="markerFk" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <circle cx="5" cy="5" r="3" fill="#38bdf8"/>
+    </marker>
+    <marker id="markerPk" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <rect x="2" y="2" width="6" height="6" fill="#22c55e" rx="1"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="520" fill="#0c0f14"/>
+  <rect width="960" height="520" fill="url(#dotGridSchema)" opacity="0.6"/>
+
+  <!-- Diagram Title -->
+  <text x="32" y="38" fill="#f8fafc" font-size="16" font-weight="700" letter-spacing="-0.3px">Dimensional Data Mart: Star Schema Model</text>
+  <text x="32" y="56" fill="#94a3b8" font-size="12">Desain data mart teroptimasi kueri OLAP untuk kalkulasi rasio OTP, atrubusi delay, dan simulasi solar.</text>
+
+  <!-- 1. DIM_OPERATORS (Top Left) -->
+  <g transform="translate(32, 84)">
+    <rect width="200" height="114" rx="6" fill="#141924" stroke="#242d3d" stroke-width="1.5"/>
+    <rect width="200" height="26" rx="6" fill="#1a2232"/>
+    <rect y="20" width="200" height="6" fill="#1a2232"/>
+    <text x="12" y="17" fill="#f8fafc" font-size="11.5" font-weight="700" font-family="'JetBrains Mono', monospace">dim_operators</text>
+    
+    <text x="12" y="44" fill="#22c55e" font-size="10.5" font-family="'JetBrains Mono', monospace">PK</text>
+    <text x="36" y="44" fill="#f8fafc" font-size="11">operator_id</text>
+    <text x="146" y="44" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
+
+    <text x="12" y="62" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="62" fill="#94a3b8" font-size="11">po_name</text>
+    <text x="136" y="62" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">VARCHAR</text>
+
+    <text x="12" y="80" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="80" fill="#94a3b8" font-size="11">fleet_tier</text>
+    <text x="136" y="80" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">VARCHAR</text>
+
+    <text x="12" y="98" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="98" fill="#94a3b8" font-size="11">headquarters</text>
+    <text x="136" y="98" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">VARCHAR</text>
+  </g>
+
+  <!-- 2. DIM_ROUTES (Bottom Left) -->
+  <g transform="translate(32, 230)">
+    <rect width="200" height="132" rx="6" fill="#141924" stroke="#242d3d" stroke-width="1.5"/>
+    <rect width="200" height="26" rx="6" fill="#1a2232"/>
+    <rect y="20" width="200" height="6" fill="#1a2232"/>
+    <text x="12" y="17" fill="#f8fafc" font-size="11.5" font-weight="700" font-family="'JetBrains Mono', monospace">dim_routes</text>
+
+    <text x="12" y="44" fill="#22c55e" font-size="10.5" font-family="'JetBrains Mono', monospace">PK</text>
+    <text x="36" y="44" fill="#f8fafc" font-size="11">route_id</text>
+    <text x="146" y="44" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
+
+    <text x="12" y="62" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="62" fill="#94a3b8" font-size="11">origin_city</text>
+    <text x="136" y="62" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">VARCHAR</text>
+
+    <text x="12" y="80" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="80" fill="#94a3b8" font-size="11">dest_city</text>
+    <text x="136" y="80" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">VARCHAR</text>
+
+    <text x="12" y="98" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="98" fill="#94a3b8" font-size="11">highway_km</text>
+    <text x="146" y="98" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
+
+    <text x="12" y="116" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="116" fill="#94a3b8" font-size="11">standard_eta_hr</text>
+    <text x="136" y="116" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">FLOAT</text>
+  </g>
+
+  <!-- 3. DIM_OPERATOR_SENTIMENT (Bottom Far Left) -->
+  <g transform="translate(32, 386)">
+    <rect width="200" height="96" rx="6" fill="#141924" stroke="#242d3d" stroke-width="1.5"/>
+    <rect width="200" height="26" rx="6" fill="#1a2232"/>
+    <rect y="20" width="200" height="6" fill="#1a2232"/>
+    <text x="12" y="17" fill="#f8fafc" font-size="11.5" font-weight="700" font-family="'JetBrains Mono', monospace">dim_operator_sentiment</text>
+
+    <text x="12" y="44" fill="#38bdf8" font-size="10.5" font-family="'JetBrains Mono', monospace">FK</text>
+    <text x="36" y="44" fill="#f8fafc" font-size="11">operator_id</text>
+    <text x="146" y="44" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
+
+    <text x="12" y="62" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="62" fill="#94a3b8" font-size="11">rating_score</text>
+    <text x="136" y="62" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">FLOAT</text>
+
+    <text x="12" y="80" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="80" fill="#94a3b8" font-size="11">positive_pct</text>
+    <text x="136" y="80" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">FLOAT</text>
+  </g>
+
+  <!-- 4. FACT_TRIPS (Center Focal Node) -->
+  <g transform="translate(350, 84)">
+    <rect width="260" height="236" rx="6" fill="#121d28" stroke="#22c55e" stroke-width="2"/>
+    <rect width="260" height="28" rx="6" fill="#162934"/>
+    <rect y="22" width="260" height="6" fill="#162934"/>
+    <text x="12" y="19" fill="#22c55e" font-size="12" font-weight="700" font-family="'JetBrains Mono', monospace">fact_trips (N = 3.500)</text>
+
+    <text x="12" y="48" fill="#22c55e" font-size="10.5" font-family="'JetBrains Mono', monospace">PK</text>
+    <text x="36" y="48" fill="#f8fafc" font-size="11.5" font-weight="600">trip_id</text>
+    <text x="195" y="48" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
+
+    <text x="12" y="68" fill="#38bdf8" font-size="10.5" font-family="'JetBrains Mono', monospace">FK</text>
+    <text x="36" y="68" fill="#94a3b8" font-size="11.5">operator_id</text>
+    <text x="195" y="68" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
+
+    <text x="12" y="88" fill="#38bdf8" font-size="10.5" font-family="'JetBrains Mono', monospace">FK</text>
+    <text x="36" y="88" fill="#94a3b8" font-size="11.5">route_id</text>
+    <text x="195" y="88" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
+
+    <text x="12" y="108" fill="#38bdf8" font-size="10.5" font-family="'JetBrains Mono', monospace">FK</text>
+    <text x="36" y="108" fill="#94a3b8" font-size="11.5">date_id</text>
+    <text x="195" y="108" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
+
+    <text x="12" y="128" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="128" fill="#f8fafc" font-size="11.5">scheduled_departure</text>
+    <text x="180" y="128" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">DATETIME</text>
+
+    <text x="12" y="148" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="148" fill="#f8fafc" font-size="11.5">actual_arrival</text>
+    <text x="180" y="148" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">DATETIME</text>
+
+    <text x="12" y="168" fill="#22c55e" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="168" fill="#f8fafc" font-size="11.5" font-weight="600">total_delay_min</text>
+    <text x="195" y="168" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">FLOAT</text>
+
+    <text x="12" y="188" fill="#22c55e" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="188" fill="#f8fafc" font-size="11.5" font-weight="600">otp_status</text>
+    <text x="180" y="188" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">VARCHAR</text>
+
+    <text x="12" y="208" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="208" fill="#94a3b8" font-size="11.5">fuel_consumed_liters</text>
+    <text x="195" y="208" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">FLOAT</text>
+
+    <text x="12" y="228" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="228" fill="#94a3b8" font-size="11.5">avg_speed_kmh</text>
+    <text x="195" y="228" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">FLOAT</text>
+  </g>
+
+  <!-- 5. DIM_CALENDAR (Top Right) -->
+  <g transform="translate(728, 84)">
+    <rect width="200" height="114" rx="6" fill="#141924" stroke="#242d3d" stroke-width="1.5"/>
+    <rect width="200" height="26" rx="6" fill="#1a2232"/>
+    <rect y="20" width="200" height="6" fill="#1a2232"/>
+    <text x="12" y="17" fill="#f8fafc" font-size="11.5" font-weight="700" font-family="'JetBrains Mono', monospace">dim_calendar</text>
+
+    <text x="12" y="44" fill="#22c55e" font-size="10.5" font-family="'JetBrains Mono', monospace">PK</text>
+    <text x="36" y="44" fill="#f8fafc" font-size="11">date_id</text>
+    <text x="146" y="44" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
+
+    <text x="12" y="62" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="62" fill="#94a3b8" font-size="11">full_date</text>
+    <text x="146" y="62" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">DATE</text>
+
+    <text x="12" y="80" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="80" fill="#94a3b8" font-size="11">day_name</text>
+    <text x="136" y="80" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">VARCHAR</text>
+
+    <text x="12" y="98" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="98" fill="#94a3b8" font-size="11">is_weekend</text>
+    <text x="136" y="98" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">BOOLEAN</text>
+  </g>
+
+  <!-- 6. FACT_TRIP_STAGES (Bottom Right Decomposition) -->
+  <g transform="translate(670, 240)">
+    <rect width="258" height="152" rx="6" fill="#131c28" stroke="#38bdf8" stroke-width="1.5"/>
+    <rect width="258" height="26" rx="6" fill="#182736"/>
+    <rect y="20" width="258" height="6" fill="#182736"/>
+    <text x="12" y="17" fill="#38bdf8" font-size="11.5" font-weight="700" font-family="'JetBrains Mono', monospace">fact_trip_stages (N = 17.500)</text>
+
+    <text x="12" y="44" fill="#22c55e" font-size="10.5" font-family="'JetBrains Mono', monospace">PK</text>
+    <text x="36" y="44" fill="#f8fafc" font-size="11">stage_id</text>
+    <text x="195" y="44" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
+
+    <text x="12" y="62" fill="#38bdf8" font-size="10.5" font-family="'JetBrains Mono', monospace">FK</text>
+    <text x="36" y="62" fill="#94a3b8" font-size="11">trip_id</text>
+    <text x="195" y="62" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
+
+    <text x="12" y="80" fill="#38bdf8" font-size="10.5" font-family="'JetBrains Mono', monospace">FK</text>
+    <text x="36" y="80" fill="#94a3b8" font-size="11">checkpoint_id</text>
+    <text x="195" y="80" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
+
+    <text x="12" y="98" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="98" fill="#f8fafc" font-size="11">stage_type</text>
+    <text x="180" y="98" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">VARCHAR</text>
+
+    <text x="12" y="116" fill="#f59e0b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="116" fill="#f8fafc" font-size="11">dwell_time_min</text>
+    <text x="195" y="116" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">FLOAT</text>
+
+    <text x="12" y="134" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="134" fill="#94a3b8" font-size="11">stage_delay_delta</text>
+    <text x="195" y="134" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">FLOAT</text>
+  </g>
+
+  <!-- 7. DIM_CHECKPOINTS (Far Bottom Right) -->
+  <g transform="translate(670, 412)">
+    <rect width="258" height="74" rx="6" fill="#141924" stroke="#242d3d" stroke-width="1.5"/>
+    <rect width="258" height="24" rx="6" fill="#1a2232"/>
+    <rect y="18" width="258" height="6" fill="#1a2232"/>
+    <text x="12" y="16" fill="#f8fafc" font-size="11" font-weight="700" font-family="'JetBrains Mono', monospace">dim_checkpoints</text>
+
+    <text x="12" y="38" fill="#22c55e" font-size="10" font-family="'JetBrains Mono', monospace">PK</text>
+    <text x="36" y="38" fill="#f8fafc" font-size="10.5">checkpoint_id</text>
+    <text x="210" y="38" fill="#64748b" font-size="9.5" font-family="'JetBrains Mono', monospace">INT</text>
+
+    <text x="12" y="56" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="36" y="56" fill="#94a3b8" font-size="10.5">name &amp; location_km</text>
+    <text x="195" y="56" fill="#64748b" font-size="9.5" font-family="'JetBrains Mono', monospace">VARCHAR</text>
+  </g>
+
+  <!-- RELATIONSHIP CONNECTORS (Orthogonal elbows, r=8, no overlaps) -->
+  
+  <!-- dim_operators -> fact_trips (1 to N) -->
+  <path d="M 232 128 L 291 128 Q 299 128 299 152 L 299 152 Q 299 152 307 152 L 350 152" fill="none" stroke="#64748b" stroke-width="1.5" />
+  <rect x="250" y="119" width="36" height="18" rx="3" fill="#0c0f14"/>
+  <text x="254" y="132" fill="#94a3b8" font-size="10" font-family="'JetBrains Mono', monospace">1 : N</text>
+
+  <!-- dim_routes -> fact_trips (1 to N) -->
+  <path d="M 232 290 L 291 290 Q 299 290 299 172 L 299 172 Q 299 172 307 172 L 350 172" fill="none" stroke="#64748b" stroke-width="1.5" />
+  <rect x="250" y="281" width="36" height="18" rx="3" fill="#0c0f14"/>
+  <text x="254" y="294" fill="#94a3b8" font-size="10" font-family="'JetBrains Mono', monospace">1 : N</text>
+
+  <!-- fact_trips -> dim_calendar (N to 1) -->
+  <path d="M 610 192 L 669 192 Q 677 192 677 128 L 677 128 Q 677 128 685 128 L 728 128" fill="none" stroke="#64748b" stroke-width="1.5" />
+  <rect x="674" y="150" width="36" height="18" rx="3" fill="#0c0f14"/>
+  <text x="678" y="163" fill="#94a3b8" font-size="10" font-family="'JetBrains Mono', monospace">N : 1</text>
+
+  <!-- fact_trips -> fact_trip_stages (1 to N) -->
+  <path d="M 610 240 L 632 240 Q 640 240 640 280 L 640 280 Q 640 280 648 280 L 670 280" fill="none" stroke="#38bdf8" stroke-width="1.5" />
+  <rect x="622" y="250" width="36" height="18" rx="3" fill="#0c0f14"/>
+  <text x="626" y="263" fill="#38bdf8" font-size="10" font-family="'JetBrains Mono', monospace">1 : N</text>
+
+  <!-- fact_trip_stages -> dim_checkpoints (N to 1) -->
+  <path d="M 799 392 L 799 412" fill="none" stroke="#64748b" stroke-width="1.5" />
+
+  <!-- Footer Legend -->
+  <g transform="translate(32, 498)">
+    <text x="0" y="12" fill="#64748b" font-size="11" font-family="'JetBrains Mono', monospace">Cardinality: PK (Primary Key) &bull; FK (Foreign Key) &bull; SQLite Relational Integrity Enforced (PRAGMA foreign_keys = ON)</text>
+  </g>
+</svg>

@@ -260,7 +260,8 @@
   }
 
   /**
-   * Chart 1: Trade-off OTP vs Fuel Intensity
+   * Chart 1: Operator OTP profile with fuel-intensity overlay.
+   * Bar colors encode OTP bands; fuel remains a separate right-axis metric.
    */
   function renderLeaderboardChart(list) {
     if (!window.Chart) return;
@@ -274,7 +275,11 @@
     const labels = list.map((item) => item.po_name.replace("PO ", ""));
     const otpData = list.map((item) => item.otp_pct);
     const fuelData = list.map((item) => item.mean_fuel_intensity);
-    const barColors = list.map((item) => item.brand_color || "#38bdf8");
+    const barColors = otpData.map((otp) => {
+      if (otp >= 40) return "#10b981";
+      if (otp >= 15) return "#f59e0b";
+      return "#ef4444";
+    });
 
     // Custom plugin: Render real operator logos directly atop each bar
     const barLogoPlugin = {

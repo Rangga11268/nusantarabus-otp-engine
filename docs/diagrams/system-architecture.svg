@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" width="100%" height="100%" role="img" aria-labelledby="sys-arch-title sys-arch-desc" style="background:#0c0f14; font-family:'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <title id="sys-arch-title">NusantaraBus End-to-End System Architecture</title>
+  <desc id="sys-arch-desc">Data ingestion pipeline, SQLite Star Schema data mart, and dual-surface application architecture for intercity bus analytics.</desc>
+
+  <defs>
+    <!-- Background Grid Pattern -->
+    <pattern id="dotGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#1e2638" />
+    </pattern>
+
+    <!-- Markers for Connectors -->
+    <marker id="arrowMuted" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748b"/>
+    </marker>
+    <marker id="arrowEmerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#22c55e"/>
+    </marker>
+    <marker id="arrowSky" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="480" fill="#0c0f14"/>
+  <rect width="960" height="480" fill="url(#dotGrid)" opacity="0.6"/>
+
+  <!-- Diagram Header -->
+  <text x="32" y="38" fill="#f8fafc" font-size="16" font-weight="700" letter-spacing="-0.3px">NusantaraBus: Platform Architecture &amp; Data Pipeline</text>
+  <text x="32" y="56" fill="#94a3b8" font-size="12" font-weight="400">Arsitektur end-to-end dari ingestasi data scraper, pemodelan Star Schema, hingga dual-surface UI.</text>
+
+  <!-- SECTION 1: INGESTION BOUNDARY (Left Zone) -->
+  <g id="zone-ingestion">
+    <rect x="32" y="80" width="240" height="340" rx="8" fill="#101520" stroke="#1e2738" stroke-width="1.5" />
+    <rect x="44" y="92" width="124" height="20" rx="3" fill="#1e293b" />
+    <text x="50" y="106" fill="#94a3b8" font-size="10" font-weight="700" font-family="'JetBrains Mono', monospace" letter-spacing="0.5px">INGESTION &amp; SCRAPE</text>
+
+    <!-- Node 1A: Public Scrapers -->
+    <g transform="translate(48, 128)">
+      <rect width="208" height="68" rx="6" fill="#161c2a" stroke="#243048" stroke-width="1" />
+      <text x="14" y="24" fill="#f8fafc" font-size="13" font-weight="600">Public Review Scrapers</text>
+      <text x="14" y="42" fill="#94a3b8" font-size="11">RedBus ID &amp; Traveloka OTA</text>
+      <text x="14" y="56" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">80 Ulasan Riil + Rating</text>
+    </g>
+
+    <!-- Node 1B: Highway Telemetry -->
+    <g transform="translate(48, 212)">
+      <rect width="208" height="68" rx="6" fill="#161c2a" stroke="#243048" stroke-width="1" />
+      <text x="14" y="24" fill="#f8fafc" font-size="13" font-weight="600">Fleet Stage Telemetry</text>
+      <text x="14" y="42" fill="#94a3b8" font-size="11">Trans-Java Tollway Checkpoints</text>
+      <text x="14" y="56" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">3.500 Trip &amp; 17.500 Stages</text>
+    </g>
+
+    <!-- Node 1C: Validation Boundary -->
+    <g transform="translate(48, 296)">
+      <rect width="208" height="54" rx="6" fill="#161c2a" stroke="#243048" stroke-width="1" />
+      <text x="14" y="24" fill="#f8fafc" font-size="12.5" font-weight="600">Untrusted Data Boundary</text>
+      <text x="14" y="42" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">Schema Sanitizer &amp; Typings</text>
+    </g>
+  </g>
+
+  <!-- SECTION 2: CORE ANALYTICAL DATA MART (Center Zone) -->
+  <g id="zone-datamart">
+    <rect x="332" y="80" width="296" height="340" rx="8" fill="#101520" stroke="#1e2738" stroke-width="1.5" />
+    <rect x="344" y="92" width="138" height="20" rx="3" fill="#1e293b" />
+    <text x="350" y="106" fill="#94a3b8" font-size="10" font-weight="700" font-family="'JetBrains Mono', monospace" letter-spacing="0.5px">DIMENSIONAL DATA MART</text>
+
+    <!-- Node 2A: Star Schema Engine -->
+    <g transform="translate(348, 128)">
+      <rect width="264" height="88" rx="6" fill="#141c2c" stroke="#22c55e" stroke-width="1.5" />
+      <rect x="12" y="12" width="70" height="18" rx="3" fill="rgba(34, 197, 94, 0.15)" />
+      <text x="16" y="25" fill="#22c55e" font-size="9.5" font-weight="700" font-family="'JetBrains Mono', monospace">STAR SCHEMA</text>
+      <text x="12" y="48" fill="#f8fafc" font-size="14" font-weight="700">SQLite Relational Core</text>
+      <text x="12" y="65" fill="#94a3b8" font-size="11">fact_trips &amp; fact_trip_stages</text>
+      <text x="12" y="79" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">dim_operators, dim_routes, dim_checkpoints</text>
+    </g>
+
+    <!-- Node 2B: Analytics Computation Layer -->
+    <g transform="translate(348, 232)">
+      <rect width="264" height="118" rx="6" fill="#161c2a" stroke="#243048" stroke-width="1" />
+      <text x="12" y="22" fill="#f8fafc" font-size="13" font-weight="600">Analytics &amp; Simulation Logic</text>
+      
+      <circle cx="20" cy="42" r="3" fill="#22c55e" />
+      <text x="30" y="46" fill="#94a3b8" font-size="11">OTP 4-Band Classifier (Early/Minor/Mod/Severe)</text>
+      
+      <circle cx="20" cy="62" r="3" fill="#38bdf8" />
+      <text x="30" y="66" fill="#94a3b8" font-size="11">5-Stage Dwell Bottleneck Waterfall</text>
+      
+      <circle cx="20" cy="82" r="3" fill="#f59e0b" />
+      <text x="30" y="86" fill="#94a3b8" font-size="11">OPEX Fuel Simulator (2.8 L/hr idle, 90 km/h)</text>
+
+      <circle cx="20" cy="102" r="3" fill="#a855f7" />
+      <text x="30" y="106" fill="#94a3b8" font-size="11">Departure Window Density Optimization</text>
+    </g>
+
+    <!-- Node 2C: Excel Multi-Sheet Exporter -->
+    <g transform="translate(348, 362)">
+      <rect width="264" height="42" rx="6" fill="#141c24" stroke="#1f2c3d" stroke-width="1" />
+      <text x="12" y="26" fill="#22c55e" font-size="11.5" font-weight="600">Data Export: nusantarabus_complete_dataset.xlsx</text>
+    </g>
+  </g>
+
+  <!-- SECTION 3: DUAL-SURFACE WEB APPLICATION (Right Zone) -->
+  <g id="zone-presentation">
+    <rect x="688" y="80" width="240" height="340" rx="8" fill="#101520" stroke="#1e2738" stroke-width="1.5" />
+    <rect x="700" y="92" width="134" height="20" rx="3" fill="#1e293b" />
+    <text x="706" y="106" fill="#94a3b8" font-size="10" font-weight="700" font-family="'JetBrains Mono', monospace" letter-spacing="0.5px">DUAL-SURFACE FRONTEND</text>
+
+    <!-- Node 3A: Consumer Travel Landing Page (Focal 1) -->
+    <g transform="translate(704, 128)">
+      <rect width="208" height="106" rx="6" fill="#12201b" stroke="#22c55e" stroke-width="1.5" />
+      <rect x="12" y="12" width="86" height="18" rx="3" fill="rgba(34, 197, 94, 0.2)" />
+      <text x="16" y="25" fill="#22c55e" font-size="9.5" font-weight="700" font-family="'JetBrains Mono', monospace">PASSENGER UI</text>
+      <text x="12" y="48" fill="#f8fafc" font-size="13.5" font-weight="700">Travel Landing Page</text>
+      <text x="12" y="66" fill="#94a3b8" font-size="11">Boarding Pass Ticket Cards</text>
+      <text x="12" y="82" fill="#94a3b8" font-size="11">80 Verified Review Feed</text>
+      <text x="12" y="97" fill="#64748b" font-size="10">Anti-Ngetem Survival Guide</text>
+    </g>
+
+    <!-- Node 3B: Fleet Operations Console (Focal 2) -->
+    <g transform="translate(704, 250)">
+      <rect width="208" height="106" rx="6" fill="#111c29" stroke="#38bdf8" stroke-width="1.5" />
+      <rect x="12" y="12" width="94" height="18" rx="3" fill="rgba(56, 189, 248, 0.2)" />
+      <text x="16" y="25" fill="#38bdf8" font-size="9.5" font-weight="700" font-family="'JetBrains Mono', monospace">ANALYTICS OPS</text>
+      <text x="12" y="48" fill="#f8fafc" font-size="13.5" font-weight="700">Fleet Ops Console</text>
+      <text x="12" y="66" fill="#94a3b8" font-size="11">OTP Bar Chart with PO Logos</text>
+      <text x="12" y="82" fill="#94a3b8" font-size="11">5-Stage Delay Waterfall</text>
+      <text x="12" y="97" fill="#64748b" font-size="10">Interactive Fuel OPEX Sliders</text>
+    </g>
+
+    <!-- Node 3C: Bidirectional Switcher -->
+    <g transform="translate(704, 368)">
+      <rect width="208" height="36" rx="6" fill="#161c2a" stroke="#243048" stroke-width="1" />
+      <text x="16" y="23" fill="#f8fafc" font-size="11" font-weight="600">&larr; Seamless 1-Click Toggle &rarr;</text>
+    </g>
+  </g>
+
+  <!-- ORTHOGONAL CONNECTORS (Rule §6: r=8 elbows, no diagonals, label masks) -->
+  
+  <!-- Path 1: Scrapers -> Validation -> Star Schema -->
+  <path d="M 152 196 L 152 296" fill="none" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,4" />
+  <path d="M 152 280 L 152 296" fill="none" stroke="#64748b" stroke-width="1.5" />
+  
+  <!-- Path 2: Ingestion Zone to Data Mart Zone (Orthogonal elbow) -->
+  <path d="M 272 172 L 310 172 Q 318 172 318 172 L 348 172" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrowEmerald)" />
+  
+  <rect x="280" y="163" width="56" height="16" fill="#0c0f14" rx="2" />
+  <text x="283" y="175" fill="#22c55e" font-size="9" font-family="'JetBrains Mono', monospace" font-weight="700">INSPECT</text>
+
+  <!-- Path 3: Telemetry to Data Mart Zone -->
+  <path d="M 256 246 L 294 246 Q 302 246 302 200 L 302 188 Q 302 180 310 180 L 348 180" fill="none" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrowMuted)" />
+
+  <!-- Path 4: Data Mart to Passenger Landing Page -->
+  <path d="M 612 172 L 650 172 Q 658 172 658 172 L 704 172" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrowEmerald)" />
+  <rect x="622" y="163" width="68" height="16" fill="#0c0f14" rx="2" />
+  <text x="626" y="175" fill="#22c55e" font-size="9" font-family="'JetBrains Mono', monospace" font-weight="700">PASSENGER</text>
+
+  <!-- Path 5: Data Mart to Fleet Console -->
+  <path d="M 612 290 L 650 290 Q 658 290 658 296 L 658 303 L 704 303" fill="none" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrowSky)" />
+  <rect x="626" y="282" width="60" height="16" fill="#0c0f14" rx="2" />
+  <text x="630" y="294" fill="#38bdf8" font-size="9" font-family="'JetBrains Mono', monospace" font-weight="700">ANALYTICS</text>
+
+  <!-- Bottom Legend Strip (Rule §6 & §9) -->
+  <g transform="translate(32, 442)">
+    <line x1="0" y1="0" x2="896" y2="0" stroke="#1e2738" stroke-width="1" />
+    <rect x="0" y="12" width="12" height="12" rx="2" fill="#22c55e" />
+    <text x="18" y="22" fill="#94a3b8" font-size="11">Passenger Core Flow</text>
+
+    <rect x="160" y="12" width="12" height="12" rx="2" fill="#38bdf8" />
+    <text x="178" y="22" fill="#94a3b8" font-size="11">Fleet Analytics Flow</text>
+
+    <line x1="320" y1="18" x2="340" y2="18" stroke="#64748b" stroke-width="1.5" stroke-dasharray="3,3" />
+    <text x="348" y="22" fill="#94a3b8" font-size="11">Untrusted Boundary</text>
+
+    <text x="730" y="22" fill="#64748b" font-size="11" font-family="'JetBrains Mono', monospace">100% Client-Side Vanilla Web</text>
+  </g>
+</svg>
