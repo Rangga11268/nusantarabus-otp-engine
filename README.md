@@ -28,7 +28,7 @@ Rather than treating transit delay as an unavoidable black box, this project dec
 The platform adopts a decoupled, end-to-end data pipeline adhering to the `diagram-design` specification:
 
 <p align="center">
-  <img src="docs/diagrams/system-architecture.svg" alt="NusantaraBus System Architecture" width="100%">
+  <img src="./docs/diagrams/system-architecture.svg" alt="NusantaraBus System Architecture" width="100%">
 </p>
 
 ### Pipeline Breakdown:
@@ -56,7 +56,7 @@ The platform adopts a decoupled, end-to-end data pipeline adhering to the `diagr
 The analytical data warehouse is structured into a normalized Star Schema optimized for OLAP aggregations and window CTE queries:
 
 <p align="center">
-  <img src="docs/diagrams/star-schema.svg" alt="NusantaraBus Star Schema Model" width="100%">
+  <img src="./docs/diagrams/star-schema.svg" alt="NusantaraBus Star Schema Model" width="100%">
 </p>
 
 ### Table Specifications:
@@ -117,7 +117,7 @@ ORDER BY avg_delay_contribution_min DESC;
 The data mart uncovers a non-linear relationship between initial departure delay and final terminal arrival delay:
 
 <p align="center">
-  <img src="docs/diagrams/delay-waterfall.svg" alt="NusantaraBus 5-Stage Delay Waterfall" width="100%">
+  <img src="./docs/diagrams/delay-waterfall.svg" alt="NusantaraBus 5-Stage Delay Waterfall" width="100%">
 </p>
 
 * **Early Departures (&le;5 min initial delay):** Average destination delay is only **+14.2 minutes** with an OTP rate of **68.2%**. The bus clears the Jakarta-Cikampek arterial belt before commercial logistics freight builds up.

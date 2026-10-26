@@ -34,15 +34,15 @@
     <text x="36" y="44" fill="#f8fafc" font-size="11">operator_id</text>
     <text x="146" y="44" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
 
-    <text x="12" y="62" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="62" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="62" fill="#94a3b8" font-size="11">po_name</text>
     <text x="136" y="62" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">VARCHAR</text>
 
-    <text x="12" y="80" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="80" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="80" fill="#94a3b8" font-size="11">fleet_tier</text>
     <text x="136" y="80" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">VARCHAR</text>
 
-    <text x="12" y="98" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="98" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="98" fill="#94a3b8" font-size="11">headquarters</text>
     <text x="136" y="98" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">VARCHAR</text>
   </g>
@@ -58,19 +58,19 @@
     <text x="36" y="44" fill="#f8fafc" font-size="11">route_id</text>
     <text x="146" y="44" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
 
-    <text x="12" y="62" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="62" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="62" fill="#94a3b8" font-size="11">origin_city</text>
     <text x="136" y="62" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">VARCHAR</text>
 
-    <text x="12" y="80" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="80" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="80" fill="#94a3b8" font-size="11">dest_city</text>
     <text x="136" y="80" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">VARCHAR</text>
 
-    <text x="12" y="98" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="98" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="98" fill="#94a3b8" font-size="11">highway_km</text>
     <text x="146" y="98" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
 
-    <text x="12" y="116" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="116" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="116" fill="#94a3b8" font-size="11">standard_eta_hr</text>
     <text x="136" y="116" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">FLOAT</text>
   </g>
@@ -86,11 +86,11 @@
     <text x="36" y="44" fill="#f8fafc" font-size="11">operator_id</text>
     <text x="146" y="44" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
 
-    <text x="12" y="62" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="62" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="62" fill="#94a3b8" font-size="11">rating_score</text>
     <text x="136" y="62" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">FLOAT</text>
 
-    <text x="12" y="80" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="80" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="80" fill="#94a3b8" font-size="11">positive_pct</text>
     <text x="136" y="80" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">FLOAT</text>
   </g>
@@ -118,27 +118,27 @@
     <text x="36" y="108" fill="#94a3b8" font-size="11.5">date_id</text>
     <text x="195" y="108" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
 
-    <text x="12" y="128" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="128" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="128" fill="#f8fafc" font-size="11.5">scheduled_departure</text>
     <text x="180" y="128" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">DATETIME</text>
 
-    <text x="12" y="148" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="148" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="148" fill="#f8fafc" font-size="11.5">actual_arrival</text>
     <text x="180" y="148" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">DATETIME</text>
 
-    <text x="12" y="168" fill="#22c55e" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="168" fill="#22c55e" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="168" fill="#f8fafc" font-size="11.5" font-weight="600">total_delay_min</text>
     <text x="195" y="168" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">FLOAT</text>
 
-    <text x="12" y="188" fill="#22c55e" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="188" fill="#22c55e" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="188" fill="#f8fafc" font-size="11.5" font-weight="600">otp_status</text>
     <text x="180" y="188" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">VARCHAR</text>
 
-    <text x="12" y="208" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="208" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="208" fill="#94a3b8" font-size="11.5">fuel_consumed_liters</text>
     <text x="195" y="208" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">FLOAT</text>
 
-    <text x="12" y="228" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="228" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="228" fill="#94a3b8" font-size="11.5">avg_speed_kmh</text>
     <text x="195" y="228" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">FLOAT</text>
   </g>
@@ -154,15 +154,15 @@
     <text x="36" y="44" fill="#f8fafc" font-size="11">date_id</text>
     <text x="146" y="44" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
 
-    <text x="12" y="62" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="62" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="62" fill="#94a3b8" font-size="11">full_date</text>
     <text x="146" y="62" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">DATE</text>
 
-    <text x="12" y="80" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="80" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="80" fill="#94a3b8" font-size="11">day_name</text>
     <text x="136" y="80" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">VARCHAR</text>
 
-    <text x="12" y="98" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="98" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="98" fill="#94a3b8" font-size="11">is_weekend</text>
     <text x="136" y="98" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">BOOLEAN</text>
   </g>
@@ -186,15 +186,15 @@
     <text x="36" y="80" fill="#94a3b8" font-size="11">checkpoint_id</text>
     <text x="195" y="80" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">INT</text>
 
-    <text x="12" y="98" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="98" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="98" fill="#f8fafc" font-size="11">stage_type</text>
     <text x="180" y="98" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">VARCHAR</text>
 
-    <text x="12" y="116" fill="#f59e0b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="116" fill="#f59e0b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="116" fill="#f8fafc" font-size="11">dwell_time_min</text>
     <text x="195" y="116" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">FLOAT</text>
 
-    <text x="12" y="134" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="134" fill="#64748b" font-size="10.5" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="134" fill="#94a3b8" font-size="11">stage_delay_delta</text>
     <text x="195" y="134" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">FLOAT</text>
   </g>
@@ -210,7 +210,7 @@
     <text x="36" y="38" fill="#f8fafc" font-size="10.5">checkpoint_id</text>
     <text x="210" y="38" fill="#64748b" font-size="9.5" font-family="'JetBrains Mono', monospace">INT</text>
 
-    <text x="12" y="56" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">&bull;</text>
+    <text x="12" y="56" fill="#64748b" font-size="10" font-family="'JetBrains Mono', monospace">&#8226;</text>
     <text x="36" y="56" fill="#94a3b8" font-size="10.5">name &amp; location_km</text>
     <text x="195" y="56" fill="#64748b" font-size="9.5" font-family="'JetBrains Mono', monospace">VARCHAR</text>
   </g>
@@ -242,6 +242,6 @@
 
   <!-- Footer Legend -->
   <g transform="translate(32, 498)">
-    <text x="0" y="12" fill="#64748b" font-size="11" font-family="'JetBrains Mono', monospace">Cardinality: PK (Primary Key) &bull; FK (Foreign Key) &bull; SQLite Relational Integrity Enforced (PRAGMA foreign_keys = ON)</text>
+    <text x="0" y="12" fill="#64748b" font-size="11" font-family="'JetBrains Mono', monospace">Cardinality: PK (Primary Key) &#8226; FK (Foreign Key) &#8226; SQLite Relational Integrity Enforced (PRAGMA foreign_keys = ON)</text>
   </g>
 </svg>

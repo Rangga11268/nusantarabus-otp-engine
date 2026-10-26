@@ -130,7 +130,7 @@
     <!-- Node 3C: Bidirectional Switcher -->
     <g transform="translate(704, 368)">
       <rect width="208" height="36" rx="6" fill="#161c2a" stroke="#243048" stroke-width="1" />
-      <text x="16" y="23" fill="#f8fafc" font-size="11" font-weight="600">&larr; Seamless 1-Click Toggle &rarr;</text>
+      <text x="16" y="23" fill="#f8fafc" font-size="11" font-weight="600">&#8592; Seamless 1-Click Toggle &#8594;</text>
     </g>
   </g>
 
