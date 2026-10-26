@@ -1462,6 +1462,7 @@
     }
 
     if (isDashboard) {
+      switchTab("leaderboard");
       updateKPIs(state.activeCorridor);
       renderLeaderboard(state.activeCorridor);
       renderWaterfall();
